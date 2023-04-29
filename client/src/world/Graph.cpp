@@ -9,18 +9,22 @@
 
 Graph::Graph(World& world) : Entity(world), adjacencySet() {
     sprite.setTexture(*world.getAssets().get(GameAssets::WHITE_PIXEL));
+
+    nodes.push_back(new GraphNode({ 16.0f, 9.0f }));
+    nodes.push_back(new GraphNode({ 20.0f, 9.0f }));
+    nodes.push_back(new GraphNode({ 5.0f, 12.0f }));
 }
 
 const sf::Vector2f &Graph::getLocation() {
-    return { 0.0f, 0.0f };
+    return world.getView().getCenter();
 }
 
 sf::Vector2f Graph::getVisualSize() const {
-    return World::VIEW_SIZE;
+    return world.getView().getSize();
 }
 
 ZOrder Graph::getZOrder() const {
-    return ZOrder::Graph;
+    return ZOrder::SnailPath;
 }
 
 void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -31,7 +35,7 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     for(GraphNode* node : nodes) {
         sprite.setPosition(node->getPosition());
-        sprite.setScale({1.0f / 160.0f, 1.0f / 90.0f});
+        // sprite.setScale({1.0f / 10.0f, 1.0f / 10.0f});
         target.draw(sprite);
     }
 }

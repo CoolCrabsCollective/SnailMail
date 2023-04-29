@@ -21,10 +21,7 @@ namespace GameAssets {
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
 	ASSET(wiz::FontAsset, SANS_TTF, ("font/sans.ttf"))
 
-	ASSET(wiz::TextureAsset, PLAYER, ("gfx/player.png"))
-	ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.jpg"))
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
-	ASSET(wiz::TextureAsset, LOGO, ("gfx/logo.png"))
     ASSET(wiz::TextureAsset, PATH, ("gfx/path.png"))
 }
 

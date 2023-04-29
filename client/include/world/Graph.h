@@ -27,7 +27,7 @@ class Graph : public Entity {
 public:
     Graph(World& world);
 
-    const sf::Vector2f &getLocation() override;
+    const sf::Vector2f& getLocation() override;
 
     sf::Vector2f getVisualSize() const override;
 
