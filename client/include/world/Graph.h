@@ -24,8 +24,7 @@ struct pair_hash {
 
 class Graph : public Entity {
     std::vector<GraphNode*> nodes;
-    std::unordered_set<std::pair<GraphNode*, GraphNode*>, pair_hash> adjacencySet;
-    std::vector<Path> edges;
+    std::unordered_map<std::pair<GraphNode*, GraphNode*>, Path, pair_hash> adjacencyMap;
 
     mutable sf::Sprite sprite;
     mutable sf::VertexArray lines;

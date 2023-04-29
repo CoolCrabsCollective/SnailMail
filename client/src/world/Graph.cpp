@@ -10,7 +10,7 @@
 #include "SpriteUtil.h"
 #include "MathUtil.h"
 
-Graph::Graph(World& world) : Entity(world), adjacencySet(), lines(sf::Lines, 2) {
+Graph::Graph(World& world) : Entity(world), adjacencyMap(), lines(sf::Lines, 2) {
     sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
 
     generateRandom(10);
@@ -30,20 +30,11 @@ ZOrder Graph::getZOrder() const {
 
 void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     // Drawing edges/paths
-    for (Path p : edges) {
-        target.draw(p);
+    for(const auto& entry : adjacencyMap) {
+        target.draw(entry.second);
     }
 
-    /*
-    for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
-        lines[0].position = pair.first->getPosition();
-        lines[0].color = sf::Color::Black;
-        lines[1].position = pair.second->getPosition();
-        lines[1].color = sf::Color::Black;
-        target.draw(lines);
-    }
-    */
-
+    // Drawing nodes
     for(GraphNode* node : nodes) {
         sprite.setPosition(node->getPosition());
         SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
@@ -113,7 +104,8 @@ void Graph::generateRandom(uint16_t nodeCount) {
         }
 
         bool cancel = false;
-        for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
+        for(const auto& entry : adjacencyMap) {
+            const std::pair<GraphNode*, GraphNode*>& pair = entry.first;
             if(MathUtil::segmentsIntersect((pair.first->getPosition() + pair.second->getPosition() * 0.1f) / 1.1f,
                                            (pair.second->getPosition() + pair.first->getPosition() * 0.1f) / 1.1f,
                                            (node1->getPosition() + node2->getPosition() * 0.1f) / 1.1f,
@@ -127,26 +119,20 @@ void Graph::generateRandom(uint16_t nodeCount) {
         node1->addNeighbor(node2);
         node2->addNeighbor(node1);
 
+        std::pair<GraphNode*, GraphNode*> final_pair;
         if(node1 < node2)
-            adjacencySet.insert(std::pair(node1, node2));
+            final_pair = std::pair(node1, node2);
         else
-            adjacencySet.insert(std::pair(node2, node1));
+            final_pair = std::pair(node2, node1);
+
+        adjacencyMap.emplace(final_pair, Path(*world.getAssets().get(GameAssets::PATH), *world.getAssets().get(GameAssets::CUM_PATH), final_pair.first->getPosition(), final_pair.second->getPosition(), world.getView()));
     } while((hasLeaf() || !isConnected()) && it < 500);
-
-
-    for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
-        edges.emplace_back(*world.getAssets().get(GameAssets::PATH),
-                           *world.getAssets().get(GameAssets::CUM_PATH),
-                             pair.first->getPosition(),
-                             pair.second->getPosition(),
-                             world.getView());
-    }
 }
 
 bool Graph::areAdjacent(GraphNode* node1, GraphNode* node2) {
     return node1 < node2
-        ? adjacencySet.contains(std::pair(node1, node2))
-        : adjacencySet.contains(std::pair(node2, node1));
+        ? adjacencyMap.contains(std::pair(node1, node2))
+        : adjacencyMap.contains(std::pair(node2, node1));
 }
 
 std::vector<GraphNode*>& Graph::getNodes() {
