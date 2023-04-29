@@ -13,7 +13,8 @@ Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
     sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
 
     actualPosition = node->getPosition();
-    moveLocation(node->getNeighbors()[0]);
+    if(!node->getNeighbors().empty())
+        moveLocation(node->getNeighbors()[0]);
 }
 
 const sf::Vector2f &Snail::getLocation() {
