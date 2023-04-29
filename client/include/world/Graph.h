@@ -50,6 +50,8 @@ public:
     std::vector<GraphNode*>& getNodes();
 
     bool isConnected();
+
+    Path& getPath(GraphNode *node1, GraphNode *node2);
 };
 
 

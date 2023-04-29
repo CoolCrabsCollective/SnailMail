@@ -163,6 +163,12 @@ bool Graph::areAdjacent(GraphNode* node1, GraphNode* node2) {
         : adjacencyMap.contains(std::pair(node2, node1));
 }
 
+Path& Graph::getPath(GraphNode *node1, GraphNode *node2) {
+    return node1 < node2
+           ? adjacencyMap.at(std::pair(node1, node2))
+           : adjacencyMap.at(std::pair(node2, node1));
+}
+
 std::vector<GraphNode*>& Graph::getNodes() {
     return nodes;
 }

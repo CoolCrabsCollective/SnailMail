@@ -12,7 +12,7 @@ LadyBug::LadyBug(World& world, GraphNode* node) : GraphEntity(world, node) {
     sprite.setTexture(*world.getAssets().get(GameAssets::LADY_BUG));
 }
 
-const sf::Vector2f& LadyBug::getLocation() const {
+const sf::Vector2f& LadyBug::getPosition() const {
     return getStartNode()->getPosition();
 }
 
@@ -25,8 +25,8 @@ ZOrder LadyBug::getZOrder() const {
 }
 
 void LadyBug::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sprite.setPosition(getLocation());
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1.95f, 2.});
+    sprite.setPosition(getPosition());
+    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1.95f, 1.95f});
     SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5, 1.});
     target.draw(sprite);
 }
