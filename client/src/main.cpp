@@ -60,9 +60,10 @@ int main(int argc, char* argv[])
 
 	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(mode, "Snail Mail");
 
+    srand(time(nullptr));
 	MailGame game(window, logger, loader);
 
-	game.setScreen(std::shared_ptr<LoadingScreen>(new LoadingScreen(game)));
+	game.setScreen(std::make_shared<LoadingScreen>(game));
 
 	while (window->isOpen()) {
 		game.update();
