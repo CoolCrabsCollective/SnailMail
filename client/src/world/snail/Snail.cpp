@@ -9,7 +9,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
 
-Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
+Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node), pathSelArrow(world) {
     sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
 
     actualPosition = node->getPosition();
@@ -45,6 +45,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     }
 
     target.draw(sprite);
+    pathSelArrow.draw(target, states);
 }
 
 void Snail::tick(float delta) {
