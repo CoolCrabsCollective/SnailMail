@@ -7,7 +7,7 @@
 
 #include "SFML/Graphics.hpp"
 
-#define PATH_TEXTURE_SIZE 32
+#define PATH_TO_NODE_RATIO 2
 
 class Path : public sf::Drawable, public sf::Transformable {
 public:
@@ -15,7 +15,7 @@ public:
     sf::Vector2f& p1;
     sf::Vector2f& p2;
 
-    Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2);
+    Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 };

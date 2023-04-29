@@ -9,10 +9,11 @@
 #include "SpriteUtil.h"
 
 
+
 Graph::Graph(World& world) : Entity(world), adjacencySet(), lines(sf::Lines, 2) {
     sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
-    GraphNode* node1 = new GraphNode({ 16.0f, 9.0f });
-    GraphNode* node2 = new GraphNode({ 20.0f, 9.0f });
+    GraphNode* node1 = new GraphNode({ 16.0f, 2.0f });
+    GraphNode* node2 = new GraphNode({ 20.0f, 12.0f });
     GraphNode* node3 = new GraphNode({ 5.0f, 12.0f });
     node1->addNeighbor(node3);
     node2->addNeighbor(node3);
@@ -25,6 +26,10 @@ Graph::Graph(World& world) : Entity(world), adjacencySet(), lines(sf::Lines, 2) 
 
     adjacencySet.insert(std::pair(node1, node3));
     adjacencySet.insert(std::pair(node2, node3));
+
+    for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
+        edges.push_back(Path(*world.getAssets().get(GameAssets::PATH), pair.first->getPosition(), pair.second->getPosition(), world.getView()));
+    }
 }
 
 const sf::Vector2f &Graph::getLocation() {
@@ -40,6 +45,11 @@ ZOrder Graph::getZOrder() const {
 }
 
 void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
+    // Drawing edges/paths
+    for (Path p : edges) {
+        target.draw(p);
+    }
+
     for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
         lines[0].position = pair.first->getPosition();
         lines[0].color = sf::Color::Black;

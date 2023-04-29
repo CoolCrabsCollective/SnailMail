@@ -4,7 +4,7 @@
 
 #include "world/Path.h"
 
-Path::Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2) : p1(p1), p2(p2) {
+Path::Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view) : p1(p1), p2(p2) {
    sf::Vector2f edge_vector = p2 - p1;
    float edge_vector_mag = edge_vector.length();
 
@@ -14,10 +14,11 @@ Path::Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2) : p
 
    while ((cur_pos - p1).length() < edge_vector_mag) {
        sf::Sprite sprite = sf::Sprite(pathTexture);
-       sprite.setPosition(cur_pos);
+       sprite.setPosition(cur_pos - sf::Vector2f(0.5f / float(PATH_TO_NODE_RATIO), 0.5f / float(PATH_TO_NODE_RATIO)));
+       sprite.setScale({1.0f / sprite.getTexture()->getSize().x / float(PATH_TO_NODE_RATIO), 1.0f / sprite.getTexture()->getSize().y / float(PATH_TO_NODE_RATIO)});
        sprites.push_back(sprite);
 
-       cur_pos = cur_pos + (edge_vector_dir*float(PATH_TEXTURE_SIZE));
+       cur_pos = cur_pos + (edge_vector_dir*float(1.0f / sprite.getTexture()->getSize().x));
    }
 }
 

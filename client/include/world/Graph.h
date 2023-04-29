@@ -12,6 +12,7 @@
 #include "Entity.h"
 #include "GraphNode.h"
 #include "SFML/Graphics/Sprite.hpp"
+#include "Path.h"
 #include "SFML/Graphics/VertexArray.hpp"
 
 struct pair_hash {
@@ -24,6 +25,7 @@ struct pair_hash {
 class Graph : public Entity {
     std::vector<GraphNode*> nodes;
     std::unordered_set<std::pair<GraphNode*, GraphNode*>, pair_hash> adjacencySet;
+    std::vector<Path> edges;
 
     mutable sf::Sprite sprite;
     mutable sf::VertexArray lines;
