@@ -19,7 +19,7 @@
 
 class World;
 
-class Entity : public Tickable, public sf::Drawable {
+class Entity : public sf::Drawable {
 protected:
     World& world;
 public:

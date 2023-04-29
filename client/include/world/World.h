@@ -14,12 +14,15 @@
 #include "Tickable.h"
 #include "WIZ/asset/AssetLoader.h"
 #include "Entity.h"
+#include "SFML/Graphics/View.hpp"
 
 class World : public Tickable, public sf::Drawable {
 protected:
     wiz::AssetLoader& assets;
     std::vector<Entity*> entities, toAdd;
     mutable std::map<ZOrder, std::vector<Entity*>> zOrderMap;
+    const sf::View view;
+
     void removeFromZOrderMap(Entity* entity);
     void initZOrderMap();
 
@@ -38,14 +41,9 @@ public:
 
     void addEntity(Entity* entity);
 
-
     void removeTrashToBeDeleted();
 
-
-
-    bool gameover = false; // why is this public
-    bool paused = false; // why not scrub
-
+    const sf::View& getView() const;
 };
 
 

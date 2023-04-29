@@ -18,7 +18,9 @@ void MailScreen::tick(float delta) {
 
 void MailScreen::render(sf::RenderTarget &target) {
     target.clear(sf::Color::Green);
+    target.setView(sf::View({800.0f, 450.0f}, { 1600.0f, 900.0f }));
     target.draw(testPath);
+    target.draw(world);
 }
 
 const std::string &MailScreen::getName() const {

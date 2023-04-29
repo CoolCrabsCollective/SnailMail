@@ -13,7 +13,7 @@ class GraphNode {
     std::vector<GraphNode*> neighbors;
     sf::Vector2f position;
 public:
-    GraphNode() = default;
+    GraphNode(sf::Vector2f position);
 
     [[nodiscard]]
     const std::vector<GraphNode*>& getNeighbors() const;
