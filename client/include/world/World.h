@@ -20,6 +20,7 @@ class World : public Tickable, public sf::Drawable {
 protected:
     wiz::AssetLoader& assets;
     std::vector<Entity*> entities, toAdd;
+    std::map<ZOrder, std::list<Entity*>> zOrderMap;
 
 
     mutable std::vector<Entity*> entities_draw_list;
@@ -39,6 +40,12 @@ public:
     const std::vector<Entity*>& getEntities() const;
 
     void addEntity(Entity* entity);
+
+    void initZOrderMap();
+
+    void removeEntities();
+
+    void removeFromZOrderMap(Entity* entity);
 
     bool gameover = false; // why is this public
     bool paused = false; // why not scrub
