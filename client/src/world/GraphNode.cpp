@@ -16,3 +16,7 @@ const std::vector<GraphNode*>& GraphNode::getNeighbors() const {
 const sf::Vector2f& GraphNode::getPosition() const {
     return position;
 }
+
+void GraphNode::addNeighbor(GraphNode* node) {
+    neighbors.push_back(node);
+}

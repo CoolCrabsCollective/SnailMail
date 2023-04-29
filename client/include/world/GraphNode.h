@@ -20,6 +20,8 @@ public:
 
     [[nodiscard]]
     const sf::Vector2f& getPosition() const;
+
+    void addNeighbor(GraphNode *node);
 };
 
 
