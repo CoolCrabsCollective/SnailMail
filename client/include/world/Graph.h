@@ -5,7 +5,6 @@
 #ifndef LD53_CLIENT_GRAPH_H
 #define LD53_CLIENT_GRAPH_H
 
-
 #include <map>
 #include <unordered_set>
 #include <string>
@@ -24,7 +23,6 @@ struct pair_hash {
 
 class Graph : public Entity {
     std::vector<GraphNode*> nodes;
-    std::unordered_map<std::pair<GraphNode*, GraphNode*>, Path, pair_hash> adjacencyMap;
 
     mutable sf::Sprite sprite;
     mutable sf::VertexArray lines;
@@ -32,6 +30,8 @@ class Graph : public Entity {
     constexpr const static float MIN_NODE_DISTANCE = 5.0f;
     constexpr const static float MAX_NODE_PATH_DISTANCE = 2.0f;
 public:
+    std::unordered_map<std::pair<GraphNode*, GraphNode*>, Path, pair_hash> adjacencyMap;
+
     Graph(World& world);
 
     void generateRandom(uint16_t nodeCount);

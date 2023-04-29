@@ -26,7 +26,7 @@ ZOrder LadyBug::getZOrder() const {
 
 void LadyBug::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     sprite.setPosition(getLocation());
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
+    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1.95f, 2.});
     SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5, 1.});
     target.draw(sprite);
 }

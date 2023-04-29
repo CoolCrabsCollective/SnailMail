@@ -8,8 +8,9 @@
 
 #include <vector>
 #include "SFML/System/Vector2.hpp"
+#include "input/Clickable.h"
 
-class GraphNode {
+class GraphNode: public Clickable {
     std::vector<GraphNode*> neighbors;
     sf::Vector2f position;
 public:
