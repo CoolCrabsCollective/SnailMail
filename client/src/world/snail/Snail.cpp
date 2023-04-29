@@ -54,6 +54,9 @@ void Snail::tick(float delta) {
 }
 
 void Snail::moveLocation(GraphNode* node) {
+    if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node))
+        return;
+
     isMoving = true;
     setTargetLocation(node);
 
