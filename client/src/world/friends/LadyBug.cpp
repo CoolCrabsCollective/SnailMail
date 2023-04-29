@@ -8,25 +8,7 @@
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
 
-LadyBug::LadyBug(World& world, GraphNode* node) : GraphEntity(world, node) {
-    sprite.setTexture(*world.getAssets().get(GameAssets::LADY_BUG));
+LadyBug::LadyBug(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::LADY_BUG)) {
+
 }
 
-const sf::Vector2f& LadyBug::getLocation() const {
-    return getStartNode()->getPosition();
-}
-
-sf::Vector2f LadyBug::getVisualSize() const {
-    return World::VIEW_SIZE;
-}
-
-ZOrder LadyBug::getZOrder() const {
-    return ZOrder::LadyBug_ZOrder;
-}
-
-void LadyBug::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sprite.setPosition(getLocation());
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1.95f, 2.});
-    SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5, 1.});
-    target.draw(sprite);
-}

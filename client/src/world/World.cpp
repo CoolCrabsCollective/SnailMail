@@ -10,6 +10,7 @@
 #include "world/friends/LadyBug.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
+#include "world/friends/Bee.h"
 
 
 World::World(wiz::AssetLoader &assets)
@@ -24,11 +25,16 @@ World::World(wiz::AssetLoader &assets)
     sf::Color snail_color_blue = sf::Color(77, 155, 230);
     sf::Color snail_color_yellow = sf::Color(251, 255, 134);
 
-    snail = new Snail(*this, startNode, snail_color_yellow);
+    snail = new Snail(*this, startNode, snail_color_blue);
     addEntity(snail);
 
     LadyBug* ladyBug = new LadyBug(*this, graph->getNodes()[graph->getNodes().size() - 1]);
     addEntity(ladyBug);
+
+
+    Bee* bee = new Bee(*this, graph->getNodes()[graph->getNodes().size() - 2]);
+    addEntity(bee);
+
 
     entitySelection = new EntitySelection(*this);
 

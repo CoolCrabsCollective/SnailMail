@@ -28,6 +28,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, SNAILY, ("gfx/snaily.png"))
     ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
     ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/lady_bug.png"))
+    ASSET(wiz::TextureAsset, BEE, ("gfx/bee.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
 
     // UI
