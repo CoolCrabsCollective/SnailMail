@@ -40,7 +40,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 1.f});
     if(!isMoving)
     {
-        sprite.rotate(sf::radians(0));
+        sprite.setRotation(sf::radians(0));
     }
 
     target.draw(sprite);
@@ -64,7 +64,7 @@ void Snail::moveLocation(GraphNode* node) {
     {
         angle += M_PI;
     }
-    sprite.rotate(sf::radians(angle));
+    sprite.setRotation(sf::radians(angle));
 }
 
 void Snail::tickMovement(float delta) {
