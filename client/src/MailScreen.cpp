@@ -17,7 +17,7 @@ void MailScreen::tick(float delta) {
 }
 
 void MailScreen::render(sf::RenderTarget &target) {
-
+    target.clear(sf::Color::Green);
 }
 
 const std::string &MailScreen::getName() const {
@@ -25,13 +25,13 @@ const std::string &MailScreen::getName() const {
 }
 
 void MailScreen::windowClosed() {
-    WindowListener::windowClosed();
+    getGame().getWindow().close();
 }
 
 void MailScreen::show() {
-
+    getGame().addWindowListener(this);
 }
 
 void MailScreen::hide() {
-
+    getGame().removeWindowListener(this);
 }

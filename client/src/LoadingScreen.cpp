@@ -13,7 +13,7 @@ void LoadingScreen::tick(float delta) {
 	getGame().getAssets().update(16.0f);
 
 	if(getGame().getAssets().isAllLoaded())
-		getGame().setScreen(std::shared_ptr<TitleScreen>(new TitleScreen(getGame())));
+		getGame().setScreen(std::shared_ptr<MailScreen>(new MailScreen(getGame())));
 }
 
 void LoadingScreen::render(sf::RenderTarget& target) {
