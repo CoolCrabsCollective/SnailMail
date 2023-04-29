@@ -8,7 +8,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
 
-Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node) {
+Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node), pathSelArrow(world) {
     snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
     snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
 
@@ -58,6 +58,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     target.draw(snail_sprite);
     target.draw(snail_cap_sprite);
+    pathSelArrow.draw(target, states);
 }
 
 void Snail::tick(float delta) {

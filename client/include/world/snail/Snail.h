@@ -7,6 +7,7 @@
 
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/GraphEntity.h"
+#include "ui/PathSelArrow.h"
 
 class Snail : public GraphEntity, public Tickable {
     mutable sf::Sprite snail_sprite;
@@ -19,6 +20,8 @@ class Snail : public GraphEntity, public Tickable {
     sf::Vector2f locDiff;
 
     sf::Vector2f actualPosition;
+
+    PathSelArrow pathSelArrow;
 
 public:
     Snail(World& world, GraphNode* node, sf::Color snail_color);

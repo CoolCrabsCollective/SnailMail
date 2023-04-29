@@ -2,17 +2,17 @@
 // Created by cedric on 4/29/23.
 //
 
-#ifndef LD53_CLIENT_LADYBUG_H
-#define LD53_CLIENT_LADYBUG_H
+#ifndef LD53_CLIENT_BEE_H
+#define LD53_CLIENT_BEE_H
 
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/GraphEntity.h"
 #include "world/friends/Friend.h"
 #include "world/World.h"
 
-class LadyBug : public Friend {
+class Bee : public Friend {
 public:
-    LadyBug(World& world, GraphNode* node);
+    Bee(World& world, GraphNode* node);
 };
 
-#endif //LD53_CLIENT_LADYBUG_H
+#endif //LD53_CLIENT_BEE_H
