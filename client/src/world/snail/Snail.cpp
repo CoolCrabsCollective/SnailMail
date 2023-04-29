@@ -106,12 +106,11 @@ void Snail::tickMovement(float delta) {
             key = {getTargetNode(), getStartNode()};
         }
 
-        world.getGraph()->adjacencyMap.find(key)->second.cummed = true;
+        world.getGraph()->adjacencyMap.find(key)->second.setCummed(true);
 
         setLocation(getTargetNode());
         isMoving = false;
         actualPosition = getLocation();
         movingProgress = .0f;
-
     }
 }

@@ -52,3 +52,9 @@ void Path::setCumminess(float cumLevel, bool backdoor) {
         }
     }
 }
+
+void Path::setCummed(float cummed) {
+    this->cummed = cummed;
+    if (cummed)
+        sprites.back().setTexture(cumTexture, true);
+}
