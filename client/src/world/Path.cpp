@@ -14,11 +14,12 @@ Path::Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2, sf:
 
    while ((cur_pos - p1).length() < edge_vector_mag) {
        sf::Sprite sprite = sf::Sprite(pathTexture);
-       sprite.setPosition(cur_pos - sf::Vector2f(0.5f / float(PATH_TO_NODE_RATIO), 0.5f / float(PATH_TO_NODE_RATIO)));
+       sprite.setPosition(cur_pos + sf::Vector2f(0.5f / float(PATH_TO_NODE_RATIO), 0.5f / float(PATH_TO_NODE_RATIO)));
        sprite.setScale({1.0f / sprite.getTexture()->getSize().x / float(PATH_TO_NODE_RATIO), 1.0f / sprite.getTexture()->getSize().y / float(PATH_TO_NODE_RATIO)});
+       sprite.rotate(sf::Vector2f(1.0f, 0.0f).angleTo(edge_vector_dir));
        sprites.push_back(sprite);
 
-       cur_pos = cur_pos + (edge_vector_dir*float(1.0f / sprite.getTexture()->getSize().x));
+       cur_pos = cur_pos + edge_vector_dir * (1.0f / float(PATH_TO_NODE_RATIO));
    }
 }
 

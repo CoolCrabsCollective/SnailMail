@@ -44,9 +44,13 @@ public:
 
     bool areAdjacent(GraphNode* node1, GraphNode* node2);
 
+    bool hasLeaf();
+
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
     std::vector<GraphNode*>& getNodes();
+
+    bool isConnected();
 };
 
 
