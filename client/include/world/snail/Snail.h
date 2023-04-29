@@ -22,7 +22,7 @@ class Snail : public GraphEntity, public Tickable {
 public:
     Snail(World& world, GraphNode* node);
 
-    const sf::Vector2f &getLocation() override;
+    const sf::Vector2f& getLocation() const override;
 
     sf::Vector2f getVisualSize() const override;
 

@@ -17,7 +17,7 @@ Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
         moveLocation(node->getNeighbors()[0]);
 }
 
-const sf::Vector2f &Snail::getLocation() {
+const sf::Vector2f& Snail::getLocation() const {
     return actualPosition;
 }
 
