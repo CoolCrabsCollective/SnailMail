@@ -14,7 +14,7 @@ World::World(wiz::AssetLoader &assets)
     : assets(assets),
       view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
 
-    Graph* graph = new Graph(*this);
+    graph = new Graph(*this);
     addEntity(graph);
     GraphNode* startNode = graph->getNodes()[0];
     Snail* snail = new Snail(*this, startNode);
@@ -111,5 +111,9 @@ const sf::View& World::getView() const {
 
 const std::map<ZOrder, std::vector<Entity *>> &World::getZOrderMap() const {
     return zOrderMap;
+}
+
+Graph* World::getGraph() const {
+    return graph;
 }
 

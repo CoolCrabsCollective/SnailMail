@@ -2,6 +2,7 @@
 // Created by adrien on 29/04/23.
 //
 
+#include <iostream>
 #include "world/Path.h"
 
 Path::Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view)
@@ -14,7 +15,7 @@ Path::Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Ve
    sf::Vector2f cur_pos = p1;
 
    while ((cur_pos - p1).length() < edge_vector_mag) {
-       sf::Sprite sprite = sf::Sprite(cumTexture);
+       sf::Sprite sprite = sf::Sprite(pathTexture);
        sprite.setOrigin({sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f});
        sprite.setPosition(cur_pos);
        sprite.setScale({1.0f / sprite.getTexture()->getSize().x / float(PATH_TO_NODE_RATIO), 1.0f / sprite.getTexture()->getSize().y / float(PATH_TO_NODE_RATIO)});
@@ -28,5 +29,18 @@ Path::Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Ve
 void Path::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     for (sf::Sprite sprite : sprites) {
         target.draw(sprite);
+    }
+}
+
+void Path::setCumminess(float cum_level) {
+    unsigned int total_sprites = sprites.size();
+    unsigned int sprites_to_cum = total_sprites * cum_level;
+
+    for (sf::Sprite& s : sprites) {
+        if (sprites_to_cum-- == 0)
+            return;
+
+        std::cout << "Swag" << std::endl;
+        s.setTexture(cumTexture, true);
     }
 }

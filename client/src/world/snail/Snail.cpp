@@ -77,4 +77,13 @@ void Snail::tickMovement(float delta) {
         actualPosition = getLocation();
         movingProgress = .0f;
     }
+
+    std::pair<GraphNode*, GraphNode*> key;
+    if (getStartNode() < getTargetNode()) {
+        key = {getStartNode(), getTargetNode()};
+    } else {
+        key = {getTargetNode(), getStartNode()};
+    }
+
+    world.getGraph()->adjacencyMap.find(key)->second.setCumminess(movingProgress);
 }

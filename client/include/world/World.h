@@ -15,6 +15,7 @@
 #include "WIZ/asset/AssetLoader.h"
 #include "Entity.h"
 #include "SFML/Graphics/View.hpp"
+#include "Graph.h"
 
 class World : public Tickable, public sf::Drawable {
 protected:
@@ -22,6 +23,7 @@ protected:
     std::vector<Entity*> entities, toAdd;
     mutable std::map<ZOrder, std::vector<Entity*>> zOrderMap;
     const sf::View view;
+    Graph* graph;
 
     void removeFromZOrderMap(Entity* entity);
 
@@ -45,6 +47,8 @@ public:
     const sf::View& getView() const;
 
     const std::map<ZOrder, std::vector<Entity *>> &getZOrderMap() const;
+
+    Graph* getGraph() const;
 };
 
 
