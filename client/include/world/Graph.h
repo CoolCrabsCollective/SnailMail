@@ -12,6 +12,7 @@
 #include "GraphNode.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "Path.h"
+#include "SFML/Graphics/VertexArray.hpp"
 
 struct pair_hash {
     template <class T1, class T2>
@@ -26,6 +27,7 @@ class Graph : public Entity {
     std::vector<Path> edges;
 
     mutable sf::Sprite sprite;
+    mutable sf::VertexArray lines;
 public:
     Graph(World& world);
 
