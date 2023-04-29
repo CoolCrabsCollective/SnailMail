@@ -136,6 +136,7 @@ void Graph::generateRandom(uint16_t nodeCount) {
 
     for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
         edges.emplace_back(*world.getAssets().get(GameAssets::PATH),
+                           *world.getAssets().get(GameAssets::CUM_PATH),
                              pair.first->getPosition(),
                              pair.second->getPosition(),
                              world.getView());
