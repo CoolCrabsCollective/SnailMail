@@ -57,6 +57,17 @@ void Snail::moveLocation(GraphNode* node) {
     if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node))
         return;
 
+    std::pair<GraphNode*, GraphNode*> key;
+    if (getStartNode() < node) {
+        key = {getStartNode(), node};
+    } else {
+        key = {node, getStartNode()};
+    }
+
+    auto found = world.getGraph()->adjacencyMap.find(key);
+    if (found == world.getGraph()->adjacencyMap.end() || world.getGraph()->adjacencyMap.find(key)->second.cummed)
+        return;
+
     isMoving = true;
     setTargetLocation(node);
 

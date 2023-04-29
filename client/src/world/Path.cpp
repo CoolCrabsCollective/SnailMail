@@ -6,7 +6,7 @@
 #include "world/Path.h"
 
 Path::Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view)
-    : p1(p1), p2(p2), pathTexture(pathTexture), cumTexture(cumTexture) {
+    : p1(p1), p2(p2), pathTexture(pathTexture), cumTexture(cumTexture), cummed(false) {
     sf::Vector2f edge_vector = p2 - p1;
     float edge_vector_mag = edge_vector.length();
 
@@ -43,6 +43,7 @@ void Path::setCumminess(float cumLevel, bool backdoor) {
 
             sprites.at(i).setTexture(cumTexture, true);
         }
+        cummed = true;
     } else {
         for (int i = total_sprites - 1 ; i > 0 ; i--) {
             if (sprites_to_cum-- == 0)
@@ -50,6 +51,6 @@ void Path::setCumminess(float cumLevel, bool backdoor) {
 
             sprites.at(i).setTexture(cumTexture, true);
         }
-
+        cummed = true;
     }
 }
