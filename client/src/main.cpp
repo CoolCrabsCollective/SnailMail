@@ -27,19 +27,6 @@ int main(int argc, char* argv[])
 	Result rc = romfsInit();
 #endif
 
-    GRand r;
-
-    r.seed(88);
-    for(int i = 0; i < 10; i++)
-        std::cout << r.d() << ", ";
-    std::cout << std::endl;
-
-    r.seed(7);
-    r.seed(88);
-    for(int i = 0; i < 10; i++)
-        std::cout << r.d() << ", ";
-    std::cout << std::endl;
-
     std::shared_ptr<wiz::Logger> logger = std::unique_ptr<wiz::Logger>(new wiz::TagLoggerWrapper(
 			new wiz::DateTimeLoggerWrapper(
                 new wiz::MultiLogger({
