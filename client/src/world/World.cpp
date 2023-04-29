@@ -9,6 +9,8 @@
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"
 #include "world/snail/Snail.h"
+#include "GameAssets.h"
+#include "SpriteUtil.h"
 
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
@@ -19,6 +21,11 @@ World::World(wiz::AssetLoader &assets)
     GraphNode* startNode = graph->getNodes()[0];
     Snail* snail = new Snail(*this, startNode);
     addEntity(snail);
+
+    background.setTexture(*assets.get(GameAssets::BACKGROUND));
+    background.setPosition(view.getCenter());
+    SpriteUtil::setSpriteSize(background, view.getSize());
+    SpriteUtil::setSpriteOrigin(background, {0.5f, 0.5f});
 }
 
 void World::tick(float delta) {
@@ -44,6 +51,8 @@ void World::tick(float delta) {
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 
     target.setView(view);
+    target.draw(background);
+
     for(int i = 0; i < ZOrder::ENUM_LENGTH; i++) {
         for(Entity* entity: zOrderMap[static_cast<ZOrder>(i)]) {
             target.draw(*entity);
