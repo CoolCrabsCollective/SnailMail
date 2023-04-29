@@ -12,9 +12,11 @@
 #include "WIZ/game/WindowListener.h"
 #include "Box2D/Dynamics/b2World.h"
 #include "SFML/Graphics/Sprite.hpp"
+#include "world/World.h"
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener {
     std::string name = "SnailMail";
+    World world;
 
 public:
     MailScreen(wiz::Game& game);
