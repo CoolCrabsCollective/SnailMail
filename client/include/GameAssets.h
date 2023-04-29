@@ -26,6 +26,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, CUM_PATH, ("gfx/cum_path.png"))
     ASSET(wiz::TextureAsset, GRAPH_VERTEX, ("gfx/graph_vertex.png"))
     ASSET(wiz::TextureAsset, SNAILY, ("gfx/snaily.png"))
+    ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
     ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/lady_bug.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
 

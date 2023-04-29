@@ -9,9 +9,11 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
 
-Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node), pathSelArrow(world) {
-    sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
+Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node), pathSelArrow(world) {
+    snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
+    snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
 
+    snail_cap_sprite.setColor(snail_color);
     actualPosition = node->getPosition();
     if(!node->getNeighbors().empty())
         moveLocation(node->getNeighbors()[0]);
@@ -30,21 +32,33 @@ ZOrder Snail::getZOrder() const {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sprite.setPosition(actualPosition);
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
-    float scaleX = sprite.getScale().x;
-    float scaleY = sprite.getScale().y;
+    snail_sprite.setPosition(actualPosition);
+    snail_cap_sprite.setPosition(actualPosition);
+    SpriteUtil::setSpriteSize(snail_sprite, sf::Vector2f{2., 2.});
+    SpriteUtil::setSpriteSize(snail_cap_sprite, sf::Vector2f{2., 2.});
+    float scaleX = snail_sprite.getScale().x;
+    float scaleY = snail_sprite.getScale().y;
     if(locDiff.x >= 0)
-        sprite.setScale(sf::Vector2f {std::abs(scaleX), std::abs(scaleY)});
-    else
-        sprite.setScale(sf::Vector2f {-std::abs(scaleX), std::abs(scaleY)});
-    SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 1.f});
-    if(!isMoving)
     {
-        sprite.setRotation(sf::radians(0));
+        snail_sprite.setScale(sf::Vector2f {std::abs(scaleX), std::abs(scaleY)});
+        snail_cap_sprite.setScale(sf::Vector2f {std::abs(scaleX), std::abs(scaleY)});
+    }
+    else
+    {
+        snail_sprite.setScale(sf::Vector2f {-std::abs(scaleX), std::abs(scaleY)});
+        snail_cap_sprite.setScale(sf::Vector2f {-std::abs(scaleX), std::abs(scaleY)});
     }
 
-    target.draw(sprite);
+    SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.5f, 1.f});
+    SpriteUtil::setSpriteOrigin(snail_cap_sprite, sf::Vector2f{0.5f, 1.f});
+    if(!isMoving)
+    {
+        snail_sprite.setRotation(sf::radians(0));
+        snail_cap_sprite.setRotation(sf::radians(0));
+    }
+
+    target.draw(snail_sprite);
+    target.draw(snail_cap_sprite);
     pathSelArrow.draw(target, states);
 }
 
@@ -80,7 +94,8 @@ void Snail::moveLocation(GraphNode* node) {
     {
         angle += M_PI;
     }
-    sprite.setRotation(sf::radians(angle));
+    snail_sprite.setRotation(sf::radians(angle));
+    snail_cap_sprite.setRotation(sf::radians(angle));
 }
 
 void Snail::tickMovement(float delta) {
@@ -88,22 +103,30 @@ void Snail::tickMovement(float delta) {
     movingProgress += delta * currentProgressRate;
     if (movingProgress < 1.0f) {
         actualPosition = this->getStartNode()->getPosition() + locDiff * movingProgress;
+
+        std::pair<GraphNode*, GraphNode*> key;
+        bool backdoor = false;
+        if (getStartNode() < getTargetNode()) {
+            key = {getStartNode(), getTargetNode()};
+        } else {
+            backdoor = true;
+            key = {getTargetNode(), getStartNode()};
+        }
+
+        world.getGraph()->adjacencyMap.find(key)->second.setCumminess(movingProgress, backdoor);
     } else {
+        std::pair<GraphNode*, GraphNode*> key;
+        if (getStartNode() < getTargetNode()) {
+            key = {getStartNode(), getTargetNode()};
+        } else {
+            key = {getTargetNode(), getStartNode()};
+        }
+
+        world.getGraph()->adjacencyMap.find(key)->second.setCummed(true);
+
         setLocation(getTargetNode());
         isMoving = false;
         actualPosition = getLocation();
         movingProgress = .0f;
-        return;
     }
-
-    std::pair<GraphNode*, GraphNode*> key;
-    bool backdoor = false;
-    if (getStartNode() < getTargetNode()) {
-        key = {getStartNode(), getTargetNode()};
-    } else {
-        backdoor = true;
-        key = {getTargetNode(), getStartNode()};
-    }
-
-    world.getGraph()->adjacencyMap.find(key)->second.setCumminess(movingProgress, backdoor);
 }
