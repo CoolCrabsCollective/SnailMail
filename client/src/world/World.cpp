@@ -2,7 +2,6 @@
 // Created by cedric on 4/29/23.
 //
 
-#include <algorithm>
 #include "world/World.h"
 #include <algorithm>
 
@@ -15,7 +14,10 @@ void World::tick(float delta) {
 }
 
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-
+    for(int i = 0; i < ZOrder::ENUM_LENGTH; i++)
+    {
+    
+    }
 }
 
 void World::addEntity(Entity *entity) {
@@ -65,12 +67,17 @@ void World::removeFromZOrderMap(Entity *entity) {
 void World::initZOrderMap() {
     zOrderMap.clear();
 
-    for(Entity* entity : entities) {
+    for (Entity *entity: entities) {
         ZOrder key = entity->getZOrder();
 
-        if(!zOrderMap.contains(key))
-            zOrderMap[key] = { entity };
+        if (!zOrderMap.contains(key))
+            zOrderMap[key] = {entity};
         else
             zOrderMap[key].insert(zOrderMap[key].begin(), entity);
     }
+}
+
+wiz::AssetLoader& World::getAssets() const {
+    return assets;
+
 }

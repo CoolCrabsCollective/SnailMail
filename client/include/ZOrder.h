@@ -6,10 +6,10 @@
 #define LD53_CLIENT_ZORDER_H
 
 enum ZOrder {
-    Edge,
-    Vertex,
+    Graph,
     Goo,
     PostOffice,
     Snail,
+    ENUM_LENGTH
 };
 #endif //LD53_CLIENT_ZORDER_H
