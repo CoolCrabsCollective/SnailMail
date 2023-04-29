@@ -5,7 +5,6 @@
 #ifndef LD53_CLIENT_GRAPH_H
 #define LD53_CLIENT_GRAPH_H
 
-
 #include <map>
 #include <unordered_set>
 #include <string>

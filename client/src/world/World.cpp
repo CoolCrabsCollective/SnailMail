@@ -3,28 +3,33 @@
 //
 
 #include "world/World.h"
-#include "world/snail/Snail.h"
 #include <algorithm>
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"
-#include "world/snail/Snail.h"
+#include "world/friends/LadyBug.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
 #include "world/PostOffice.h"
+
 
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
       view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
 
-    Graph* graph = new Graph(*this);
+    graph = new Graph(*this);
     addEntity(graph);
     GraphNode* startNode = graph->getNodes()[0];
-    Snail* snail = new Snail(*this, startNode);
+    snail = new Snail(*this, startNode);
     addEntity(snail);
 
     PostOffice* postOffice = new PostOffice(*this, startNode);
     addEntity(postOffice);
+
+    LadyBug* ladyBug = new LadyBug(*this, graph->getNodes()[graph->getNodes().size() - 1]);
+    addEntity(ladyBug);
+
+    entitySelection = new EntitySelection(*this);
 
     background.setTexture(*assets.get(GameAssets::BACKGROUND));
     background.setPosition(view.getCenter());
@@ -33,6 +38,8 @@ World::World(wiz::AssetLoader &assets)
 }
 
 void World::tick(float delta) {
+    handleSelected();
+
     for(Entity* entity : entities) {
         if(Tickable* tickable = dynamic_cast<Tickable*>(entity)) {
             tickable->tick(delta);
@@ -113,6 +120,14 @@ void World::removeFromZOrderMap(Entity *entity) {
         zOrderMap.erase(key);
 }
 
+void World::handleSelected() {
+    GraphNode* selected = entitySelection->getSelected();
+    if (selected) {
+        snail->moveLocation(selected);
+        entitySelection->setSelected(nullptr);
+    }
+}
+
 wiz::AssetLoader& World::getAssets() const {
     return assets;
 
@@ -126,3 +141,10 @@ const std::map<ZOrder, std::vector<Entity *>> &World::getZOrderMap() const {
     return zOrderMap;
 }
 
+Graph* World::getGraph() const {
+    return graph;
+}
+
+EntitySelection *World::getEntitySelection() const {
+    return entitySelection;
+}

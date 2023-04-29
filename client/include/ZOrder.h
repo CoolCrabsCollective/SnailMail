@@ -9,6 +9,7 @@ enum ZOrder {
     Path_ZOrder,
     Goo_ZOrder,
     PostOffice_ZOrder,
+    LadyBug_ZOrder,
     Snail_ZOrder,
     ENUM_LENGTH
 };

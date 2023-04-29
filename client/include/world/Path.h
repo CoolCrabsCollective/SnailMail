@@ -16,10 +16,13 @@ public:
     sf::Vector2f& p2;
     sf::Texture pathTexture;
     sf::Texture cumTexture;
+    bool cummed;
 
     Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+    void setCumminess(float cumLevel, bool backdoor);
 };
 
 

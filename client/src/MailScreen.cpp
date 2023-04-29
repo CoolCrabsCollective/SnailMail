@@ -45,8 +45,11 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
     sf::Vector2f clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
                                                             world.getView());
 
+    world.getEntitySelection()->clickScan(clickVector);
 }
 
 void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {
     sf::Vector2f touchVector = getWindow().mapPixelToCoords(sf::Vector2i(touchScreenEvent.x, touchScreenEvent.y), world.getView());
+
+    world.getEntitySelection()->clickScan(touchVector);
 }

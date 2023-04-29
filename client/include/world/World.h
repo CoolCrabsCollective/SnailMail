@@ -15,7 +15,10 @@
 #include "WIZ/asset/AssetLoader.h"
 #include "Entity.h"
 #include "SFML/Graphics/View.hpp"
+#include "Graph.h"
 #include "SFML/Graphics/Sprite.hpp"
+#include "input/EntitySelection.h"
+#include "world/snail/Snail.h"
 
 class World : public Tickable, public sf::Drawable {
 protected:
@@ -24,9 +27,14 @@ protected:
     mutable std::map<ZOrder, std::vector<Entity*>> zOrderMap;
     const sf::View view;
 
+    Graph* graph = nullptr;
+    Snail* snail = nullptr;
+
     void removeFromZOrderMap(Entity* entity);
 
     mutable sf::Sprite background;
+    EntitySelection* entitySelection = nullptr;
+
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 
@@ -47,6 +55,12 @@ public:
     const sf::View& getView() const;
 
     const std::map<ZOrder, std::vector<Entity *>> &getZOrderMap() const;
+
+    EntitySelection *getEntitySelection() const;
+
+    void handleSelected();
+
+    Graph *getGraph() const;
 };
 
 
