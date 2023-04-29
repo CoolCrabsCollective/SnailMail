@@ -108,3 +108,8 @@ wiz::AssetLoader& World::getAssets() const {
 const sf::View& World::getView() const {
     return view;
 }
+
+const std::map<ZOrder, std::vector<Entity *>> &World::getZOrderMap() const {
+    return zOrderMap;
+}
+

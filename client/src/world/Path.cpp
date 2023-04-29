@@ -4,7 +4,8 @@
 
 #include "world/Path.h"
 
-Path::Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view) : p1(p1), p2(p2) {
+Path::Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view)
+   : p1(p1), p2(p2), pathTexture(pathTexture), cumTexture(cumTexture) {
    sf::Vector2f edge_vector = p2 - p1;
    float edge_vector_mag = edge_vector.length();
 
@@ -13,8 +14,9 @@ Path::Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2, sf:
    sf::Vector2f cur_pos = p1;
 
    while ((cur_pos - p1).length() < edge_vector_mag) {
-       sf::Sprite sprite = sf::Sprite(pathTexture);
-       sprite.setPosition(cur_pos + sf::Vector2f(0.5f / float(PATH_TO_NODE_RATIO), 0.5f / float(PATH_TO_NODE_RATIO)));
+       sf::Sprite sprite = sf::Sprite(cumTexture);
+       sprite.setOrigin({sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f});
+       sprite.setPosition(cur_pos);
        sprite.setScale({1.0f / sprite.getTexture()->getSize().x / float(PATH_TO_NODE_RATIO), 1.0f / sprite.getTexture()->getSize().y / float(PATH_TO_NODE_RATIO)});
        sprite.rotate(sf::Vector2f(1.0f, 0.0f).angleTo(edge_vector_dir));
        sprites.push_back(sprite);

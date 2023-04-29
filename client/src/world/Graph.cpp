@@ -34,6 +34,7 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
         target.draw(p);
     }
 
+    /*
     for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
         lines[0].position = pair.first->getPosition();
         lines[0].color = sf::Color::Black;
@@ -41,6 +42,7 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
         lines[1].color = sf::Color::Black;
         target.draw(lines);
     }
+    */
 
     for(GraphNode* node : nodes) {
         sprite.setPosition(node->getPosition());
@@ -134,6 +136,7 @@ void Graph::generateRandom(uint16_t nodeCount) {
 
     for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
         edges.emplace_back(*world.getAssets().get(GameAssets::PATH),
+                           *world.getAssets().get(GameAssets::CUM_PATH),
                              pair.first->getPosition(),
                              pair.second->getPosition(),
                              world.getView());

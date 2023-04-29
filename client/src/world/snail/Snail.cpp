@@ -68,7 +68,6 @@ void Snail::moveLocation(GraphNode* node) {
 }
 
 void Snail::tickMovement(float delta) {
-
     movingProgress += delta * progressRate;
     if (movingProgress < 1.0f) {
         actualPosition = this->getStartNode()->getPosition() + locDiff * movingProgress;
