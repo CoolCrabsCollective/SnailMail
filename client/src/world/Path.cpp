@@ -40,7 +40,6 @@ void Path::setCumminess(float cum_level) {
         if (sprites_to_cum-- == 0)
             return;
 
-        std::cout << "Swag" << std::endl;
         s.setTexture(cumTexture, true);
     }
 }

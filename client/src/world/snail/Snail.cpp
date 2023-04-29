@@ -78,6 +78,7 @@ void Snail::tickMovement(float delta) {
         isMoving = false;
         actualPosition = getLocation();
         movingProgress = .0f;
+        return;
     }
 
     std::pair<GraphNode*, GraphNode*> key;
