@@ -17,10 +17,10 @@ public:
     GraphEntity(World& world, GraphNode* node) : Entity(world), startLocation(node) {}
 
     [[nodiscard]]
-    virtual const sf::Vector2f& getLocation() const = 0;
+    virtual const sf::Vector2f& getPosition() const = 0;
 
     [[nodiscard]]
-    const sf::Vector2f& getTargetLocation() { return targetLocation->getPosition(); }
+    const sf::Vector2f& getTargetPosition() { return targetLocation->getPosition(); }
 
     [[nodiscard]]
     GraphNode* getTargetNode() const { return targetLocation; }

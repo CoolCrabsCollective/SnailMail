@@ -16,7 +16,7 @@ class Friend : public GraphEntity {
 public:
     Friend(World& world, GraphNode* node, const sf::Texture& texture);
 
-    const sf::Vector2f& getLocation() const override;
+    const sf::Vector2f& getPosition() const;
 
     sf::Vector2f getVisualSize() const override;
 

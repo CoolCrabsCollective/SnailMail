@@ -2,14 +2,13 @@
 // Created by william on 29/04/23.
 //
 
-#include <iostream>
 #include "world/snail/Snail.h"
 #include "GameAssets.h"
 #include "world/World.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
 
-Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node) {
+Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node), pathSelArrow(world) {
     snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
     snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
 
@@ -19,7 +18,7 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity
         moveLocation(node->getNeighbors()[0]);
 }
 
-const sf::Vector2f& Snail::getLocation() const {
+const sf::Vector2f &Snail::getPosition() const {
     return actualPosition;
 }
 
@@ -59,6 +58,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     target.draw(snail_sprite);
     target.draw(snail_cap_sprite);
+    pathSelArrow.draw(target, states);
 }
 
 void Snail::tick(float delta) {
@@ -71,22 +71,15 @@ void Snail::moveLocation(GraphNode* node) {
     if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node))
         return;
 
-    std::pair<GraphNode*, GraphNode*> key;
-    if (getStartNode() < node) {
-        key = {getStartNode(), node};
-    } else {
-        key = {node, getStartNode()};
-    }
-
-    auto found = world.getGraph()->adjacencyMap.find(key);
-    if (found == world.getGraph()->adjacencyMap.end() || world.getGraph()->adjacencyMap.find(key)->second.cummed)
+    if(!world.getGraph()->areAdjacent(getStartNode(), node)
+    || world.getGraph()->getPath(getStartNode(), node).cummed)
         return;
 
     isMoving = true;
     setTargetLocation(node);
 
-    const sf::Vector2f& startLoc = getLocation();
-    const sf::Vector2f& endLoc = getTargetLocation();
+    const sf::Vector2f& startLoc = getPosition();
+    const sf::Vector2f& endLoc = getTargetPosition();
     locDiff = endLoc - startLoc;
     float angle = std::atan2(locDiff.y, locDiff.x);
     if(endLoc.x < startLoc.x)
@@ -102,30 +95,13 @@ void Snail::tickMovement(float delta) {
     movingProgress += delta * currentProgressRate;
     if (movingProgress < 1.0f) {
         actualPosition = this->getStartNode()->getPosition() + locDiff * movingProgress;
-
-        std::pair<GraphNode*, GraphNode*> key;
-        bool backdoor = false;
-        if (getStartNode() < getTargetNode()) {
-            key = {getStartNode(), getTargetNode()};
-        } else {
-            backdoor = true;
-            key = {getTargetNode(), getStartNode()};
-        }
-
-        world.getGraph()->adjacencyMap.find(key)->second.setCumminess(movingProgress, backdoor);
+        world.getGraph()->getPath(getStartNode(), getTargetNode()).setCumminess(movingProgress, getStartNode() >= getTargetNode());
     } else {
-        std::pair<GraphNode*, GraphNode*> key;
-        if (getStartNode() < getTargetNode()) {
-            key = {getStartNode(), getTargetNode()};
-        } else {
-            key = {getTargetNode(), getStartNode()};
-        }
 
-        world.getGraph()->adjacencyMap.find(key)->second.setCummed(true);
-
+        world.getGraph()->getPath(getStartNode(), getTargetNode()).setCummed(true);
         setLocation(getTargetNode());
         isMoving = false;
-        actualPosition = getLocation();
+        actualPosition = getPosition();
         movingProgress = .0f;
     }
 }

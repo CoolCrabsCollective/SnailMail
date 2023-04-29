@@ -28,7 +28,7 @@ public:
     }
 
     [[nodiscard]]
-    virtual const sf::Vector2f& getLocation() const = 0;
+    virtual const sf::Vector2f& getPosition() const = 0;
 
     [[nodiscard]]
     virtual sf::Vector2f getVisualSize() const {

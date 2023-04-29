@@ -10,7 +10,7 @@ Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture) : Grap
     sprite.setTexture(texture);
 }
 
-const sf::Vector2f& Friend::getLocation() const {
+const sf::Vector2f& Friend::getPosition() const {
     return getStartNode()->getPosition();
 }
 
@@ -23,7 +23,7 @@ ZOrder Friend::getZOrder() const {
 }
 
 void Friend::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sprite.setPosition(getLocation());
+    sprite.setPosition(getPosition());
     SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1.95f, 2.});
     SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5, 1.});
     target.draw(sprite);

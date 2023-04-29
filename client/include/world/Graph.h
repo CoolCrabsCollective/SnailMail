@@ -23,6 +23,7 @@ struct pair_hash {
 
 class Graph : public Entity {
     std::vector<GraphNode*> nodes;
+    std::unordered_map<std::pair<GraphNode*, GraphNode*>, Path, pair_hash> adjacencyMap;
 
     mutable sf::Sprite sprite;
     mutable sf::VertexArray lines;
@@ -30,13 +31,11 @@ class Graph : public Entity {
     constexpr const static float MIN_NODE_DISTANCE = 5.0f;
     constexpr const static float MAX_NODE_PATH_DISTANCE = 2.0f;
 public:
-    std::unordered_map<std::pair<GraphNode*, GraphNode*>, Path, pair_hash> adjacencyMap;
-
     Graph(World& world);
 
     void generateRandom(uint16_t nodeCount);
 
-    const sf::Vector2f& getLocation() const override;
+    const sf::Vector2f& getPosition() const override;
 
     sf::Vector2f getVisualSize() const override;
 
@@ -51,6 +50,8 @@ public:
     std::vector<GraphNode*>& getNodes();
 
     bool isConnected();
+
+    Path& getPath(GraphNode *node1, GraphNode *node2);
 };
 
 

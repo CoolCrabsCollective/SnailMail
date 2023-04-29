@@ -16,7 +16,7 @@ Graph::Graph(World& world) : Entity(world), adjacencyMap(), lines(sf::Lines, 2) 
     generateRandom(10);
 }
 
-const sf::Vector2f& Graph::getLocation() const {
+const sf::Vector2f& Graph::getPosition() const {
     return world.getView().getCenter();
 }
 
@@ -161,6 +161,12 @@ bool Graph::areAdjacent(GraphNode* node1, GraphNode* node2) {
     return node1 < node2
         ? adjacencyMap.contains(std::pair(node1, node2))
         : adjacencyMap.contains(std::pair(node2, node1));
+}
+
+Path& Graph::getPath(GraphNode *node1, GraphNode *node2) {
+    return node1 < node2
+           ? adjacencyMap.at(std::pair(node1, node2))
+           : adjacencyMap.at(std::pair(node2, node1));
 }
 
 std::vector<GraphNode*>& Graph::getNodes() {
