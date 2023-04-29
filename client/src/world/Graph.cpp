@@ -11,8 +11,6 @@
 
 Graph::Graph(World& world) : Entity(world), adjacencySet(), lines(sf::Lines, 2) {
     sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
-    SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 0.5f});
     GraphNode* node1 = new GraphNode({ 16.0f, 9.0f });
     GraphNode* node2 = new GraphNode({ 20.0f, 9.0f });
     GraphNode* node3 = new GraphNode({ 5.0f, 12.0f });
@@ -52,8 +50,8 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     for(GraphNode* node : nodes) {
         sprite.setPosition(node->getPosition());
-        SpriteUtil::setSpriteSize(sprite, { 0.5f, 0.5f });
-        SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
+        SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
+        SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 0.5f});
         target.draw(sprite);
     }
 }
