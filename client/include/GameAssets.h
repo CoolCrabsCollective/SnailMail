@@ -9,7 +9,6 @@
 #include "WIZ/asset/SoundAsset.h"
 #include "WIZ/asset/FontAsset.h"
 #include "WIZ/asset/TextureAsset.h"
-#include "FakeAsset.h"
 
 #ifndef ASSET
 #define ASSET(TYPE, NAME, CONSTRUCTOR) extern const TYPE NAME;
@@ -26,6 +25,7 @@ namespace GameAssets {
 	ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.jpg"))
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
 	ASSET(wiz::TextureAsset, LOGO, ("gfx/logo.png"))
+    ASSET(wiz::TextureAsset, PATH, ("gfx/path.png"))
 }
 
 

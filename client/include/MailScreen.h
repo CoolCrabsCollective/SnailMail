@@ -13,10 +13,12 @@
 #include "Box2D/Dynamics/b2World.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/World.h"
+#include "world/Path.h"
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener {
     std::string name = "SnailMail";
     World world;
+    Path testPath;
 
 public:
     MailScreen(wiz::Game& game);

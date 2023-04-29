@@ -10,15 +10,15 @@
 #include "world/World.h"
 
 MailScreen::MailScreen(wiz::Game& game)
-        : Screen(game), world(game.getAssets()) {
+        : Screen(game), world(game.getAssets()), testPath(*game.getAssets().get(GameAssets::PATH)) {
 }
 
 void MailScreen::tick(float delta) {
-
 }
 
 void MailScreen::render(sf::RenderTarget &target) {
     target.clear(sf::Color::Green);
+    target.draw(testPath);
 }
 
 const std::string &MailScreen::getName() const {
