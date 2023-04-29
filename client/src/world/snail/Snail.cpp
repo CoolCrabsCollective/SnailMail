@@ -60,7 +60,6 @@ void Snail::moveLocation(GraphNode* node) {
 }
 
 void Snail::tickMovement(float delta) {
-
     movingProgress += delta * progressRate;
     if (movingProgress < 1.0f) {
         actualPosition = getLocation() + locDiff * movingProgress;
@@ -71,5 +70,4 @@ void Snail::tickMovement(float delta) {
         sprite.rotate(sf::radians(0));
         movingProgress = .0f;
     }
-
 }
