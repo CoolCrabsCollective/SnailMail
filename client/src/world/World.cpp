@@ -3,12 +3,10 @@
 //
 
 #include "world/World.h"
-#include "world/snail/Snail.h"
 #include <algorithm>
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"
-#include "world/snail/Snail.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
 
@@ -19,8 +17,10 @@ World::World(wiz::AssetLoader &assets)
     graph = new Graph(*this);
     addEntity(graph);
     GraphNode* startNode = graph->getNodes()[0];
-    Snail* snail = new Snail(*this, startNode);
+    snail = new Snail(*this, startNode);
     addEntity(snail);
+
+    entitySelection = new EntitySelection(*this);
 
     background.setTexture(*assets.get(GameAssets::BACKGROUND));
     background.setPosition(view.getCenter());
@@ -29,6 +29,8 @@ World::World(wiz::AssetLoader &assets)
 }
 
 void World::tick(float delta) {
+    handleSelected();
+
     for(Entity* entity : entities) {
         if(Tickable* tickable = dynamic_cast<Tickable*>(entity)) {
             tickable->tick(delta);
@@ -109,6 +111,14 @@ void World::removeFromZOrderMap(Entity *entity) {
         zOrderMap.erase(key);
 }
 
+void World::handleSelected() {
+    GraphNode* selected = entitySelection->getSelected();
+    if (selected) {
+        snail->moveLocation(selected);
+        entitySelection->setSelected(nullptr);
+    }
+}
+
 wiz::AssetLoader& World::getAssets() const {
     return assets;
 
@@ -126,3 +136,6 @@ Graph* World::getGraph() const {
     return graph;
 }
 
+EntitySelection *World::getEntitySelection() const {
+    return entitySelection;
+}

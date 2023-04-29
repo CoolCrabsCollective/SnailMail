@@ -3,16 +3,44 @@
 //
 
 #include "input/EntitySelection.h"
+#include "input/Clickable.h"
+#include "world/World.h"
 
 EntitySelection::EntitySelection(World &world) : world(world) {
 }
 
-void EntitySelection::clickScan(sf::Vector2f clickPos) {
+GraphNode* EntitySelection::clickScan(sf::Vector2f clickPos) {
     const std::map<ZOrder, std::vector<Entity*>> zOrderMap = world.getZOrderMap();
+    Clickable* clickable = nullptr;
 
-//    for(int i = 0; i < ZOrder::ENUM_LENGTH; i++) {
-//        for(Entity* entity: zOrderMap[static_cast<ZOrder>(i)]) {
-//
+    // Iterate entities in Z order
+//    for(int i = ENUM_LENGTH - 1; i >= 0; i--) {
+//        for(Entity* entity: zOrderMap.at(static_cast<ZOrder>(i))) {
+//            clickable = dynamic_cast<Clickable*>(entity);
+//            if (clickable && clickable->hitScan(clickPos, entity->getLocation())) {
+//                selected = entity;
+//                return entity;
+//            }
 //        }
 //    }
+
+    // Iterate graph nodes
+    for (GraphNode* entity : world.getGraph()->getNodes()) {
+        clickable = dynamic_cast<Clickable*>(entity);
+        if (clickable && clickable->hitScan(clickPos, entity->getPosition())) {
+            selected = entity;
+            return entity;
+        }
+    }
+
+    selected = nullptr;
+    return nullptr;
+}
+
+GraphNode *EntitySelection::getSelected() const {
+    return selected;
+}
+
+void EntitySelection::setSelected(GraphNode *selected) {
+    EntitySelection::selected = selected;
 }
