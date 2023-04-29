@@ -25,6 +25,7 @@ namespace GameAssets {
 	ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.jpg"))
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
 	ASSET(wiz::TextureAsset, LOGO, ("gfx/logo.png"))
+    ASSET(wiz::TextureAsset, PATH, ("gfx/path.png"))
 }
 
 
