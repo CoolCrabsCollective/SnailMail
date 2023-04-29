@@ -5,13 +5,6 @@
 #ifndef LD53_CLIENT_ENTITY_H
 #define LD53_CLIENT_ENTITY_H
 
-//
-// Created by Alexander Winter on 2023-01-06.
-//
-
-#ifndef LD52_CLIENT_ENTITY_H
-#define LD52_CLIENT_ENTITY_H
-
 #include "SFML/System/Vector2.hpp"
 #include "Tickable.h"
 #include "SFML/Graphics/Drawable.hpp"
@@ -49,7 +42,5 @@ public:
         return false;
     }
 };
-
-#endif //LD52_CLIENT_ENTITY_H
 
 #endif //LD53_CLIENT_ENTITY_H
