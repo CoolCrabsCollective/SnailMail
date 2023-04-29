@@ -27,6 +27,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, GRAPH_VERTEX, ("gfx/graph_vertex.png"))
     ASSET(wiz::TextureAsset, SNAILY, ("gfx/snaily.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
+
+    // UI
+    ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))
 }
 
 
