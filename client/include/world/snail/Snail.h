@@ -9,7 +9,8 @@
 #include "world/GraphEntity.h"
 
 class Snail : public GraphEntity, public Tickable {
-    mutable sf::Sprite sprite;
+    mutable sf::Sprite snail_sprite;
+    mutable sf::Sprite snail_cap_sprite;
     bool isMoving = false;
     float movingProgress = 0.f;
     float progressRate = 2.f;
@@ -20,7 +21,7 @@ class Snail : public GraphEntity, public Tickable {
     sf::Vector2f actualPosition;
 
 public:
-    Snail(World& world, GraphNode* node);
+    Snail(World& world, GraphNode* node, sf::Color snail_color);
 
     const sf::Vector2f& getLocation() const override;
 
