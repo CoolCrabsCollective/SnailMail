@@ -11,7 +11,7 @@
 #include "MathUtil.h"
 
 Graph::Graph(World& world) : Entity(world), adjacencySet(), lines(sf::Lines, 2) {
-    sprite.setTexture(*world.getAssets().get(GameAssets::WHITE_PIXEL));
+    sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
 
     generateRandom(10);
 }
