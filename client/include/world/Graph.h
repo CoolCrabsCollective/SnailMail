@@ -8,6 +8,7 @@
 
 #include <map>
 #include <unordered_set>
+#include <string>
 #include "Entity.h"
 #include "GraphNode.h"
 #include "SFML/Graphics/Sprite.hpp"
@@ -36,6 +37,8 @@ public:
     ZOrder getZOrder() const override;
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+    std::vector<GraphNode*>& getNodes();
 };
 
 

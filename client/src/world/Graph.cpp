@@ -36,7 +36,7 @@ sf::Vector2f Graph::getVisualSize() const {
 }
 
 ZOrder Graph::getZOrder() const {
-    return ZOrder::SnailPath;
+    return ZOrder::Path_ZOrder;
 }
 
 void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -54,4 +54,8 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
         SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 0.5f});
         target.draw(sprite);
     }
+}
+
+std::vector<GraphNode *> & Graph::getNodes() {
+    return nodes;
 }

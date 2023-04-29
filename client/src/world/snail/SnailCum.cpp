@@ -20,7 +20,7 @@ sf::Vector2f SnailCum::getVisualSize() const {
 }
 
 ZOrder SnailCum::getZOrder() const {
-    return ZOrder::Goo;
+    return ZOrder::Goo_ZOrder;
 }
 
 void SnailCum::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {

@@ -48,18 +48,7 @@ void LoadingScreen::show() {
 
 	sprite.setTexture(*getGame().getAssets().get(GameAssets::WHITE_PIXEL));
 
-#ifdef OS_WINDOWS
-	message.setString("Deleting System32...");
-#endif
-#ifdef OS_UNIX
-	message.setString("sudo rm -rf /");
-#endif
-#ifdef OS_MAC
-	message.setString("sudo rm -rf /");
-#endif
-#ifdef OS_SWITCH
-	message.setString("Formatting SD card...");
-#endif
+	message.setString("Loading at a snail's pace...");
 
 	message.setFont(*getGame().getAssets().get(GameAssets::SANS_TTF));
 
