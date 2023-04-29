@@ -15,6 +15,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "Tickable.h"
 #include "SFML/Graphics/Drawable.hpp"
+#include "ZOrder.h"
 
 class World;
 
@@ -41,9 +42,7 @@ public:
         return sf::Vector2f { 1.0f, 1.0f };
     }
 
-    virtual float getZOrder() const {
-        return 0.;
-    };
+    virtual ZOrder getZOrder() const = 0;
 
     [[nodiscard]]
     virtual bool shouldBeRemoved() const {
