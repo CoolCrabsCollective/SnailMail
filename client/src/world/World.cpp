@@ -20,7 +20,12 @@ World::World(wiz::AssetLoader &assets)
     graph = new Graph(*this);
     addEntity(graph);
     GraphNode* startNode = graph->getNodes()[0];
-    snail = new Snail(*this, startNode);
+
+    sf::Color snail_color_red = sf::Color(232, 59, 59);
+    sf::Color snail_color_blue = sf::Color(77, 155, 230);
+    sf::Color snail_color_yellow = sf::Color(251, 255, 134);
+
+    snail = new Snail(*this, startNode, snail_color_yellow);
     addEntity(snail);
 
     PostOffice* postOffice = new PostOffice(*this, startNode);

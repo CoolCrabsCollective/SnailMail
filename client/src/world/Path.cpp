@@ -43,7 +43,6 @@ void Path::setCumminess(float cumLevel, bool backdoor) {
 
             sprites.at(i).setTexture(cumTexture, true);
         }
-        cummed = true;
     } else {
         for (int i = total_sprites - 1 ; i > 0 ; i--) {
             if (sprites_to_cum-- == 0)
@@ -51,6 +50,11 @@ void Path::setCumminess(float cumLevel, bool backdoor) {
 
             sprites.at(i).setTexture(cumTexture, true);
         }
-        cummed = true;
     }
+}
+
+void Path::setCummed(float cummed) {
+    this->cummed = cummed;
+    if (cummed)
+        sprites.back().setTexture(cumTexture, true);
 }
