@@ -10,7 +10,7 @@
 #include "world/World.h"
 
 MailScreen::MailScreen(wiz::Game& game)
-        : Screen(game), world(game.getAssets()), testPath(*game.getAssets().get(GameAssets::PATH)) {
+        : Screen(game), world(game.getAssets()), testPath(*game.getAssets().get(GameAssets::PATH), {10, 10}, {100, 100}) {
 }
 
 void MailScreen::tick(float delta) {

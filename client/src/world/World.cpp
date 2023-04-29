@@ -3,6 +3,7 @@
 //
 
 #include "world/World.h"
+#include "world/snail/Snail.h"
 #include <algorithm>
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"

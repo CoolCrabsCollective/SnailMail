@@ -4,11 +4,25 @@
 
 #include "world/Path.h"
 
-Path::Path(const sf::Texture& pathTexture) {
-   pathSprite = sf::Sprite(pathTexture);
-   pathSprite.setPosition({100, 100});
+Path::Path(const sf::Texture& pathTexture, sf::Vector2f p1, sf::Vector2f p2) : p1(p1), p2(p2) {
+   sf::Vector2f edge_vector = p2 - p1;
+   float edge_vector_mag = edge_vector.length();
+
+   // Draws from p1 to p2
+   sf::Vector2f edge_vector_dir = edge_vector.normalized();
+   sf::Vector2f cur_pos = p1;
+
+   while ((cur_pos - p1).length() < edge_vector_mag) {
+       sf::Sprite sprite = sf::Sprite(pathTexture);
+       sprite.setPosition(cur_pos);
+       sprites.push_back(sprite);
+
+       cur_pos = cur_pos + (edge_vector_dir*float(PATH_TEXTURE_SIZE));
+   }
 }
 
 void Path::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    target.draw(pathSprite);
+    for (sf::Sprite sprite : sprites) {
+        target.draw(sprite);
+    }
 }
