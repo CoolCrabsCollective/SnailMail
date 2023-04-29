@@ -15,6 +15,7 @@
 #include "WIZ/asset/AssetLoader.h"
 #include "Entity.h"
 #include "SFML/Graphics/View.hpp"
+#include "SFML/Graphics/Sprite.hpp"
 
 class World : public Tickable, public sf::Drawable {
 protected:
@@ -25,6 +26,7 @@ protected:
 
     void removeFromZOrderMap(Entity* entity);
 
+    mutable sf::Sprite background;
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 
