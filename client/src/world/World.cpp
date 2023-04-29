@@ -4,6 +4,7 @@
 
 #include "world/World.h"
 #include <algorithm>
+#include "SFML/Graphics.hpp"
 
 World::World(wiz::AssetLoader &assets) : assets(assets){
 
@@ -16,7 +17,10 @@ void World::tick(float delta) {
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     for(int i = 0; i < ZOrder::ENUM_LENGTH; i++)
     {
-    
+        for(Entity* entity: zOrderMap[static_cast<ZOrder>(i)])
+        {
+            target.draw(*entity);
+        }
     }
 }
 
