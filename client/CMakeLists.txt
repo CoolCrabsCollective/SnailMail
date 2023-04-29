@@ -96,8 +96,6 @@ FetchContent_GetProperties(Box2D SOURCE_DIR Box2D_SOURCE_DIR)
 
 # Other dependencies
 
-add_subdirectory(../common build)
-
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL)
 find_package(Threads REQUIRED)
@@ -122,7 +120,6 @@ add_executable(${PARENT_PROJECT_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${PARENT_PROJECT_NAME}
         WizEngine
-        ${PARENT_PROJECT_NAME}_common
         sfml-system
         sfml-window
         sfml-graphics
