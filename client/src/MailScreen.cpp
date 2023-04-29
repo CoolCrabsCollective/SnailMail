@@ -7,9 +7,10 @@
 
 #include "MailScreen.h"
 #include "GameAssets.h"
+#include "world/World.h"
 
 MailScreen::MailScreen(wiz::Game& game)
-        : Screen(game) {
+        : Screen(game), world(game.getAssets()) {
 }
 
 void MailScreen::tick(float delta) {
