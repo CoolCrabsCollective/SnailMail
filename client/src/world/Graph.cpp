@@ -2,34 +2,18 @@
 // Created by Alexander Winter on 2023-04-29.
 //
 
+#include <iostream>
 #include "world/Graph.h"
 #include "world/World.h"
 #include "GameAssets.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
-
-
+#include "MathUtil.h"
 
 Graph::Graph(World& world) : Entity(world), adjacencySet(), lines(sf::Lines, 2) {
     sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
-    GraphNode* node1 = new GraphNode({ 16.0f, 2.0f });
-    GraphNode* node2 = new GraphNode({ 20.0f, 12.0f });
-    GraphNode* node3 = new GraphNode({ 5.0f, 12.0f });
-    node1->addNeighbor(node3);
-    node2->addNeighbor(node3);
-    node3->addNeighbor(node1);
-    node3->addNeighbor(node2);
 
-    nodes.push_back(node1);
-    nodes.push_back(node2);
-    nodes.push_back(node3);
-
-    adjacencySet.insert(std::pair(node1, node3));
-    adjacencySet.insert(std::pair(node2, node3));
-
-    for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
-        edges.push_back(Path(*world.getAssets().get(GameAssets::PATH), pair.first->getPosition(), pair.second->getPosition(), world.getView()));
-    }
+    generateRandom(10);
 }
 
 const sf::Vector2f &Graph::getLocation() {
@@ -66,6 +50,91 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     }
 }
 
-std::vector<GraphNode *> & Graph::getNodes() {
+void Graph::generateRandom(uint16_t nodeCount) {
+    float minX = INFINITY, minY = INFINITY, maxX = -INFINITY, maxY = -INFINITY;
+
+    for(uint16_t i = 0; i < nodeCount; i++) {
+        float x = static_cast<float>(rand() / (RAND_MAX + 1.0)) * world.getView().getSize().x;
+        float y = static_cast<float>(rand() / (RAND_MAX + 1.0)) * world.getView().getSize().y;
+
+        bool cancel = false;
+
+        for(GraphNode* node : nodes) {
+            if((node->getPosition() - sf::Vector2f {x, y}).lengthSq() < MathUtil::pow2(MIN_NODE_DISTANCE)) {
+                cancel = true;
+            }
+        }
+
+        if(cancel) {
+            i--;
+            continue;
+        }
+
+        nodes.push_back(new GraphNode({ x, y }));
+
+        minX = std::min(x, minX);
+        minY = std::min(y, minY);
+        maxX = std::max(x, maxX);
+        maxY = std::max(y, maxY);
+
+        std::cout << "X: " << x << ", Y: " << y << std::endl;
+    }
+
+    minX -= world.getView().getSize().x * 0.1f;
+    minY -= world.getView().getSize().y * 0.1f;
+
+    maxX += world.getView().getSize().x * 0.1f;
+    maxY += world.getView().getSize().y * 0.1f;
+
+    float scaleX = world.getView().getSize().x / (maxX - minX);
+    float scaleY = world.getView().getSize().y / (maxY - minY);
+
+    for(GraphNode* node : nodes) {
+        node->setPosition((node->getPosition() - sf::Vector2f { minX, minY }).cwiseMul({ scaleX, scaleY }));
+    }
+
+
+    for(uint16_t i = 0; i < nodeCount * 2; i++) {
+        int node1Idx = rand() % nodeCount;
+        int node2Idx = rand() % nodeCount;
+
+        if(node1Idx == node2Idx) {
+            i--;
+            continue;
+        }
+
+        GraphNode* node1 = nodes[node1Idx];
+        GraphNode* node2 = nodes[node2Idx];
+
+        if(areAdjacent(node1, node2)) {
+            i--;
+            continue;
+        }
+
+        node1->addNeighbor(node2);
+        node2->addNeighbor(node1);
+
+        if(node1 < node2)
+            adjacencySet.insert(std::pair(node1, node2));
+        else
+            adjacencySet.insert(std::pair(node2, node1));
+    }
+
+
+    for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
+        edges.emplace_back(*world.getAssets().get(GameAssets::PATH),
+                             pair.first->getPosition(),
+                             pair.second->getPosition(),
+                             world.getView());
+    }
+}
+
+bool Graph::areAdjacent(GraphNode* node1, GraphNode* node2) {
+    return node1 < node2
+        ? adjacencySet.contains(std::pair(node1, node2))
+        : adjacencySet.contains(std::pair(node2, node1));
+}
+
+std::vector<GraphNode*>& Graph::getNodes() {
     return nodes;
 }

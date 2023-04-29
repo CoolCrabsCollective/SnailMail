@@ -21,7 +21,9 @@ public:
     [[nodiscard]]
     const sf::Vector2f& getPosition() const;
 
-    void addNeighbor(GraphNode *node);
+    void addNeighbor(GraphNode* node);
+
+    void setPosition(const sf::Vector2f &position);
 };
 
 

@@ -29,14 +29,20 @@ class Graph : public Entity {
 
     mutable sf::Sprite sprite;
     mutable sf::VertexArray lines;
+
+    constexpr const static float MIN_NODE_DISTANCE = 5.0f;
 public:
     Graph(World& world);
+
+    void generateRandom(uint16_t nodeCount);
 
     const sf::Vector2f& getLocation() override;
 
     sf::Vector2f getVisualSize() const override;
 
     ZOrder getZOrder() const override;
+
+    bool areAdjacent(GraphNode* node1, GraphNode* node2);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
