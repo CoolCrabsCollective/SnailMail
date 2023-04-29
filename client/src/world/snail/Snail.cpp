@@ -13,7 +13,8 @@ Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
     sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
 
     actualPosition = node->getPosition();
-    moveLocation(node->getNeighbors()[0]);
+    if(!node->getNeighbors().empty())
+        moveLocation(node->getNeighbors()[0]);
 }
 
 const sf::Vector2f &Snail::getLocation() {
@@ -68,7 +69,8 @@ void Snail::moveLocation(GraphNode* node) {
 }
 
 void Snail::tickMovement(float delta) {
-    movingProgress += delta * progressRate;
+    currentProgressRate = progressRate / locDiff.length();
+    movingProgress += delta * currentProgressRate;
     if (movingProgress < 1.0f) {
         actualPosition = this->getStartNode()->getPosition() + locDiff * movingProgress;
     } else {

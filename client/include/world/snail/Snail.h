@@ -12,7 +12,8 @@ class Snail : public GraphEntity, public Tickable {
     mutable sf::Sprite sprite;
     bool isMoving = false;
     float movingProgress = 0.f;
-    float progressRate = .1f;
+    float progressRate = 2.f;
+    float currentProgressRate = 0;
 
     sf::Vector2f locDiff;
 
