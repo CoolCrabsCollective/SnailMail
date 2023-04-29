@@ -6,15 +6,17 @@
 #include "GameAssets.h"
 #include "world/World.h"
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "SpriteUtil.h"
 
 Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
     sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
 
     actualPosition = node->getPosition();
+    moveLocation(node->getNeighbors()[0]);
 }
 
 const sf::Vector2f &Snail::getLocation() {
-    return getLocation();
+    return actualPosition;
 }
 
 sf::Vector2f Snail::getVisualSize() const {
@@ -22,12 +24,19 @@ sf::Vector2f Snail::getVisualSize() const {
 }
 
 ZOrder Snail::getZOrder() const {
-    return ZOrder::Snail;
+    return ZOrder::Snail_ZOrder;
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     sprite.setPosition(actualPosition);
-    sprite.setScale({1.0f / 160.0f, 1.0f / 90.0f});
+    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
+    float scaleX = sprite.getScale().x;
+    float scaleY = sprite.getScale().y;
+    if(locDiff.x >= 0)
+        sprite.setScale(sf::Vector2f {std::abs(scaleX), std::abs(scaleY)});
+    else
+        sprite.setScale(sf::Vector2f {-std::abs(scaleX), std::abs(scaleY)});
+    SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 1.f});
     target.draw(sprite);
 }
 
@@ -43,8 +52,10 @@ void Snail::moveLocation(GraphNode* node) {
 
     const sf::Vector2f& startLoc = getLocation();
     const sf::Vector2f& endLoc = getTargetLocation();
-
     locDiff = endLoc - startLoc;
+
+    sprite.rotate(sf::radians(M_PI_2 - std::atan2(locDiff.y, locDiff.x)));
+
 }
 
 void Snail::tickMovement(float delta) {
@@ -56,6 +67,7 @@ void Snail::tickMovement(float delta) {
         setLocation(getTargetNode());
         isMoving = false;
         actualPosition = getLocation();
+        sprite.rotate(sf::radians(0));
         movingProgress = .0f;
     }
 }

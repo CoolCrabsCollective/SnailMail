@@ -20,3 +20,7 @@ const sf::Vector2f& GraphNode::getPosition() const {
 void GraphNode::addNeighbor(GraphNode* node) {
     neighbors.push_back(node);
 }
+
+void GraphNode::setPosition(const sf::Vector2f& position) {
+    GraphNode::position = position;
+}

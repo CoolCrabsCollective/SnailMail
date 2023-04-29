@@ -7,12 +7,17 @@
 #include <algorithm>
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"
+#include "world/snail/Snail.h"
 
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
       view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
 
-    addEntity(new Graph(*this));
+    Graph* graph = new Graph(*this);
+    addEntity(graph);
+    GraphNode* startNode = graph->getNodes()[0];
+    Snail* snail = new Snail(*this, startNode);
+    addEntity(snail);
 }
 
 void World::tick(float delta) {
