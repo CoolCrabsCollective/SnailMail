@@ -21,12 +21,10 @@ class World;
 class Entity : public Tickable, public sf::Drawable {
 protected:
     World& world;
-    sf::Vector2f location;
 public:
 
-    Entity(World& world,
-           sf::Vector2f location)
-            : world(world), location(location) {}
+    Entity(World& world)
+            : world(world) {}
 
     virtual ~Entity() = default;
 
@@ -36,9 +34,7 @@ public:
     }
 
     [[nodiscard]]
-    const sf::Vector2f& getLocation() const {
-        return location;
-    }
+    virtual const sf::Vector2f& getLocation() = 0;
 
     [[nodiscard]]
     virtual sf::Vector2f getVisualSize() const {
