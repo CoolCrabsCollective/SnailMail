@@ -5,13 +5,21 @@
 #include "world/World.h"
 #include <algorithm>
 #include "SFML/Graphics.hpp"
+#include "world/Graph.h"
 
-World::World(wiz::AssetLoader &assets) : assets(assets){
+World::World(wiz::AssetLoader &assets)
+    : assets(assets),
+      view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
 
+    addEntity(new Graph(*this));
 }
 
 void World::tick(float delta) {
-
+    for(Entity* entity : entities) {
+        if(Tickable* tickable = dynamic_cast<Tickable*>(entity)) {
+            tickable->tick(delta);
+        }
+    }
     removeTrashToBeDeleted();
     for(Entity* entity : toAdd) {
         entities.push_back(entity);
@@ -27,17 +35,22 @@ void World::tick(float delta) {
 }
 
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    for(int i = 0; i < ZOrder::ENUM_LENGTH; i++)
-    {
-        for(Entity* entity: zOrderMap[static_cast<ZOrder>(i)])
-        {
+
+    target.setView(view);
+    for(int i = 0; i < ZOrder::ENUM_LENGTH; i++) {
+        for(Entity* entity: zOrderMap[static_cast<ZOrder>(i)]) {
             target.draw(*entity);
         }
     }
 }
 
-void World::addEntity(Entity *entity) {
+void World::addEntity(Entity* entity) {
     toAdd.push_back(entity);
+
+    if(!zOrderMap.contains(entity->getZOrder()))
+        zOrderMap[entity->getZOrder()] = {entity};
+    else
+        zOrderMap[entity->getZOrder()].insert(zOrderMap[entity->getZOrder()].begin(), entity);
 }
 
 const std::vector<Entity *> &World::getEntities() const {
@@ -80,20 +93,11 @@ void World::removeFromZOrderMap(Entity *entity) {
         zOrderMap.erase(key);
 }
 
-void World::initZOrderMap() {
-    zOrderMap.clear();
-
-    for (Entity *entity: entities) {
-        ZOrder key = entity->getZOrder();
-
-        if (!zOrderMap.contains(key))
-            zOrderMap[key] = {entity};
-        else
-            zOrderMap[key].insert(zOrderMap[key].begin(), entity);
-    }
-}
-
 wiz::AssetLoader& World::getAssets() const {
     return assets;
 
+}
+
+const sf::View& World::getView() const {
+    return view;
 }

@@ -6,7 +6,7 @@
 #define LD53_CLIENT_ZORDER_H
 
 enum ZOrder {
-    Graph,
+    SnailPath,
     Goo,
     PostOffice,
     Snail,

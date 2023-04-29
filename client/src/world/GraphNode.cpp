@@ -4,6 +4,11 @@
 
 #include "world/GraphNode.h"
 
+GraphNode::GraphNode(sf::Vector2f position)
+    : position(position) {
+
+}
+
 const std::vector<GraphNode*>& GraphNode::getNeighbors() const {
     return neighbors;
 }
