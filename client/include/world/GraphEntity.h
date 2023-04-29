@@ -9,7 +9,7 @@
 #include "GraphNode.h"
 
 class GraphEntity : public Entity {
-private:
+protected:
     GraphNode* startLocation = nullptr;
     GraphNode* targetLocation = nullptr;
 
@@ -17,16 +17,16 @@ public:
     GraphEntity(World& world, GraphNode* node) : Entity(world), startLocation(node) {}
 
     [[nodiscard]]
-    virtual const sf::Vector2f& getLocation() = 0;
+    virtual const sf::Vector2f& getLocation() const = 0;
 
     [[nodiscard]]
     const sf::Vector2f& getTargetLocation() { return targetLocation->getPosition(); }
 
     [[nodiscard]]
-    GraphNode* getTargetNode() { return targetLocation; }
+    GraphNode* getTargetNode() const { return targetLocation; }
 
     [[nodiscard]]
-    GraphNode* getStartNode() { return startLocation; }
+    GraphNode* getStartNode() const { return startLocation; }
 
     void setLocation(GraphNode *location) {
         GraphEntity::startLocation = location;

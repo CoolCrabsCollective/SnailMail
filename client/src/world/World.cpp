@@ -8,7 +8,7 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"
-#include "world/snail/Snail.h"
+#include "world/friends/LadyBug.h"
 
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
@@ -19,6 +19,8 @@ World::World(wiz::AssetLoader &assets)
     GraphNode* startNode = graph->getNodes()[0];
     Snail* snail = new Snail(*this, startNode);
     addEntity(snail);
+    LadyBug* ladyBug = new LadyBug(*this, graph->getNodes()[graph->getNodes().size() - 1]);
+    addEntity(ladyBug);
 }
 
 void World::tick(float delta) {
