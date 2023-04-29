@@ -30,6 +30,7 @@ class Graph : public Entity {
     mutable sf::VertexArray lines;
 
     constexpr const static float MIN_NODE_DISTANCE = 5.0f;
+    constexpr const static float MAX_NODE_PATH_DISTANCE = 2.0f;
 public:
     Graph(World& world);
 

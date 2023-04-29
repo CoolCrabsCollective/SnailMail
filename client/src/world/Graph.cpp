@@ -44,6 +44,12 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 }
 
 void Graph::generateRandom(uint16_t nodeCount) {
+    for(GraphNode* node : nodes)
+        delete node;
+
+    nodes.clear();
+    adjacencyMap.clear();
+
     float minX = INFINITY, minY = INFINITY, maxX = -INFINITY, maxY = -INFINITY;
 
     for(uint16_t i = 0; i < nodeCount; i++) {
@@ -89,8 +95,8 @@ void Graph::generateRandom(uint16_t nodeCount) {
     int it = 0;
     do {
         it++;
-        int node1Idx = rand() % nodeCount;
-        int node2Idx = rand() % nodeCount;
+        int node1Idx = rand() % nodes.size();
+        int node2Idx = rand() % nodes.size();
 
         if(node1Idx == node2Idx) {
             continue;
@@ -106,13 +112,30 @@ void Graph::generateRandom(uint16_t nodeCount) {
         bool cancel = false;
         for(const auto& entry : adjacencyMap) {
             const std::pair<GraphNode*, GraphNode*>& pair = entry.first;
-            if(MathUtil::segmentsIntersect((pair.first->getPosition() + pair.second->getPosition() * 0.1f) / 1.1f,
-                                           (pair.second->getPosition() + pair.first->getPosition() * 0.1f) / 1.1f,
-                                           (node1->getPosition() + node2->getPosition() * 0.1f) / 1.1f,
-                                           (node2->getPosition() + node2->getPosition() * 0.1f) / 1.1f)) {
+            if(MathUtil::segmentsIntersect((pair.first->getPosition() * 0.9f + pair.second->getPosition() * 0.1f),
+                                           (pair.second->getPosition() * 0.9f + pair.first->getPosition() * 0.1f),
+                                           (node1->getPosition() * 0.9f + node2->getPosition() * 0.1f),
+                                           (node2->getPosition() * 0.9f + node1->getPosition() * 0.1f))) {
                 cancel = true;
+                break;
             }
         }
+
+        if(cancel)
+            continue;
+
+        for(GraphNode* node : nodes) {
+            if(node == node1 || node == node2)
+                continue;
+
+            if(MathUtil::pointSegmentDistanceSquared(node->getPosition(),
+                                                     node1->getPosition(),
+                                                     node2->getPosition()) < MathUtil::pow2(MAX_NODE_PATH_DISTANCE)) {
+                cancel = true;
+                break;
+            }
+        }
+
         if(cancel)
             continue;
 
@@ -126,7 +149,12 @@ void Graph::generateRandom(uint16_t nodeCount) {
             final_pair = std::pair(node2, node1);
 
         adjacencyMap.emplace(final_pair, Path(*world.getAssets().get(GameAssets::PATH), *world.getAssets().get(GameAssets::CUM_PATH), final_pair.first->getPosition(), final_pair.second->getPosition(), world.getView()));
-    } while((hasLeaf() || !isConnected()) && it < 500);
+    } while(it < 500000);
+
+    if(!isConnected() || hasLeaf()) {
+        generateRandom(nodeCount);
+        return;
+    }
 }
 
 bool Graph::areAdjacent(GraphNode* node1, GraphNode* node2) {
