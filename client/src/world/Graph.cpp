@@ -95,13 +95,13 @@ void Graph::generateRandom(uint16_t nodeCount) {
         node->setPosition((node->getPosition() - sf::Vector2f { minX, minY }).cwiseMul({ scaleX, scaleY }));
     }
 
-
-    for(uint16_t i = 0; i < nodeCount * 2; i++) {
+    int it = 0;
+    do {
+        it++;
         int node1Idx = rand() % nodeCount;
         int node2Idx = rand() % nodeCount;
 
         if(node1Idx == node2Idx) {
-            i--;
             continue;
         }
 
@@ -109,9 +109,20 @@ void Graph::generateRandom(uint16_t nodeCount) {
         GraphNode* node2 = nodes[node2Idx];
 
         if(areAdjacent(node1, node2)) {
-            i--;
             continue;
         }
+
+        bool cancel = false;
+        for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
+            if(MathUtil::segmentsIntersect((pair.first->getPosition() + pair.second->getPosition() * 0.1f) / 1.1f,
+                                           (pair.second->getPosition() + pair.first->getPosition() * 0.1f) / 1.1f,
+                                           (node1->getPosition() + node2->getPosition() * 0.1f) / 1.1f,
+                                           (node2->getPosition() + node2->getPosition() * 0.1f) / 1.1f)) {
+                cancel = true;
+            }
+        }
+        if(cancel)
+            continue;
 
         node1->addNeighbor(node2);
         node2->addNeighbor(node1);
@@ -120,7 +131,7 @@ void Graph::generateRandom(uint16_t nodeCount) {
             adjacencySet.insert(std::pair(node1, node2));
         else
             adjacencySet.insert(std::pair(node2, node1));
-    }
+    } while((hasLeaf() || !isConnected()) && it < 500);
 
 
     for(const std::pair<GraphNode*, GraphNode*>& pair : adjacencySet) {
@@ -139,4 +150,33 @@ bool Graph::areAdjacent(GraphNode* node1, GraphNode* node2) {
 
 std::vector<GraphNode*>& Graph::getNodes() {
     return nodes;
+}
+
+bool Graph::hasLeaf() {
+    for(GraphNode* node : nodes) {
+        if(node->getNeighbors().size() <= 1)
+            return true;
+    }
+    return false;
+}
+
+bool Graph::isConnected() {
+    if(nodes.empty())
+        return true;
+
+    std::unordered_set<GraphNode*> visited;
+    std::vector<GraphNode*> toProcess { nodes[0] };
+
+    while(!toProcess.empty()) {
+        GraphNode* node = toProcess[toProcess.size() - 1];
+        toProcess.erase(toProcess.end() - 1);
+        visited.insert(node);
+        for(GraphNode* neighbor : node->getNeighbors()) {
+            if(!visited.contains(neighbor)) {
+                toProcess.push_back(neighbor);
+            }
+        }
+    }
+
+    return visited.size() == nodes.size();
 }

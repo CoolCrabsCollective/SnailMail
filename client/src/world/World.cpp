@@ -5,6 +5,7 @@
 #include "world/World.h"
 #include "world/snail/Snail.h"
 #include <algorithm>
+#include <iostream>
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"
 #include "world/snail/Snail.h"
@@ -107,3 +108,8 @@ wiz::AssetLoader& World::getAssets() const {
 const sf::View& World::getView() const {
     return view;
 }
+
+const std::map<ZOrder, std::vector<Entity *>> &World::getZOrderMap() const {
+    return zOrderMap;
+}
+

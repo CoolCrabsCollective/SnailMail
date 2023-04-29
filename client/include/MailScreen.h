@@ -15,7 +15,7 @@
 #include "world/World.h"
 #include "world/Path.h"
 
-class MailScreen : public wiz::Screen, public wiz::WindowListener {
+class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SnailMail";
     World world;
 
@@ -33,6 +33,10 @@ public:
     const std::string& getName() const override;
 
     void windowClosed() override;
+
+    void mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseButtonEvent) override;
+
+    void touchBegan(const sf::Event::TouchEvent &touchScreenEvent) override;
 };
 
 #endif //LD53_CLIENT_MAILSCREEN_H

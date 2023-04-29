@@ -14,6 +14,7 @@ MailScreen::MailScreen(wiz::Game& game)
 }
 
 void MailScreen::tick(float delta) {
+    world.tick(delta / 1000.f);
 }
 
 void MailScreen::render(sf::RenderTarget &target) {
@@ -32,8 +33,20 @@ void MailScreen::windowClosed() {
 
 void MailScreen::show() {
     getGame().addWindowListener(this);
+    getGame().addInputListener(this);
 }
 
 void MailScreen::hide() {
     getGame().removeWindowListener(this);
+    getGame().removeInputListener(this);
+}
+
+void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
+    sf::Vector2f clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
+                                                            world.getView());
+
+}
+
+void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {
+    sf::Vector2f touchVector = getWindow().mapPixelToCoords(sf::Vector2i(touchScreenEvent.x, touchScreenEvent.y), world.getView());
 }

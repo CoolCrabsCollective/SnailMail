@@ -8,7 +8,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/GraphEntity.h"
 
-class Snail : public GraphEntity {
+class Snail : public GraphEntity, public Tickable {
     mutable sf::Sprite sprite;
     bool isMoving = false;
     float movingProgress = 0.f;
