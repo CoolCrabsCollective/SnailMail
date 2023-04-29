@@ -51,6 +51,7 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     for(GraphNode* node : nodes) {
         sprite.setPosition(node->getPosition());
         SpriteUtil::setSpriteSize(sprite, { 0.5f, 0.5f });
+        SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
         target.draw(sprite);
     }
 }
