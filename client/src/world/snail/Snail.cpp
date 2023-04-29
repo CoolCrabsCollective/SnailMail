@@ -17,7 +17,7 @@ Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
         moveLocation(node->getNeighbors()[0]);
 }
 
-const sf::Vector2f &Snail::getLocation() {
+const sf::Vector2f& Snail::getLocation() const {
     return actualPosition;
 }
 
@@ -55,6 +55,17 @@ void Snail::tick(float delta) {
 
 void Snail::moveLocation(GraphNode* node) {
     if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node))
+        return;
+
+    std::pair<GraphNode*, GraphNode*> key;
+    if (getStartNode() < node) {
+        key = {getStartNode(), node};
+    } else {
+        key = {node, getStartNode()};
+    }
+
+    auto found = world.getGraph()->adjacencyMap.find(key);
+    if (found == world.getGraph()->adjacencyMap.end() || world.getGraph()->adjacencyMap.find(key)->second.cummed)
         return;
 
     isMoving = true;

@@ -7,8 +7,10 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "world/Graph.h"
+#include "world/friends/LadyBug.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
+
 
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
@@ -19,6 +21,9 @@ World::World(wiz::AssetLoader &assets)
     GraphNode* startNode = graph->getNodes()[0];
     snail = new Snail(*this, startNode);
     addEntity(snail);
+
+    LadyBug* ladyBug = new LadyBug(*this, graph->getNodes()[graph->getNodes().size() - 1]);
+    addEntity(ladyBug);
 
     entitySelection = new EntitySelection(*this);
 
