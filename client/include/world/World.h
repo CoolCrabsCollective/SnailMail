@@ -24,7 +24,6 @@ protected:
     const sf::View view;
 
     void removeFromZOrderMap(Entity* entity);
-    void initZOrderMap();
 
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
