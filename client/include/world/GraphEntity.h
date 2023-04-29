@@ -10,14 +10,14 @@
 
 class GraphEntity : public Entity {
 private:
-    GraphNode* location = nullptr;
+    GraphNode* startLocation = nullptr;
     GraphNode* targetLocation = nullptr;
 
 public:
-    GraphEntity(World& world, GraphNode* node) : Entity(world), location(node) {}
+    GraphEntity(World& world, GraphNode* node) : Entity(world), startLocation(node) {}
 
     [[nodiscard]]
-    const sf::Vector2f& getLocation() { return location->getPosition(); }
+    virtual const sf::Vector2f& getLocation() = 0;
 
     [[nodiscard]]
     const sf::Vector2f& getTargetLocation() { return targetLocation->getPosition(); }
@@ -25,8 +25,11 @@ public:
     [[nodiscard]]
     GraphNode* getTargetNode() { return targetLocation; }
 
+    [[nodiscard]]
+    GraphNode* getStartNode() { return startLocation; }
+
     void setLocation(GraphNode *location) {
-        GraphEntity::location = location;
+        GraphEntity::startLocation = location;
     }
 
     void setTargetLocation(GraphNode *targetLocation) {

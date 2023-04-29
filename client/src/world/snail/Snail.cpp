@@ -38,6 +38,11 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     else
         sprite.setScale(sf::Vector2f {-std::abs(scaleX), std::abs(scaleY)});
     SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 1.f});
+    if(!isMoving)
+    {
+        sprite.setRotation(sf::radians(0));
+    }
+
     target.draw(sprite);
 }
 
@@ -54,20 +59,22 @@ void Snail::moveLocation(GraphNode* node) {
     const sf::Vector2f& startLoc = getLocation();
     const sf::Vector2f& endLoc = getTargetLocation();
     locDiff = endLoc - startLoc;
-
-    sprite.rotate(sf::radians(M_PI_2 - std::atan2(locDiff.y, locDiff.x)));
-
+    float angle = std::atan2(locDiff.y, locDiff.x);
+    if(endLoc.x < startLoc.x)
+    {
+        angle += M_PI;
+    }
+    sprite.setRotation(sf::radians(angle));
 }
 
 void Snail::tickMovement(float delta) {
     movingProgress += delta * progressRate;
     if (movingProgress < 1.0f) {
-        actualPosition = getLocation() + locDiff * movingProgress;
+        actualPosition = this->getStartNode()->getPosition() + locDiff * movingProgress;
     } else {
         setLocation(getTargetNode());
         isMoving = false;
         actualPosition = getLocation();
-        sprite.rotate(sf::radians(0));
         movingProgress = .0f;
     }
 }
