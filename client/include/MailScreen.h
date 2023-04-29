@@ -18,7 +18,6 @@
 class MailScreen : public wiz::Screen, public wiz::WindowListener {
     std::string name = "SnailMail";
     World world;
-    Path testPath;
 
 public:
     MailScreen(wiz::Game& game);
