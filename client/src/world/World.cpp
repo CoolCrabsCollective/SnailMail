@@ -12,6 +12,18 @@ World::World(wiz::AssetLoader &assets) : assets(assets){
 
 void World::tick(float delta) {
 
+    removeTrashToBeDeleted();
+    for(Entity* entity : toAdd) {
+        entities.push_back(entity);
+
+        ZOrder key = entity->getZOrder();
+
+        if(!zOrderMap.contains(key))
+            zOrderMap[key] = { entity };
+        else
+            zOrderMap[key].insert(zOrderMap[key].begin(), entity);
+    }
+    toAdd.clear();
 }
 
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -32,7 +44,7 @@ const std::vector<Entity *> &World::getEntities() const {
     return entities;
 }
 
-void World::removeEntities() {
+void World::removeTrashToBeDeleted() {
     size_t i = 0;
     while (i < this->entities.size()) {
         Entity* entity = this->entities.at(i);

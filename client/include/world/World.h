@@ -20,6 +20,8 @@ protected:
     wiz::AssetLoader& assets;
     std::vector<Entity*> entities, toAdd;
     mutable std::map<ZOrder, std::vector<Entity*>> zOrderMap;
+    void removeFromZOrderMap(Entity* entity);
+    void initZOrderMap();
 
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
@@ -36,11 +38,10 @@ public:
 
     void addEntity(Entity* entity);
 
-    void initZOrderMap();
 
-    void removeEntities();
+    void removeTrashToBeDeleted();
 
-    void removeFromZOrderMap(Entity* entity);
+
 
     bool gameover = false; // why is this public
     bool paused = false; // why not scrub
