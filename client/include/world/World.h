@@ -43,6 +43,8 @@ public:
     void removeTrashToBeDeleted();
 
     const sf::View& getView() const;
+
+    const std::map<ZOrder, std::vector<Entity *>> &getZOrderMap() const;
 };
 
 
