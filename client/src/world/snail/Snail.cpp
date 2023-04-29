@@ -82,11 +82,13 @@ void Snail::tickMovement(float delta) {
     }
 
     std::pair<GraphNode*, GraphNode*> key;
+    bool backdoor = false;
     if (getStartNode() < getTargetNode()) {
         key = {getStartNode(), getTargetNode()};
     } else {
+        backdoor = true;
         key = {getTargetNode(), getStartNode()};
     }
 
-    world.getGraph()->adjacencyMap.find(key)->second.setCumminess(movingProgress);
+    world.getGraph()->adjacencyMap.find(key)->second.setCumminess(movingProgress, backdoor);
 }

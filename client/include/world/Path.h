@@ -21,7 +21,7 @@ public:
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
-    void setCumminess(float cum_level);
+    void setCumminess(float cumLevel, bool backdoor);
 };
 
 

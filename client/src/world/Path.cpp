@@ -32,14 +32,24 @@ void Path::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
     }
 }
 
-void Path::setCumminess(float cum_level) {
+void Path::setCumminess(float cumLevel, bool backdoor) {
     unsigned int total_sprites = sprites.size();
-    unsigned int sprites_to_cum = total_sprites * cum_level;
+    unsigned int sprites_to_cum = total_sprites * cumLevel;
 
-    for (sf::Sprite& s : sprites) {
-        if (sprites_to_cum-- == 0)
-            return;
+    if (!backdoor) {
+        for (int i = 0 ; i < total_sprites ; i++) {
+            if (sprites_to_cum-- == 0)
+                return;
 
-        s.setTexture(cumTexture, true);
+            sprites.at(i).setTexture(cumTexture, true);
+        }
+    } else {
+        for (int i = total_sprites - 1 ; i > 0 ; i--) {
+            if (sprites_to_cum-- == 0)
+                return;
+
+            sprites.at(i).setTexture(cumTexture, true);
+        }
+
     }
 }
