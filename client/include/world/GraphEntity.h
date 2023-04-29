@@ -22,6 +22,9 @@ public:
     [[nodiscard]]
     const sf::Vector2f& getTargetLocation() { return targetLocation->getPosition(); }
 
+    [[nodiscard]]
+    GraphNode* getTargetNode() { return targetLocation; }
+
     void setLocation(GraphNode *location) {
         GraphEntity::location = location;
     }

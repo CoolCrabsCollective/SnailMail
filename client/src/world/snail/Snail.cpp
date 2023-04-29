@@ -35,11 +35,10 @@ void Snail::tick(float delta) {
     if (isMoving) {
         tickMovement(isMoving);
     }
-
 }
 
 void Snail::moveLocation(GraphNode* node) {
-    isMoving = false;
+    isMoving = true;
     setTargetLocation(node);
 
     const sf::Vector2f& startLoc = getLocation();
@@ -52,8 +51,11 @@ void Snail::tickMovement(float delta) {
     movingProgress += delta*progressRate;
 
     if (movingProgress < 1.0f) {
-        actualPosition = locDiff * movingProgress;
+        actualPosition = getLocation() + locDiff * movingProgress;
+    } else {
+        setLocation(getTargetNode());
+        isMoving = false;
+        actualPosition = getLocation();
+        movingProgress = .0f;
     }
-
-
 }
