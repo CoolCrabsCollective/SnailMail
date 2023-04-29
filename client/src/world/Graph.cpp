@@ -8,7 +8,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 
 Graph::Graph(World& world) : Entity(world), adjacencySet() {
-    sprite.setTexture(*world.getAssets().get(GameAssets::WHITE_PIXEL));
+    sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
 
     nodes.push_back(new GraphNode({ 16.0f, 9.0f }));
     nodes.push_back(new GraphNode({ 20.0f, 9.0f }));

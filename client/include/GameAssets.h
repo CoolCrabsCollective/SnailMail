@@ -23,6 +23,7 @@ namespace GameAssets {
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
     ASSET(wiz::TextureAsset, PATH, ("gfx/path.png"))
+    ASSET(wiz::TextureAsset, GRAPH_VERTEX, ("gfx/graph_vertex.png"))
 }
 
 
