@@ -6,10 +6,10 @@
 #define LD53_CLIENT_ZORDER_H
 
 enum ZOrder {
-    SnailPath,
-    Goo,
-    PostOffice,
-    Snail,
+    Path_ZOrder,
+    Goo_ZOrder,
+    PostOffice_ZOrder,
+    Snail_ZOrder,
     ENUM_LENGTH
 };
 #endif //LD53_CLIENT_ZORDER_H

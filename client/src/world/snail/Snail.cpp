@@ -6,6 +6,7 @@
 #include "GameAssets.h"
 #include "world/World.h"
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "SpriteUtil.h"
 
 Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
     sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
@@ -22,12 +23,13 @@ sf::Vector2f Snail::getVisualSize() const {
 }
 
 ZOrder Snail::getZOrder() const {
-    return ZOrder::Snail;
+    return ZOrder::Snail_ZOrder;
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     sprite.setPosition(actualPosition);
-    sprite.setScale({1.0f / 160.0f, 1.0f / 90.0f});
+    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
+    SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 1.f});
     target.draw(sprite);
 }
 

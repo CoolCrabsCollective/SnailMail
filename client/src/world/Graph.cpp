@@ -25,7 +25,7 @@ sf::Vector2f Graph::getVisualSize() const {
 }
 
 ZOrder Graph::getZOrder() const {
-    return ZOrder::SnailPath;
+    return ZOrder::Path_ZOrder;
 }
 
 void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -133,4 +133,8 @@ bool Graph::areAdjacent(GraphNode* node1, GraphNode* node2) {
     return node1 < node2
         ? adjacencySet.contains(std::pair(node1, node2))
         : adjacencySet.contains(std::pair(node2, node1));
+}
+
+std::vector<GraphNode*>& Graph::getNodes() {
+    return nodes;
 }
