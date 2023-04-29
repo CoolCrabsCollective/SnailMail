@@ -29,6 +29,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
     ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/lady_bug.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
+    ASSET(wiz::TextureAsset, POST_OFFICE, ("gfx/post_office.png"))
 
     // UI
     ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))

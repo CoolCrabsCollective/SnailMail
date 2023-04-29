@@ -26,7 +26,7 @@ class Snail : public GraphEntity, public Tickable {
 public:
     Snail(World& world, GraphNode* node, sf::Color snail_color);
 
-    const sf::Vector2f& getLocation() const override;
+    const sf::Vector2f &getPosition() const override;
 
     sf::Vector2f getVisualSize() const override;
 

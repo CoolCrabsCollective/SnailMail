@@ -10,6 +10,7 @@
 #include "world/friends/LadyBug.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
+#include "world/PostOffice.h"
 
 
 World::World(wiz::AssetLoader &assets)
@@ -26,6 +27,9 @@ World::World(wiz::AssetLoader &assets)
 
     snail = new Snail(*this, startNode, snail_color_yellow);
     addEntity(snail);
+
+    PostOffice* postOffice = new PostOffice(*this, startNode);
+    addEntity(postOffice);
 
     LadyBug* ladyBug = new LadyBug(*this, graph->getNodes()[graph->getNodes().size() - 1]);
     addEntity(ladyBug);
