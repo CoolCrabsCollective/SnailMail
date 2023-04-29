@@ -11,7 +11,7 @@ SnailCum::SnailCum(World& world) : Entity(world) {
     sprite.setTexture(*world.getAssets().get(GameAssets::WHITE_PIXEL));
 }
 
-const sf::Vector2f &SnailCum::getLocation() {
+const sf::Vector2f &SnailCum::getPosition() const {
     return { 0.0f, 0.0f };
 }
 

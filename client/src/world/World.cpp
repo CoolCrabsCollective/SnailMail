@@ -11,6 +11,7 @@
 #include "world/snail/Snail.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
+#include "world/PostOffice.h"
 
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
@@ -21,6 +22,9 @@ World::World(wiz::AssetLoader &assets)
     GraphNode* startNode = graph->getNodes()[0];
     Snail* snail = new Snail(*this, startNode);
     addEntity(snail);
+
+    PostOffice* postOffice = new PostOffice(*this, startNode);
+    addEntity(postOffice);
 
     background.setTexture(*assets.get(GameAssets::BACKGROUND));
     background.setPosition(view.getCenter());

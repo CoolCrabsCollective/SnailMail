@@ -36,7 +36,7 @@ public:
 
     void generateRandom(uint16_t nodeCount);
 
-    const sf::Vector2f& getLocation() override;
+    const sf::Vector2f& getPosition() const override;
 
     sf::Vector2f getVisualSize() const override;
 

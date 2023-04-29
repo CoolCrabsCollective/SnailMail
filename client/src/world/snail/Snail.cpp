@@ -17,7 +17,7 @@ Snail::Snail(World& world, GraphNode* node) : GraphEntity(world, node) {
         moveLocation(node->getNeighbors()[0]);
 }
 
-const sf::Vector2f &Snail::getLocation() {
+const sf::Vector2f &Snail::getPosition() const {
     return actualPosition;
 }
 
@@ -57,8 +57,8 @@ void Snail::moveLocation(GraphNode* node) {
     isMoving = true;
     setTargetLocation(node);
 
-    const sf::Vector2f& startLoc = getLocation();
-    const sf::Vector2f& endLoc = getTargetLocation();
+    const sf::Vector2f& startLoc = getPosition();
+    const sf::Vector2f& endLoc = getTargetPosition();
     locDiff = endLoc - startLoc;
     float angle = std::atan2(locDiff.y, locDiff.x);
     if(endLoc.x < startLoc.x)
@@ -76,7 +76,7 @@ void Snail::tickMovement(float delta) {
     } else {
         setLocation(getTargetNode());
         isMoving = false;
-        actualPosition = getLocation();
+        actualPosition = getPosition();
         movingProgress = .0f;
     }
 }

@@ -16,7 +16,7 @@ Graph::Graph(World& world) : Entity(world), adjacencyMap(), lines(sf::Lines, 2) 
     generateRandom(10);
 }
 
-const sf::Vector2f &Graph::getLocation() {
+const sf::Vector2f& Graph::getPosition() const {
     return world.getView().getCenter();
 }
 
