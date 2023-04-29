@@ -2,6 +2,7 @@
 // Created by william on 29/04/23.
 //
 
+#include <iostream>
 #include "world/snail/Snail.h"
 #include "GameAssets.h"
 #include "world/World.h"
@@ -42,7 +43,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
 void Snail::tick(float delta) {
     if (isMoving) {
-        tickMovement(isMoving);
+        tickMovement(delta);
     }
 }
 
@@ -59,8 +60,8 @@ void Snail::moveLocation(GraphNode* node) {
 }
 
 void Snail::tickMovement(float delta) {
-    movingProgress += delta*progressRate;
 
+    movingProgress += delta * progressRate;
     if (movingProgress < 1.0f) {
         actualPosition = getLocation() + locDiff * movingProgress;
     } else {
@@ -70,4 +71,5 @@ void Snail::tickMovement(float delta) {
         sprite.rotate(sf::radians(0));
         movingProgress = .0f;
     }
+
 }

@@ -14,6 +14,7 @@ MailScreen::MailScreen(wiz::Game& game)
 }
 
 void MailScreen::tick(float delta) {
+    world.tick(delta / 1000.f);
 }
 
 void MailScreen::render(sf::RenderTarget &target) {
