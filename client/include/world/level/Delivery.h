@@ -11,6 +11,7 @@
 class Delivery : public Tickable {
 
     Mission& mission;
+    bool hasTimeLimit;
     float timeLimit;
     float timeLeft;
 
@@ -19,7 +20,7 @@ class Delivery : public Tickable {
     bool completed;
 public:
 
-    Delivery(Mission& mission, float timeLimit, Friend *destination);
+    Delivery(Mission& mission, bool hasTimeLimit, float timeLimit, Friend *destination);
 
     void tick(float delta) override;
 
