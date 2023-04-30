@@ -18,7 +18,7 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity
     if(!node->getNeighbors().empty())
         moveLocation(node->getNeighbors()[0]);
 
-    pathSelArrow = new PathSelArrow(world);
+    pathSelArrow = new PathSelArrow(world, snail_color);
 }
 
 const sf::Vector2f &Snail::getPosition() const {
@@ -79,7 +79,7 @@ void Snail::tick(float delta) {
 }
 
 void Snail::moveLocation(GraphNode* node) {
-    if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node))
+    if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node) || !node)
         return;
 
     if(!world.getGraph()->areAdjacent(getStartNode(), node)
@@ -117,6 +117,12 @@ void Snail::tickMovement(float delta) {
     }
 }
 
-bool Snail::hitScan(const sf::Vector2f& hit) {
-    return pathSelArrow->hitScanAll(hit);
+GraphNode* Snail::hitScan(const sf::Vector2f& hit) {
+    if (isMoving)
+        return nullptr;
+
+    GraphNode* target = pathSelArrow->hitScanAll(hit);
+    if (target)
+        moveLocation(target);
+    return target;
 }

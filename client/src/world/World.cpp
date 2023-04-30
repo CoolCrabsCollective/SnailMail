@@ -23,9 +23,8 @@ World::World(wiz::AssetLoader &assets)
     GraphNode* startNode = graph->getNodes()[0];
 
 
-
-    snail = new Snail(*this, startNode, Snail::SNAIL_COLOR_BLUE);
-    addEntity(snail);
+    Snail* snail = new Snail(*this, startNode, Snail::SNAIL_COLOR_BLUE);
+    snails.push_back(snail);
 
     PostOffice* postOffice = new PostOffice(*this, startNode);
     addEntity(postOffice);
@@ -47,8 +46,6 @@ World::World(wiz::AssetLoader &assets)
 }
 
 void World::tick(float delta) {
-    handleSelected();
-
     for(Entity* entity : entities) {
         if(Tickable* tickable = dynamic_cast<Tickable*>(entity)) {
             tickable->tick(delta);
@@ -129,14 +126,6 @@ void World::removeFromZOrderMap(Entity *entity) {
         zOrderMap.erase(key);
 }
 
-void World::handleSelected() {
-    GraphNode* selected = entitySelection->getSelected();
-    if (selected) {
-        snail->moveLocation(selected);
-        entitySelection->setSelected(nullptr);
-    }
-}
-
 wiz::AssetLoader& World::getAssets() const {
     return assets;
 
@@ -156,4 +145,8 @@ Graph* World::getGraph() const {
 
 EntitySelection *World::getEntitySelection() const {
     return entitySelection;
+}
+
+const std::vector<Snail *> &World::getSnails() const {
+    return snails;
 }

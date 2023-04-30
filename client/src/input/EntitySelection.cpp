@@ -32,6 +32,14 @@ GraphNode* EntitySelection::clickScan(sf::Vector2f clickPos) {
 //        }
 //    }
 
+    for (Snail* snail : world.getSnails()) {
+        GraphNode* hitScan = snail->hitScan(clickPos);
+        if (hitScan) {
+            selected = hitScan;
+            return hitScan;
+        }
+    }
+
     selected = nullptr;
     return nullptr;
 }

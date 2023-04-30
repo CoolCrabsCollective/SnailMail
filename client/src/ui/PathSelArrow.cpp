@@ -7,12 +7,14 @@
 #include "GameAssets.h"
 #include "world/World.h"
 
-PathSelArrow::PathSelArrow(World &world) : Clickable({-1.0f, -1.0f}, {1.0f, 1.0f}) {
+PathSelArrow::PathSelArrow(World &world, sf::Color color) : Clickable({-.5f, -.5f}, {.5f, .5f}),
+                                                                            world(world) {
     sprite.setTexture(*world.getAssets().get(GameAssets::PATH_SEL_ARROW));
+    sprite.setColor(color);
 }
 
 void PathSelArrow::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
+    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1., 1.});
     SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 0.5f});
 
     for (int i = 0; i<arrowPositions.size(); i++) {
@@ -26,7 +28,11 @@ void PathSelArrow::draw(sf::RenderTarget& target, const sf::RenderStates& states
 void PathSelArrow::updatePositions(GraphNode* currentNode) {
     arrowPositions.clear();
     arrowAngles.clear();
+    graphNodes.clear();
     for (GraphNode* neighbor : currentNode->getNeighbors()) {
+        if (world.getGraph()->getPath(currentNode, neighbor).cummed)
+            continue;
+
         sf::Vector2f dir = neighbor->getPosition() - currentNode->getPosition();
         float angle = atanf(dir.y / dir.x);
 
@@ -37,15 +43,16 @@ void PathSelArrow::updatePositions(GraphNode* currentNode) {
         arrowPositions.push_back({cosf(angle) * spawnRadius + currentNode->getPosition().x,
                                   sinf(angle) * spawnRadius + currentNode->getPosition().y});
         arrowAngles.push_back(angle + M_PI / 2);
+        graphNodes.push_back(neighbor);
     }
 }
 
-bool PathSelArrow::hitScanAll(const sf::Vector2f &hit) {
-    for (sf::Vector2f arrowPos : arrowPositions) {
-        if (hitScan(hit, arrowPos)) {
-            return true;
+GraphNode* PathSelArrow::hitScanAll(const sf::Vector2f &hit) {
+    for (int i = 0; i<arrowPositions.size(); i++) {
+        if (hitScan(hit, arrowPositions.at(i))) {
+            return graphNodes.at(i);
         }
     }
 
-    return false;
+    return nullptr;
 }

@@ -16,19 +16,22 @@ class World;
 class PathSelArrow: public Clickable {
     mutable sf::Sprite sprite;
 
+    World& world;
+
     std::vector<sf::Vector2f> arrowPositions;
     std::vector<float> arrowAngles;
+    std::vector<GraphNode*> graphNodes;
 
     float spawnRadius = 2.0f;
 
 public:
-    PathSelArrow(World &world);
+    PathSelArrow(World &world, sf::Color color);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const;
 
     void updatePositions(GraphNode* currentNode);
 
-    bool hitScanAll(const sf::Vector2f& hit);
+    GraphNode* hitScanAll(const sf::Vector2f& hit);
 
     ~PathSelArrow() = default;
 };
