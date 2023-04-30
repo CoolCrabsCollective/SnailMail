@@ -5,13 +5,14 @@
 #include "world/World.h"
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
-#include "GameAssets.h"
 
 Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture, float frameDelay, float animationDelay) : GraphEntity(world, node),
                     chatBubble(world, sf::Color(255, 255, 255)), frameDelay(frameDelay), animationDelay(animationDelay) {
     sprite.setTexture(texture);
     spriteRect = sf::IntRect({0, 0}, {FRIEND_TEXTURE_SIZE, FRIEND_TEXTURE_SIZE});
     sprite.setTextureRect(spriteRect);
+    GRand queue;
+    timeTillNextAnim += queue.d();
 }
 
 const sf::Vector2f& Friend::getPosition() const {
