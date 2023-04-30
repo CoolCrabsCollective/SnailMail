@@ -15,10 +15,11 @@ MailScreen::MailScreen(wiz::Game& game)
             world(game.getAssets(), *this),
             completeMenu(world),
             sidebar(world),
-            levelIndicator(world),
             levelSelMenu(world),
+            levelIndicator(world, levelSelMenu),
             uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }) {
-    clickables.push_back(dynamic_cast<Clickable*>(&levelSelMenu));
+    clickables.push_back(dynamic_cast<ClickableUI*>(&levelIndicator));
+    clickables.push_back(dynamic_cast<ClickableUI*>(&levelSelMenu));
 }
 
 void MailScreen::tick(float delta) {
@@ -72,11 +73,11 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
                                                             uiView);
     completeMenu.click(clickVector);
 
-//    for (Clickable* clickable : clickables) {
-//        if (clickable->hitScan(clickVector)) {
-//            break;
-//        }
-//    }
+    for (ClickableUI* clickable : clickables) {
+        if (clickable->hitScan(clickVector)) {
+            break;
+        }
+    }
 }
 
 void MailScreen::mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) {
@@ -100,7 +101,7 @@ void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {
                                                uiView);
     completeMenu.click(touchVector);
 
-    for (Clickable* clickable : clickables) {
+    for (ClickableUI* clickable : clickables) {
         if (clickable->hitScan(touchVector)) {
             break;
         }
