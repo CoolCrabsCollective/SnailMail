@@ -16,7 +16,9 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     constexpr float snail_scale = 4.f;
     constexpr float snail_time_distance = 150.f;
     constexpr float snail_friend_distance = 250.f;
-    std::vector<sf::Color> colors = { Snail::SNAIL_COLOR_BLUE, Snail::SNAIL_COLOR_YELLOW, Snail::SNAIL_COLOR_RED};
+    std::vector<Snail*> snails = world.getSnails();
+
+    std::vector<Mission*> missions = world.getMissions();
     std::vector<std::vector<int>> delivery_ids = {{0, 1}, {1, 2, 3}, {0, 3}};
     std::vector<std::vector<int>> time_left = {{7, 12}, {3, 15, 22}, {17, 25}};
 
@@ -27,14 +29,14 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     target.draw(background);
 
     int snail_offset = 0;
-    for(int i = 0; i < colors.size(); i++)
+    for(int i = 0; i < snails.size(); i++)
     {
         snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
         sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin, snail_margin + snail_offset};
         snail_sprite.setPosition(pos);
         snail_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
         snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
-        snail_cap_sprite.setColor(colors[i]);
+        snail_cap_sprite.setColor(snails[i]->getSnailColor());
         snail_cap_sprite.setPosition(pos);
         snail_cap_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
 

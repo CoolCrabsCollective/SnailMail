@@ -73,6 +73,8 @@ public:
 
     const std::vector<Snail *> &getSnails() const;
 
+    const std::vector<Mission *> &getMissions() const;
+
     Snail* spawnSnail(GraphNode *node, int i);
 
     PostOffice* getPostOffice(int id);

@@ -283,3 +283,7 @@ const std::vector<Snail *> &World::getSnails() const {
 PostOffice* World::getPostOffice(int id) {
     return postOffices[id];
 }
+
+const std::vector<Mission *> &World::getMissions() const {
+    return missions;
+}

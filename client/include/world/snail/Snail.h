@@ -42,6 +42,8 @@ public:
 
     void tickMovement(float delta);
 
+    const sf::Color &getSnailColor() const;
+
     GraphNode* hitScan(const sf::Vector2f& hit);
 
     constexpr static sf::Color SNAIL_COLOR_RED = sf::Color(232, 59, 59);

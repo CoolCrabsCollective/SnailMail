@@ -123,3 +123,7 @@ GraphNode* Snail::hitScan(const sf::Vector2f& hit) {
         moveLocation(target);
     return target;
 }
+
+const sf::Color &Snail::getSnailColor() const {
+    return snail_color;
+}
