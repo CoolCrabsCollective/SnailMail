@@ -11,7 +11,12 @@ Mission::Mission(World& world, LevelDeliveryMission& levelMission)
         spawnDelay(levelMission.spawnDelay),
         spawnProgress(-0.01f),
         snailId(levelMission.snailId),
-        startPoint(world.getPostOffice(levelMission.startPostOfficeId)->getStartNode()) {}
+        startPoint(world.getPostOffice(levelMission.startPostOfficeId)->getStartNode()) {
+
+    for(LevelDelivery& levelDelivery : levelMission.deliveries) {
+        // deliveries.push_back(new Delivery(levelDelivery.timeLimit, ));
+    }
+}
 
 Mission::~Mission() {
     for(Delivery* delivery : deliveries)
