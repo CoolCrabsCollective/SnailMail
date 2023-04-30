@@ -35,7 +35,16 @@ void Mission::tick(float delta) {
     if(spawnProgress < spawnDelay) {
         spawnProgress += delta;
 
-        if(spawnProgress >= spawnDelay) {
+        bool snail_already_exists = false;
+        for(Snail* s : world.getSnails())
+        {
+            if(s->getSnailColor() == World::snail_colors[snailId])
+            {
+                snail_already_exists = true;
+                break;
+            }
+        }
+        if(spawnProgress >= spawnDelay && !snail_already_exists) {
             snail = world.spawnSnail(startPoint, snailId, world
             .getCurrentLevel().snail_speed);
             spawnProgress = spawnDelay;

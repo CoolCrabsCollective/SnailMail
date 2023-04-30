@@ -111,7 +111,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
 
         float minimum_offset =  200.f - starting_offset;
         float total_snail_offset = std::max(snail_offset, minimum_offset);
-        if(i < snails.size() - 1)
+        if(i < missions.size() - 1)
         {
             sf::RectangleShape line;
             line.setFillColor(sf::Color(116.f, 63.f, 57.f));
