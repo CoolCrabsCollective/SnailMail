@@ -7,8 +7,9 @@
 #include "world/World.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
+#include "ui/PathSelArrow.h"
 
-Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node), pathSelArrow(world) {
+Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node) {
     snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
     snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
 
@@ -16,6 +17,8 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity
     actualPosition = node->getPosition();
     if(!node->getNeighbors().empty())
         moveLocation(node->getNeighbors()[0]);
+
+    pathSelArrow = new PathSelArrow(world, snail_color);
 }
 
 const sf::Vector2f &Snail::getPosition() const {
@@ -31,6 +34,9 @@ ZOrder Snail::getZOrder() const {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
+    if (!isMoving)
+        pathSelArrow->draw(target, states);
+
     snail_sprite.setPosition(actualPosition);
     snail_cap_sprite.setPosition(actualPosition);
     SpriteUtil::setSpriteSize(snail_sprite, sf::Vector2f{2., 2.});
@@ -58,17 +64,22 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     target.draw(snail_sprite);
     target.draw(snail_cap_sprite);
-    pathSelArrow.draw(target, states);
 }
 
 void Snail::tick(float delta) {
     if (isMoving) {
         tickMovement(delta);
+        arrowPosUpdated = false;
+    } else {
+        if (!arrowPosUpdated) {
+            pathSelArrow->updatePositions(getStartNode());
+            arrowPosUpdated = true;
+        }
     }
 }
 
 void Snail::moveLocation(GraphNode* node) {
-    if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node))
+    if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node) || !node)
         return;
 
     if(!world.getGraph()->areAdjacent(getStartNode(), node)
@@ -104,4 +115,14 @@ void Snail::tickMovement(float delta) {
         actualPosition = getPosition();
         movingProgress = .0f;
     }
+}
+
+GraphNode* Snail::hitScan(const sf::Vector2f& hit) {
+    if (isMoving)
+        return nullptr;
+
+    GraphNode* target = pathSelArrow->hitScanAll(hit);
+    if (target)
+        moveLocation(target);
+    return target;
 }
