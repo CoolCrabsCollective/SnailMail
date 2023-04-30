@@ -36,7 +36,7 @@ void Snail::deleteYourself() {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    if (!moving)
+    if (!moving && arrowPosUpdated)
         pathSelArrow->draw(target, states);
 
     snail_sprite.setPosition(actualPosition);
