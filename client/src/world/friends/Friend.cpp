@@ -1,10 +1,13 @@
 //
 // Created by cedric on 4/29/23.
 //
+#include <iostream>
 #include "world/friends/Friend.h"
 #include "world/World.h"
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
+#include "world/level/Mission.h"
+#include "world/level/Delivery.h"
 
 Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture, float frameDelay, float animationDelay) : GraphEntity(world, node),
                     chatBubble(world, sf::Color(255, 255, 255)), frameDelay(frameDelay), animationDelay(animationDelay) {
@@ -49,6 +52,42 @@ void Friend::tick(float delta) {
     } else {
         timeTillNextAnim -= delta;
     }
+
+    isMad = false;
+
+
+    bool should_shake = false;
+    for(Mission* m : world.getMissions())
+    {
+        if(m->getSnail() != nullptr && !m->isCompleted())
+        {
+            for(Delivery* d : m->getDeliveries())
+            {
+                if(d->isExpired() && d->getDestination() == this)
+                {
+                    isMad = true;
+                }
+                if(!d->isCompleted() && !d->isExpired() && d->getDestination() == this)
+                {
+                    if(d->getTimeLeft() < 10.f)
+                    {
+                        should_shake = true;
+                    }
+                }
+            }
+        }
+    }
+
+    if(isMad)
+    {
+        chatBubble.setIsShaking(false);
+    }
+    else
+    {
+        chatBubble.setIsShaking(should_shake);
+    }
+
+    chatBubble.setIsMad(isMad);
 }
 
 ChatBubble& Friend::getChatBubble() {
