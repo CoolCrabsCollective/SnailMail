@@ -24,6 +24,7 @@ TitleScreen::TitleScreen(wiz::Game& game)
     sf::FloatRect subtextRect = subtext.getLocalBounds();
     subtext.setOrigin({subtextRect.left + subtextRect.width/2.0f, subtextRect.top + subtextRect.height/2.0f});
 
+    snailysSong.setLoop(true);
     snailysSong.setVolume(50);
     snailysSong.play();
 }
@@ -104,6 +105,7 @@ void TitleScreen::show() {
 
 void TitleScreen::hide() {
 	getGame().removeWindowListener(this);
+    snailysSong.stop();
 }
 
 const std::string& TitleScreen::getName() const {
