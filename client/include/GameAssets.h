@@ -40,6 +40,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, BEE_LETTER, ("gfx/ui/letters/bee_icon.png"))
     ASSET(wiz::TextureAsset, FROG_LETTER, ("gfx/ui/letters/frog_icon.png"))
     ASSET(wiz::TextureAsset, LADY_BUG_LETTER, ("gfx/ui/letters/lady_bug_icon.png"))
+    ASSET(wiz::TextureAsset, MOUSE_LETTER, ("gfx/ui/letters/mouse_icon.png"))
 }
 
 
