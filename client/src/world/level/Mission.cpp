@@ -35,7 +35,8 @@ void Mission::tick(float delta) {
         spawnProgress += delta;
 
         if(spawnProgress >= spawnDelay) {
-            snail = world.spawnSnail(startPoint, snailId);
+            snail = world.spawnSnail(startPoint, snailId, world
+            .getCurrentLevel().snail_speed);
             spawnProgress = spawnDelay;
         }
     } else {

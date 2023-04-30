@@ -44,9 +44,10 @@ World::World(wiz::AssetLoader &assets, MailScreen& screen)
     SpriteUtil::setSpriteOrigin(background, {0.5f, 0.5f});
 }
 
-Snail* World::spawnSnail(GraphNode* node, int snailId) {
+Snail* World::spawnSnail(GraphNode* node, int snailId, float speed) {
     Snail* snail = new Snail(*this, node, snail_colors[snailId % 4]);
     snails.push_back(snail);
+    snails.back()->setProgressRate(speed);
     addEntity(snail);
     return snail;
 }
@@ -343,5 +344,9 @@ void World::loadNextLevel() {
 
 void World::retry() {
     generateLevel(Level::getLevel(currentLevelNumber));
+}
+
+const Level &World::getCurrentLevel() const {
+    return currentLevel;
 }
 
