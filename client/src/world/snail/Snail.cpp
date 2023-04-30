@@ -15,8 +15,6 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity
 
     snail_cap_sprite.setColor(snail_color);
     actualPosition = node->getPosition();
-    if(!node->getNeighbors().empty())
-        moveLocation(node->getNeighbors()[0]);
 
     pathSelArrow = new PathSelArrow(world, snail_color);
 }
@@ -94,9 +92,8 @@ void Snail::moveLocation(GraphNode* node) {
     locDiff = endLoc - startLoc;
     float angle = std::atan2(locDiff.y, locDiff.x);
     if(endLoc.x < startLoc.x)
-    {
         angle += M_PI;
-    }
+
     snail_sprite.setRotation(sf::radians(angle));
     snail_cap_sprite.setRotation(sf::radians(angle));
 }

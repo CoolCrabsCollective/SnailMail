@@ -10,7 +10,7 @@ EntitySelection::EntitySelection(World &world) : world(world) {
 }
 
 GraphNode* EntitySelection::clickScan(sf::Vector2f clickPos) {
-    const std::map<ZOrder, std::vector<Entity*>> zOrderMap = world.getZOrderMap();
+    const std::unordered_map<ZOrder, std::vector<Entity*>> zOrderMap = world.getZOrderMap();
     Clickable* clickable = nullptr;
 
     // Iterate entities in Z order

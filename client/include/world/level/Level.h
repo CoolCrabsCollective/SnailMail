@@ -2,8 +2,8 @@
 // Created by Alexander Winter on 2023-04-29.
 //
 
-#ifndef LD53_CLIENT_SNAILLEVEL_H
-#define LD53_CLIENT_SNAILLEVEL_H
+#ifndef LD53_CLIENT_LEVEL_H
+#define LD53_CLIENT_LEVEL_H
 
 #include <cstdlib>
 #include "grand.h"
@@ -38,7 +38,7 @@ struct LevelDeliveryMission {
     std::vector<LevelDelivery> deliveries;
 };
 
-struct SnailLevel {
+struct Level {
     bool seeded = false;
     int seed = 0;
     int nodeCount = 10;
@@ -48,9 +48,9 @@ struct SnailLevel {
 
     std::vector<LevelDeliveryMission> missions = { { 0.0f, 0, 0, { { 0, 10.0f } } } };
 
-    static SnailLevel getLevel(int levelNumber);
-    const static SnailLevel LEVELS[];
+    static Level getLevel(int levelNumber);
+    const static Level LEVELS[];
 };
 
 
-#endif //LD53_CLIENT_SNAILLEVEL_H
+#endif //LD53_CLIENT_LEVEL_H

@@ -11,8 +11,6 @@
 
 Graph::Graph(World& world) : Entity(world), adjacencyMap(), lines(sf::Lines, 2) {
     sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
-
-    generateLevel(SnailLevel());
 }
 
 const sf::Vector2f& Graph::getPosition() const {
@@ -42,7 +40,7 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     }
 }
 
-void Graph::generateLevel(SnailLevel level) {
+void Graph::generateLevel(Level level) {
     for(GraphNode* node : nodes)
         delete node;
 

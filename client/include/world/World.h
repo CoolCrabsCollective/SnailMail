@@ -20,31 +20,36 @@
 #include "input/EntitySelection.h"
 #include "world/snail/Snail.h"
 
+class PostOffice;
+class Mission;
+
 class World : public Tickable, public sf::Drawable {
 protected:
+    const static sf::Color snail_colors[];
+
     wiz::AssetLoader& assets;
     std::vector<Entity*> entities, toAdd;
-    mutable std::map<ZOrder, std::vector<Entity*>> zOrderMap;
+    mutable std::unordered_map<ZOrder, std::vector<Entity*>> zOrderMap;
     const sf::View view;
 
     Graph* graph = nullptr;
     std::vector<Snail*> snails;
 
-    void removeFromZOrderMap(Entity* entity);
-
     mutable sf::Sprite background;
     EntitySelection* entitySelection = nullptr;
 
-    SnailLevel currentLevel;
+    Level currentLevel;
+    std::vector<Mission*> missions;
+    std::unordered_map<int, PostOffice*> postOffices;
 
-    const static sf::Color snail_colors[];
+    void removeFromZOrderMap(Entity* entity);
 
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 
     World(wiz::AssetLoader& assets);
 
-    void generateLevel(SnailLevel level);
+    void generateLevel(Level level);
 
     void tick(float delta) override;
 
@@ -60,13 +65,17 @@ public:
 
     const sf::View& getView() const;
 
-    const std::map<ZOrder, std::vector<Entity *>> &getZOrderMap() const;
+    const std::unordered_map<ZOrder, std::vector<Entity *>>& getZOrderMap() const;
 
-    EntitySelection *getEntitySelection() const;
+    EntitySelection* getEntitySelection() const;
 
-    Graph *getGraph() const;
+    Graph* getGraph() const;
 
     const std::vector<Snail *> &getSnails() const;
+
+    Snail* spawnSnail(GraphNode *node, int i);
+
+    PostOffice* getPostOffice(int id);
 };
 
 
