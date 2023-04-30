@@ -15,6 +15,7 @@ Mission::Mission(World& world, LevelDeliveryMission& levelMission)
 
     for(LevelDelivery& levelDelivery : levelMission.deliveries) {
         deliveries.push_back(new Delivery(*this,
+                                          levelDelivery.hasTimeLimit,
                                           levelDelivery.timeLimit,
                                           world.getFriend(levelDelivery.friendId)));
     }
@@ -43,7 +44,7 @@ void Mission::tick(float delta) {
         for(Delivery* delivery : deliveries) {
             delivery->tick(delta);
 
-            if(!delivery->isCompleted())
+            if(!delivery->isCompleted() && !delivery->isExpired())
                 allComplete = false;
         }
 

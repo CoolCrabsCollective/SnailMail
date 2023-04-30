@@ -93,7 +93,8 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             if(activeDeliveries[j]->isExpired())
             {
                 number_text.setString("X");
-            }
+            } else if(!std::isfinite(activeDeliveries[j]->getTimeLeft()))
+                number_text.setString("");
             target.draw(number_text);
 
             friend_sprite.setTexture(*friendTexture);

@@ -12,7 +12,7 @@ const Level Level::LEVELS[] = {
                          { FROG, false, 3 }},
             .offices = { { false, 0 }},
             .snailCount = 1,
-            .missions = { { 1.0f, 0, 0, { { 0, 10.0f }, { 1, 15.0f } } } }
+            .missions = { { 1.0f, 0, 0, { { 0, false, 10.0f }, { 1, true, 15.0f } } } }
         },
         {
             .seeded = true,
@@ -25,15 +25,15 @@ const Level Level::LEVELS[] = {
             .offices = { { false, 0 }},
             .snailCount = 1,
             .missions = { { 1.0f, 0, 0,
-                            { { 0, 10.0f },
-                              { 1, 20.0f },
-                              { 2, 30.0f },
-                              { 3, 50.0f }} } }
+                            { { 0, true, 10.0f },
+                              { 1, true, 20.0f },
+                              { 2, true, 30.0f },
+                              { 3, true, 50.0f }} } }
         },
         {
                 .seeded = true,
                 .seed = 666,
-                .nodeCount = 25,
+                .nodeCount = 15,
                 .friends = { { LADYBUG, false, 2 },
                              { FROG, false, 3 },
                              { MOUSE, false, 5 },
@@ -41,16 +41,16 @@ const Level Level::LEVELS[] = {
                 .offices = { { false, 0 }},
                 .snailCount = 1,
                 .missions = { { 1.0f, 0, 0,
-                                { { 0, 10.0f },
-                                  { 1, 20.0f },
-                                  { 2, 30.0f },
-                                  { 3, 50.0f }} } }
+                                { { 0, true, 10.0f },
+                                  { 1, true, 20.0f },
+                                  { 2, true, 30.0f },
+                                  { 3, true, 50.0f }} } }
         }
 
 };
 
 Level Level::getLevel(int levelNumber) {
-    if(levelNumber > 2)
+    if(levelNumber > 3)
         return Level();
 
     return LEVELS[levelNumber - 1];

@@ -2,7 +2,6 @@
 // Created by adrien on 29/04/23.
 //
 
-#include <iostream>
 #include "world/Path.h"
 
 Path::Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view)

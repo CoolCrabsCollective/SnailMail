@@ -6,11 +6,13 @@
 #include "world/level/Mission.h"
 
 Delivery::Delivery(Mission& mission,
+                   bool hasTimeLimit,
                    float timeLimit,
                    Friend* destination)
         : mission(mission),
-          timeLimit(timeLimit),
-          timeLeft(timeLimit),
+          hasTimeLimit(hasTimeLimit),
+          timeLimit(!hasTimeLimit ? INFINITY : timeLimit),
+          timeLeft(!hasTimeLimit ? INFINITY : timeLimit),
           destination(destination),
           completed(false) {}
 
