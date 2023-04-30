@@ -8,7 +8,7 @@
 #include "MailScreen.h"
 
 TitleScreen::TitleScreen(wiz::Game& game)
-	: Screen(game) {
+	: snailysSong(*game.getAssets().get(GameAssets::SNAILYS_SONG)), Screen(game) {
     background.setTexture(*game.getAssets().get(GameAssets::TITLE_SCREEN_BACKGROUND));
     message.setFont(*game.getAssets().get(GameAssets::THE_RIGHT_FONT));
     message.setFillColor(sf::Color::Blue);
@@ -23,6 +23,9 @@ TitleScreen::TitleScreen(wiz::Game& game)
     subtext.setString("(Click to continue)");
     sf::FloatRect subtextRect = subtext.getLocalBounds();
     subtext.setOrigin({subtextRect.left + subtextRect.width/2.0f, subtextRect.top + subtextRect.height/2.0f});
+
+    snailysSong.setVolume(50);
+    snailysSong.play();
 }
 
 void TitleScreen::tick(float delta) {

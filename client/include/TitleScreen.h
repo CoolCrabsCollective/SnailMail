@@ -9,6 +9,7 @@
 #include <SW/SelbaWard.hpp>
 #include <SW/Common.hpp>
 #include "SFML/Graphics/Text.hpp"
+#include "SFML/Audio/Music.hpp"
 
 class TitleScreen : public wiz::Screen, public wiz::WindowListener {
 	std::string name = "TitleScreen";
@@ -16,6 +17,8 @@ class TitleScreen : public wiz::Screen, public wiz::WindowListener {
 	sf::Sprite background;
     sf::Text message;
     sf::Text subtext;
+
+    sf::Music& snailysSong;
 
 	sw::NinePatch ninepatch;
 public:
