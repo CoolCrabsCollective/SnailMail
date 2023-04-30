@@ -14,10 +14,12 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/World.h"
 #include "world/Path.h"
+#include "ui/Sidebar.h"
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SnailMail";
     World world;
+    Sidebar* sidebar = nullptr;
 
 public:
     MailScreen(wiz::Game& game);

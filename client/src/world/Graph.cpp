@@ -84,7 +84,7 @@ void Graph::generateLevel(SnailLevel level) {
     minX -= world.getView().getSize().x * 0.1f;
     minY -= world.getView().getSize().y * 0.1f;
 
-    maxX += world.getView().getSize().x * 0.1f;
+    maxX += world.getView().getSize().x * 0.5f;
     maxY += world.getView().getSize().y * 0.1f;
 
     float scaleX = world.getView().getSize().x / (maxX - minX);
