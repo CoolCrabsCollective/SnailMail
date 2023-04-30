@@ -9,10 +9,11 @@
 #include "grand.h"
 
 enum FriendType {
-    LADYBUG,
-    BEE,
+    LADYBUG = 0,
+    BEE = 1,
     MOUSE,
-    FROG
+    FROG,
+    FRIEND_TYPE_LENGTH
 };
 
 struct LevelFriend {
@@ -52,7 +53,7 @@ struct Level {
     int deliveriesForBronze = 1;
     int deliveriesForSilver = 1;
     int deliveriesForGold = 1;
-
+    float snail_speed = 2.f;
     static Level getLevel(int levelNumber);
     const static Level LEVELS[];
 };

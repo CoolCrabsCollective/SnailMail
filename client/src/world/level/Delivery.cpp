@@ -14,7 +14,19 @@ Delivery::Delivery(Mission& mission,
           timeLimit(!hasTimeLimit ? INFINITY : timeLimit),
           timeLeft(!hasTimeLimit ? INFINITY : timeLimit),
           destination(destination),
-          completed(false) {}
+          completed(false) {
+    GRand r;
+
+    sender = static_cast<FriendType>(r.i(FRIEND_TYPE_LENGTH));
+    if (sender == destination->getFriendType()) {
+        int senderNum = static_cast<int>(sender);
+        senderNum++;
+        if (senderNum == static_cast<int>(FRIEND_TYPE_LENGTH)) {
+            senderNum = 0;
+            sender = static_cast<FriendType>(senderNum);
+        }
+    }
+}
 
 void Delivery::tick(float delta) {
     if(completed || !mission.hasSpawnedSnail())
@@ -24,6 +36,7 @@ void Delivery::tick(float delta) {
         return;
 
     if(mission.getSnail()->getLocation() == destination->getLocation() && !mission.getSnail()->isMoving()) {
+        destination->getChatBubble().popLetter(sender);
         completed = true;
     } else {
         timeLeft -= delta;
@@ -46,4 +59,8 @@ Friend *Delivery::getDestination() const {
 
 float Delivery::getTimeLeft() const {
     return timeLeft;
+}
+
+FriendType Delivery::getSender() const {
+    return sender;
 }

@@ -15,6 +15,7 @@ const Level Level::LEVELS[] = {
             .deliveriesForBronze = 0,
             .deliveriesForSilver = 0,
             .deliveriesForGold = 1,
+            .snail_speed = 5.f,
         },
         {
             .seeded = true,
@@ -32,6 +33,7 @@ const Level Level::LEVELS[] = {
             .deliveriesForBronze = 0,
             .deliveriesForSilver = 1,
             .deliveriesForGold = 2,
+            .snail_speed = 5.f,
         },
         {
                 .seeded = true,
@@ -51,6 +53,7 @@ const Level Level::LEVELS[] = {
                 .deliveriesForBronze = 2,
                 .deliveriesForSilver = 3,
                 .deliveriesForGold = 4,
+                .snail_speed = 3.f,
         },
         {
                 .seeded = true,
@@ -75,6 +78,7 @@ const Level Level::LEVELS[] = {
                 .deliveriesForBronze = 2,
                 .deliveriesForSilver = 3,
                 .deliveriesForGold = 4,
+                .snail_speed = 2.f,
         }
 
 

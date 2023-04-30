@@ -13,6 +13,8 @@
 class Mouse : public Friend {
 public:
     Mouse(World& world, GraphNode* node);
+
+    const FriendType getFriendType() const override;
 };
 
 #endif //LD53_CLIENT_MOUSE_H

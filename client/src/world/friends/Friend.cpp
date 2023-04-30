@@ -49,3 +49,8 @@ void Friend::tick(float delta) {
         timeTillNextAnim -= delta;
     }
 }
+
+ChatBubble& Friend::getChatBubble() {
+    return chatBubble;
+}
+

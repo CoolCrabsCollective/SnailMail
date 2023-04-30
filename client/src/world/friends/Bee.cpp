@@ -15,3 +15,7 @@ Bee::Bee(World& world, GraphNode* node) : Friend(world, node, *world.getAssets()
 
 }
 
+const FriendType Bee::getFriendType() const {
+    return BEE;
+}
+

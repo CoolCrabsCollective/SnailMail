@@ -18,6 +18,11 @@ class Snail : public GraphEntity, public Tickable {
     float progressRate = 2.f;
     float currentProgressRate = 0;
 
+public:
+    void setProgressRate(float progressRate);
+
+private:
+
     sf::Vector2f locDiff;
 
     sf::Vector2f actualPosition;
