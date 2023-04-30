@@ -26,10 +26,10 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
 
     std::vector<Mission*> missions = world.getMissions();
 
-    sf::RectangleShape background;
-    background.setSize(sf::Vector2f{400.f, 900.f});
+    sf::Sprite background;
     background.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR, 0.f});
-    background.setFillColor(sf::Color(0x8f, 0x56, 0x3b));
+    background.setTexture(*world.getAssets().get(GameAssets::ALEXS_DESIRE));
+    background.setScale({10.f, 10.f});
     target.draw(background);
 
     float snail_offset = 0;
