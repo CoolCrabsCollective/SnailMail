@@ -72,7 +72,16 @@ void Mission::tick(float delta) {
                 allComplete = false;
         }
 
-        if(allComplete && snail->getLocation() == startPoint) {
+        bool is_at_a_post_office = false;
+        for(auto& [k, v] : world.getPostOffices())
+        {
+            if(snail->getLocation() == v->getLocation())
+            {
+                is_at_a_post_office = true;
+                break;
+            }
+        }
+        if(allComplete && is_at_a_post_office) {
             // mission completed
             snail->deleteYourself();
             snail = nullptr;

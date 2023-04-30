@@ -354,3 +354,7 @@ int World::getCurrentLevelNumber() const {
     return currentLevelNumber;
 }
 
+const std::unordered_map<int, PostOffice *> &World::getPostOffices() const {
+    return postOffices;
+}
+
