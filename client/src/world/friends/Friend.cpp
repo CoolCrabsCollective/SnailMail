@@ -11,8 +11,8 @@ Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture, float 
     sprite.setTexture(texture);
     spriteRect = sf::IntRect({0, 0}, {FRIEND_TEXTURE_SIZE, FRIEND_TEXTURE_SIZE});
     sprite.setTextureRect(spriteRect);
-    GRand penis;
-    timeTillNextAnim += penis.d();
+    GRand queue;
+    timeTillNextAnim += queue.d();
 }
 
 const sf::Vector2f& Friend::getPosition() const {
