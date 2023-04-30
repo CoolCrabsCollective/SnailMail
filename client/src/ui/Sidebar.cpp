@@ -112,7 +112,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         if(i < snails.size() - 1)
         {
             sf::RectangleShape line;
-            line.setFillColor(sf::Color::Black);
+            line.setFillColor(sf::Color(116.f, 63.f, 57.f));
             line.setSize(sf::Vector2f{400.f, 10.f});
             line.setPosition(sf::Vector2f {DISTANCE_TO_SIDEBAR, total_snail_offset});
             target.draw(line);
