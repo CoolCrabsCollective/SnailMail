@@ -32,9 +32,10 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     background.setFillColor(sf::Color(0x8f, 0x56, 0x3b));
     target.draw(background);
 
-    int snail_offset = 0;
+    float snail_offset = 0;
     for(int i = 0; i < snails.size(); i++)
     {
+        float starting_offset = snail_offset;
         snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
         sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin, snail_margin + snail_offset};
         snail_sprite.setPosition(pos);
@@ -106,16 +107,17 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             snail_offset += offset_from_delivery;
         }
 
-
+        float minimum_offset =  200.f - starting_offset;
+        float total_snail_offset = std::max(snail_offset, minimum_offset);
         if(i < snails.size() - 1)
         {
             sf::RectangleShape line;
             line.setFillColor(sf::Color::Black);
             line.setSize(sf::Vector2f{400.f, 10.f});
-            line.setPosition(sf::Vector2f {DISTANCE_TO_SIDEBAR, snail_margin + snail_offset});
+            line.setPosition(sf::Vector2f {DISTANCE_TO_SIDEBAR, total_snail_offset});
             target.draw(line);
         }
-        snail_offset += distance_between_snails;
+        snail_offset = total_snail_offset;
     }
 
 
