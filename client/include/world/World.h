@@ -28,7 +28,6 @@ class MailScreen;
 
 class World : public Tickable, public sf::Drawable {
 protected:
-    const static sf::Color snail_colors[];
 
     wiz::AssetLoader& assets;
     MailScreen& screen;
@@ -51,6 +50,7 @@ protected:
 
 public:
     const Level &getCurrentLevel() const;
+    const static sf::Color snail_colors[];
 
 protected:
     int currentLevelNumber = 1;

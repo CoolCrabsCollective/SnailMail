@@ -45,7 +45,7 @@ World::World(wiz::AssetLoader &assets, MailScreen& screen)
 }
 
 Snail* World::spawnSnail(GraphNode* node, int snailId, float speed) {
-    Snail* snail = new Snail(*this, node, snail_colors[snailId % 4]);
+    Snail* snail = new Snail(*this, node, snail_colors[snailId]);
     snails.push_back(snail);
     snails.back()->setProgressRate(speed);
     addEntity(snail);
