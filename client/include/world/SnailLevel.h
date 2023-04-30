@@ -5,12 +5,51 @@
 #ifndef LD53_CLIENT_SNAILLEVEL_H
 #define LD53_CLIENT_SNAILLEVEL_H
 
-
 #include <cstdlib>
+#include "grand.h"
 
-class SnailLevel {
+enum FriendType {
+    LADYBUG,
+    BEE,
+    MOUSE,
+    FROG
+};
 
-public:
+struct LevelFriend {
+    FriendType type = LADYBUG;
+    bool randomPosition = true;
+    int hardcodedVertex = 0;
+};
+
+struct LevelPostOffice {
+    bool randomPosition = true;
+    int hardcodedVertex = 0;
+};
+
+struct LevelDelivery {
+    int friendId = 0;
+    float timeLimit = 10.0f;
+};
+
+struct LevelDeliveryMission {
+    float spawnDelay = 0.0f;
+    int startPostOfficeId = 0;
+    int snailId = 0;
+    std::vector<LevelDelivery> deliveries;
+};
+
+struct SnailLevel {
+    bool seeded = false;
+    int seed = 0;
+    int nodeCount = 10;
+    std::vector<LevelFriend> friends = { { LADYBUG, true, 0 } };
+    std::vector<LevelPostOffice> offices = { { true, 0 } };
+    int snailCount = 1;
+
+    std::vector<LevelDeliveryMission> missions = { { 0.0f, 0, 0, { { 0, 10.0f } } } };
+
+    static SnailLevel getLevel(int levelNumber);
+    const static SnailLevel LEVELS[];
 };
 
 

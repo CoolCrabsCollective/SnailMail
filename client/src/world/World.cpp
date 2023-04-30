@@ -14,32 +14,24 @@
 #include "world/PostOffice.h"
 
 
+const sf::Color World::snail_colors[] = {
+        sf::Color(232, 59, 59),
+        sf::Color(77, 155, 230),
+        sf::Color(251, 255, 134)
+};
+
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
       view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
 
     graph = new Graph(*this);
     addEntity(graph);
-    GraphNode* startNode = graph->getNodes()[0];
 
-    sf::Color snail_color_red = sf::Color(232, 59, 59);
-    sf::Color snail_color_blue = sf::Color(77, 155, 230);
-    sf::Color snail_color_yellow = sf::Color(251, 255, 134);
+    generateLevel(SnailLevel::getLevel(1));
 
-    Snail* snail = new Snail(*this, startNode, snail_color_blue);
+    Snail* snail = new Snail(*this, getGraph()->getNodes()[0], snail_colors[0]);
     snails.push_back(snail);
     addEntity(snail);
-
-    PostOffice* postOffice = new PostOffice(*this, startNode);
-    addEntity(postOffice);
-
-    LadyBug* ladyBug = new LadyBug(*this, graph->getNodes()[graph->getNodes().size() - 1]);
-    addEntity(ladyBug);
-
-
-    Bee* bee = new Bee(*this, graph->getNodes()[graph->getNodes().size() - 2]);
-    addEntity(bee);
-
 
     entitySelection = new EntitySelection(*this);
 
@@ -47,6 +39,102 @@ World::World(wiz::AssetLoader &assets)
     background.setPosition(view.getCenter());
     SpriteUtil::setSpriteSize(background, view.getSize());
     SpriteUtil::setSpriteOrigin(background, {0.5f, 0.5f});
+}
+
+void World::generateLevel(SnailLevel level) {
+
+    // TODO CLEAR PREVIOUS LEVEL
+
+    currentLevel = level;
+    graph->generateLevel(level);
+
+    GRand random;
+
+    if(level.seeded)
+        random.seed(level.seed);
+
+    if(level.offices.size() + level.friends.size() >= graph->getNodes().size())
+        throw std::runtime_error("Too many offices and friends for graph size");
+
+    std::unordered_set<int> used_positions;
+
+    for(LevelPostOffice& postOffice : level.offices) {
+        if(postOffice.randomPosition)
+            continue;
+
+        if(postOffice.hardcodedVertex >= graph->getNodes().size() || postOffice.hardcodedVertex < 0) {
+            std::cout << "Error: Invalid hardcoded index for post office (out of bounds)" << std::endl;
+            postOffice.randomPosition = true;
+            continue;
+        }
+
+        addEntity(new PostOffice(*this, graph->getNodes()[postOffice.hardcodedVertex]));
+        used_positions.insert(postOffice.hardcodedVertex);
+    }
+
+    for(LevelFriend lfriend : level.friends) {
+        if(lfriend.randomPosition)
+            continue;
+
+        if(lfriend.hardcodedVertex >= graph->getNodes().size()
+        || lfriend.hardcodedVertex < 0
+        || used_positions.contains(lfriend.hardcodedVertex)) {
+            std::cout << "Error: Invalid hardcoded index for friend" << std::endl;
+            lfriend.randomPosition = true;
+            continue;
+        }
+
+        switch(lfriend.type) {
+            case LADYBUG:
+                addEntity(new LadyBug(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                break;
+            case BEE:
+                addEntity(new Bee(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                break;
+            case MOUSE:
+                break;
+            case FROG:
+                break;
+        }
+        used_positions.insert(lfriend.hardcodedVertex);
+    }
+
+    for(LevelPostOffice postOffice : level.offices) {
+        if(!postOffice.randomPosition)
+            continue;
+
+        int randVertex = random.i(graph->getNodes().size());
+
+        while(used_positions.contains(randVertex))
+            randVertex = random.i(graph->getNodes().size());
+
+        addEntity(new PostOffice(*this, graph->getNodes()[randVertex]));
+        used_positions.insert(randVertex);
+    }
+
+    for(LevelFriend lfriend : level.friends) {
+        if(!lfriend.randomPosition)
+            continue;
+
+        int randVertex = random.i(graph->getNodes().size());
+
+        while(used_positions.contains(randVertex))
+            randVertex = random.i(graph->getNodes().size());
+
+        switch(lfriend.type) {
+            case LADYBUG:
+                addEntity(new LadyBug(*this, graph->getNodes()[randVertex]));
+                break;
+            case BEE:
+                addEntity(new Bee(*this, graph->getNodes()[randVertex]));
+                break;
+            case MOUSE:
+                break;
+            case FROG:
+                break;
+        }
+        used_positions.insert(randVertex);
+    }
 }
 
 void World::tick(float delta) {

@@ -2,7 +2,6 @@
 // Created by Alexander Winter on 2023-04-29.
 //
 
-#include <iostream>
 #include "world/Graph.h"
 #include "world/World.h"
 #include "GameAssets.h"
@@ -13,7 +12,7 @@
 Graph::Graph(World& world) : Entity(world), adjacencyMap(), lines(sf::Lines, 2) {
     sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
 
-    generateRandom(10);
+    generateLevel(SnailLevel());
 }
 
 const sf::Vector2f& Graph::getPosition() const {
@@ -43,18 +42,23 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     }
 }
 
-void Graph::generateRandom(uint16_t nodeCount) {
+void Graph::generateLevel(SnailLevel level) {
     for(GraphNode* node : nodes)
         delete node;
 
     nodes.clear();
     adjacencyMap.clear();
 
+    GRand random;
+
+    if(level.seeded)
+        random.seed(level.seed);
+
     float minX = INFINITY, minY = INFINITY, maxX = -INFINITY, maxY = -INFINITY;
 
-    for(uint16_t i = 0; i < nodeCount; i++) {
-        float x = static_cast<float>(rand() / (RAND_MAX + 1.0)) * world.getView().getSize().x;
-        float y = static_cast<float>(rand() / (RAND_MAX + 1.0)) * world.getView().getSize().y;
+    for(uint16_t i = 0; i < level.nodeCount; i++) {
+        float x = static_cast<float>(random.d() * world.getView().getSize().x);
+        float y = static_cast<float>(random.d() * world.getView().getSize().y);
 
         bool cancel = false;
 
@@ -75,8 +79,6 @@ void Graph::generateRandom(uint16_t nodeCount) {
         minY = std::min(y, minY);
         maxX = std::max(x, maxX);
         maxY = std::max(y, maxY);
-
-        std::cout << "X: " << x << ", Y: " << y << std::endl;
     }
 
     minX -= world.getView().getSize().x * 0.1f;
@@ -95,8 +97,8 @@ void Graph::generateRandom(uint16_t nodeCount) {
     int it = 0;
     do {
         it++;
-        int node1Idx = rand() % nodes.size();
-        int node2Idx = rand() % nodes.size();
+        int node1Idx = random.i(nodes.size());
+        int node2Idx = random.i(nodes.size());
 
         if(node1Idx == node2Idx) {
             continue;
@@ -148,11 +150,15 @@ void Graph::generateRandom(uint16_t nodeCount) {
         else
             final_pair = std::pair(node2, node1);
 
-        adjacencyMap.emplace(final_pair, Path(*world.getAssets().get(GameAssets::PATH), *world.getAssets().get(GameAssets::CUM_PATH), final_pair.first->getPosition(), final_pair.second->getPosition(), world.getView()));
+        adjacencyMap.emplace(final_pair, Path(*world.getAssets().get(GameAssets::PATH),
+                                              *world.getAssets().get(GameAssets::CUM_PATH),
+                                              final_pair.first->getPosition(), final_pair.second->getPosition(), world.getView()));
     } while(it < 500000);
 
     if(!isConnected() || hasLeaf()) {
-        generateRandom(nodeCount);
+        if(level.seeded)
+            level.seed++; // deterministically retry with another seed
+        generateLevel(level);
         return;
     }
 }
