@@ -18,9 +18,9 @@ class LevelIndicator : public sf::Drawable {
     mutable sf::Text level_num;
 
     sf::Vector2f mainOffset = {50.0f, 55.0f};
-    sf::Vector2f numOffset = {-10.f, -20.f};
+    sf::Vector2f numOffset = {30.f, -60.f};
 
-    sf::Vector2f labelOffset = {-30.f, -60.f};
+    sf::Vector2f labelOffset = {-40.f, -60.f};
 
     std::string levelNum;
 

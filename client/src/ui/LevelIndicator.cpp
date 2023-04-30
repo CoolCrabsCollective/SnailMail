@@ -18,7 +18,7 @@ LevelIndicator::LevelIndicator(World &world) : world(world) {
     label.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     label.setFillColor(sf::Color::Black);
     label.setPosition(mainOffset + labelOffset);
-    label.setString("LEVEL");
+    label.setString("LEVEL:");
 }
 
 void LevelIndicator::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
