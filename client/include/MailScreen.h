@@ -15,11 +15,13 @@
 #include "world/World.h"
 #include "world/Path.h"
 #include "ui/Sidebar.h"
+#include "ui/LevelCompleteMenu.h"
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SnailMail";
+    LevelCompleteMenu completeMenu;
     World world;
-    Sidebar* sidebar = nullptr;
+    Sidebar sidebar;
 
 public:
     MailScreen(wiz::Game& game);
@@ -39,6 +41,8 @@ public:
     void mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseButtonEvent) override;
 
     void touchBegan(const sf::Event::TouchEvent &touchScreenEvent) override;
+
+    void keyReleased(const sf::Event::KeyEvent &keyEvent) override;
 };
 
 #endif //LD53_CLIENT_MAILSCREEN_H

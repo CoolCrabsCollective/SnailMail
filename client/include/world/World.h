@@ -19,6 +19,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "input/EntitySelection.h"
 #include "world/snail/Snail.h"
+#include "ui/LevelCompleteMenu.h"
 
 class Friend;
 class PostOffice;
@@ -29,6 +30,7 @@ protected:
     const static sf::Color snail_colors[];
 
     wiz::AssetLoader& assets;
+    LevelCompleteMenu& completeMenu;
     std::vector<Entity*> entities, toAdd;
     mutable std::unordered_map<ZOrder, std::vector<Entity*>> zOrderMap;
     const sf::View view;
@@ -50,9 +52,13 @@ protected:
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 
-    World(wiz::AssetLoader& assets);
+    World(wiz::AssetLoader& assets, LevelCompleteMenu& completeMenu);
 
     void generateLevel(Level level);
+
+    void loadNextLevel();
+
+    void retry();
 
     void tick(float delta) override;
 

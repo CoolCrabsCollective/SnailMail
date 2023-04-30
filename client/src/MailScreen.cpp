@@ -11,8 +11,10 @@
 #include "ui/Sidebar.h"
 
 MailScreen::MailScreen(wiz::Game& game)
-        : Screen(game), world(game.getAssets()) {
-    sidebar = new Sidebar(world);
+        : Screen(game),
+            completeMenu(game.getAssets()),
+            world(game.getAssets(), completeMenu),
+            sidebar(world) {
 }
 
 void MailScreen::tick(float delta) {
@@ -25,7 +27,8 @@ void MailScreen::render(sf::RenderTarget &target) {
     target.draw(world);
 
     target.setView(sf::View({800.0f, 450.0f}, { 1600.0f, 900.0f }));
-    target.draw(*sidebar);
+    target.draw(sidebar);
+    target.draw(completeMenu);
 }
 
 const std::string &MailScreen::getName() const {
@@ -57,4 +60,12 @@ void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {
     sf::Vector2f touchVector = getWindow().mapPixelToCoords(sf::Vector2i(touchScreenEvent.x, touchScreenEvent.y), world.getView());
 
     world.getEntitySelection()->clickScan(touchVector);
+}
+
+void MailScreen::keyReleased(const sf::Event::KeyEvent &keyEvent) {
+    if(keyEvent.code == sf::Keyboard::Escape) {
+        completeMenu.show(false, 0, 10, 0, 0, 0, 0.0f);
+    } else if(keyEvent.code == sf::Keyboard::N) {
+        world.loadNextLevel();
+    }
 }

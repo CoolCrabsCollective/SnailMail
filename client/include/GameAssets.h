@@ -19,7 +19,7 @@ namespace GameAssets {
 
 	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
-	ASSET(wiz::FontAsset, SANS_TTF, ("font/sans.ttf"))
+	ASSET(wiz::FontAsset, THE_RIGHT_FONT, ("font/VT323-Regular.ttf"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
     ASSET(wiz::TextureAsset, PATH, ("gfx/path.png"))
@@ -41,6 +41,13 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, FROG_LETTER, ("gfx/ui/letters/frog_icon.png"))
     ASSET(wiz::TextureAsset, LADY_BUG_LETTER, ("gfx/ui/letters/lady_bug_icon.png"))
     ASSET(wiz::TextureAsset, MOUSE_LETTER, ("gfx/ui/letters/mouse_icon.png"))
+    ASSET(wiz::TextureAsset, BUTTON, ("gfx/ui/button.png"))
+
+    // SHELLS
+    ASSET(wiz::TextureAsset, BRONZE_SHELL, ("gfx/ui/shells/bronze.png"))
+    ASSET(wiz::TextureAsset, SILVER_SHELL, ("gfx/ui/shells/silver.png"))
+    ASSET(wiz::TextureAsset, GOLD_SHELL, ("gfx/ui/shells/gold.png"))
+    ASSET(wiz::TextureAsset, LOSER_SHELL, ("gfx/ui/shells/loser.png"))
 }
 
 
