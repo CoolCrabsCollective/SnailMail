@@ -25,11 +25,18 @@ GraphNode* EntitySelection::clickScan(sf::Vector2f clickPos) {
 //    }
 
     // Iterate graph nodes
-    for (GraphNode* entity : world.getGraph()->getNodes()) {
-        clickable = dynamic_cast<Clickable*>(entity);
-        if (clickable && clickable->hitScan(clickPos, entity->getPosition())) {
-            selected = entity;
-            return entity;
+//    for (GraphNode* entity : world.getGraph()->getNodes()) {
+//        if (entity->hitScan(clickPos)) {
+//            selected = entity;
+//            return entity;
+//        }
+//    }
+
+    for (Snail* snail : world.getSnails()) {
+        GraphNode* hitScan = snail->hitScan(clickPos);
+        if (hitScan) {
+            selected = hitScan;
+            return hitScan;
         }
     }
 

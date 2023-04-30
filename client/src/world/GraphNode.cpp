@@ -4,8 +4,7 @@
 
 #include "world/GraphNode.h"
 
-GraphNode::GraphNode(sf::Vector2f position)
-    : Clickable({-1.0f, -1.0f}, {1.0f, 1.0f}), position(position) {
+GraphNode::GraphNode(sf::Vector2f position) : position(position) {
 
 }
 

@@ -7,16 +7,52 @@
 #include "GameAssets.h"
 #include "world/World.h"
 
-PathSelArrow::PathSelArrow(World& world) {
+PathSelArrow::PathSelArrow(World &world, sf::Color color) : Clickable({-.5f, -.5f}, {.5f, .5f}),
+                                                                            world(world) {
     sprite.setTexture(*world.getAssets().get(GameAssets::PATH_SEL_ARROW));
+    sprite.setColor(color);
 }
 
 void PathSelArrow::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sprite.setPosition({0.0f, 0.0f});
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
+    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1., 1.});
     SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 0.5f});
-    target.draw(sprite);
+
+    for (int i = 0; i<arrowPositions.size(); i++) {
+        sprite.setPosition(arrowPositions.at(i));
+        sprite.setRotation(sf::radians(arrowAngles.at(i)));
+
+        target.draw(sprite);
+    }
 }
 
-void PathSelArrow::tick(float delta) {
+void PathSelArrow::updatePositions(GraphNode* currentNode) {
+    arrowPositions.clear();
+    arrowAngles.clear();
+    graphNodes.clear();
+    for (GraphNode* neighbor : currentNode->getNeighbors()) {
+        if (world.getGraph()->getPath(currentNode, neighbor).cummed)
+            continue;
+
+        sf::Vector2f dir = neighbor->getPosition() - currentNode->getPosition();
+        float angle = atanf(dir.y / dir.x);
+
+        if (dir.x < 0) {
+            angle = angle + M_PI;
+        }
+
+        arrowPositions.push_back({cosf(angle) * spawnRadius + currentNode->getPosition().x,
+                                  sinf(angle) * spawnRadius + currentNode->getPosition().y});
+        arrowAngles.push_back(angle + M_PI / 2);
+        graphNodes.push_back(neighbor);
+    }
+}
+
+GraphNode* PathSelArrow::hitScanAll(const sf::Vector2f &hit) {
+    for (int i = 0; i<arrowPositions.size(); i++) {
+        if (hitScan(hit, arrowPositions.at(i))) {
+            return graphNodes.at(i);
+        }
+    }
+
+    return nullptr;
 }

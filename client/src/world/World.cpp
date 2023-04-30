@@ -10,6 +10,7 @@
 #include "world/friends/LadyBug.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
+#include "world/friends/Bee.h"
 #include "world/PostOffice.h"
 
 
@@ -25,7 +26,8 @@ World::World(wiz::AssetLoader &assets)
     sf::Color snail_color_blue = sf::Color(77, 155, 230);
     sf::Color snail_color_yellow = sf::Color(251, 255, 134);
 
-    snail = new Snail(*this, startNode, snail_color_yellow);
+    Snail* snail = new Snail(*this, startNode, snail_color_blue);
+    snails.push_back(snail);
     addEntity(snail);
 
     PostOffice* postOffice = new PostOffice(*this, startNode);
@@ -33,6 +35,11 @@ World::World(wiz::AssetLoader &assets)
 
     LadyBug* ladyBug = new LadyBug(*this, graph->getNodes()[graph->getNodes().size() - 1]);
     addEntity(ladyBug);
+
+
+    Bee* bee = new Bee(*this, graph->getNodes()[graph->getNodes().size() - 2]);
+    addEntity(bee);
+
 
     entitySelection = new EntitySelection(*this);
 
@@ -43,8 +50,6 @@ World::World(wiz::AssetLoader &assets)
 }
 
 void World::tick(float delta) {
-    handleSelected();
-
     for(Entity* entity : entities) {
         if(Tickable* tickable = dynamic_cast<Tickable*>(entity)) {
             tickable->tick(delta);
@@ -125,14 +130,6 @@ void World::removeFromZOrderMap(Entity *entity) {
         zOrderMap.erase(key);
 }
 
-void World::handleSelected() {
-    GraphNode* selected = entitySelection->getSelected();
-    if (selected) {
-        snail->moveLocation(selected);
-        entitySelection->setSelected(nullptr);
-    }
-}
-
 wiz::AssetLoader& World::getAssets() const {
     return assets;
 
@@ -152,4 +149,8 @@ Graph* World::getGraph() const {
 
 EntitySelection *World::getEntitySelection() const {
     return entitySelection;
+}
+
+const std::vector<Snail *> &World::getSnails() const {
+    return snails;
 }
