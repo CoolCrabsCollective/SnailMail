@@ -9,7 +9,7 @@
 #include "SpriteUtil.h"
 #include "ui/PathSelArrow.h"
 
-Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node) {
+Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node), snail_color(snail_color) {
     snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
     snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
 

@@ -24,7 +24,7 @@ class Snail : public GraphEntity, public Tickable {
 
     PathSelArrow* pathSelArrow;
     bool arrowPosUpdated = false;
-
+    sf::Color snail_color;
 public:
     Snail(World& world, GraphNode* node, sf::Color snail_color);
 
