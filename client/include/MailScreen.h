@@ -16,12 +16,14 @@
 #include "world/Path.h"
 #include "ui/Sidebar.h"
 #include "ui/LevelCompleteMenu.h"
+#include "ui/LevelIndicator.h"
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SnailMail";
     World world;
     LevelCompleteMenu completeMenu;
     Sidebar sidebar;
+    LevelIndicator levelIndicator;
     sf::View uiView;
 
 public:
