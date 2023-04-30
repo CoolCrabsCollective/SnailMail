@@ -7,11 +7,23 @@
 
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/Text.hpp"
 
 class World;
 
 class LevelIndicator : public sf::Drawable {
     mutable sf::Sprite backgroundSprite;
+    mutable sf::Text label;
+
+    mutable sf::Text level_num;
+
+    sf::Vector2f mainOffset = {50.0f, 55.0f};
+    sf::Vector2f numOffset = {-10.f, -20.f};
+
+    sf::Vector2f labelOffset = {-30.f, -60.f};
+
+    std::string levelNum;
+
     World& world;
 
 public:
