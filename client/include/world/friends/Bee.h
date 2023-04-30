@@ -13,6 +13,8 @@
 class Bee : public Friend {
 public:
     Bee(World& world, GraphNode* node);
+
+    const FriendType getFriendType() const override;
 };
 
 #endif //LD53_CLIENT_BEE_H

@@ -16,11 +16,23 @@ namespace SpriteUtil {
                           worldUnitSize.y / static_cast<float>(sprite.getTexture()->getSize().y) });
     }
 
+    inline void setSpriteSizeUsingTextureRect(sf::Sprite& sprite, sf::Vector2f worldUnitSize) {
+        sprite.setScale({ worldUnitSize.x / static_cast<float>(sprite.getTextureRect().width),
+                          worldUnitSize.y / static_cast<float>(sprite.getTextureRect().height) });
+    }
+
     inline void setSpriteOrigin(sf::Sprite& sprite, sf::Vector2f localOrigin) {
         sprite.setOrigin({
                  localOrigin.x * static_cast<float>(sprite.getTexture()->getSize().x),
                  localOrigin.y * static_cast<float>(sprite.getTexture()->getSize().y)
          });
+    }
+
+    inline void setSpriteOriginUsingTextureRect(sf::Sprite& sprite, sf::Vector2f localOrigin) {
+        sprite.setOrigin({
+                             localOrigin.x * static_cast<float>(sprite.getTextureRect().width),
+                             localOrigin.y * static_cast<float>(sprite.getTextureRect().height)
+                         });
     }
 
     inline void setSpriteOpacity(sf::Sprite& sprite, float opacity) {

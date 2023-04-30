@@ -4,9 +4,6 @@
 
 #ifndef LD53_CLIENT_TICKABLE_H
 #define LD53_CLIENT_TICKABLE_H
-//
-// Created by Alexander Winter🤤 on 2022-04-02.
-//
 
 class Tickable {
 public:

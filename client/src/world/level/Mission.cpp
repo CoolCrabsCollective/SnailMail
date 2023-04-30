@@ -39,6 +39,10 @@ void Mission::tick(float delta) {
             snail = world.spawnSnail(startPoint, snailId, world
             .getCurrentLevel().snail_speed);
             spawnProgress = spawnDelay;
+
+            for (Delivery* delivery : deliveries) {
+                delivery->getDestination()->getChatBubble().addLetter(delivery->getSender());
+            }
         }
     } else {
         bool allComplete = true;

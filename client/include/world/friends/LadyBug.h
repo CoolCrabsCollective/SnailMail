@@ -13,6 +13,8 @@
 class LadyBug : public Friend {
 public:
     LadyBug(World& world, GraphNode* node);
+
+    const FriendType getFriendType() const override;
 };
 
 #endif //LD53_CLIENT_LADYBUG_H
