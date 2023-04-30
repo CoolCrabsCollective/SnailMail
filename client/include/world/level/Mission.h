@@ -23,6 +23,7 @@ class Mission : public Tickable {
     std::vector<Delivery*> deliveries;
 
     Snail* snail = nullptr;
+    bool spawned_snail = false;
     bool completed = false;
 public:
     Mission(World& world, LevelDeliveryMission& levelMission);

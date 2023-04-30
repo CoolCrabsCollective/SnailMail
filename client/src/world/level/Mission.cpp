@@ -32,22 +32,31 @@ void Mission::tick(float delta) {
     if(isCompleted())
         return;
 
-    if(spawnProgress < spawnDelay) {
+    if(!spawned_snail) {
         spawnProgress += delta;
 
         bool snail_already_exists = false;
+        bool snail_already_at_post_office = false;
+
         for(Snail* s : world.getSnails())
         {
             if(s->getSnailColor() == World::snail_colors[snailId])
             {
                 snail_already_exists = true;
-                break;
+            }
+
+            if(s->getLocation() == startPoint)
+            {
+                snail_already_at_post_office = true;
             }
         }
-        if(spawnProgress >= spawnDelay && !snail_already_exists) {
+
+        
+        if(spawnProgress >= spawnDelay && !snail_already_at_post_office && !snail_already_exists) {
             snail = world.spawnSnail(startPoint, snailId, world
             .getCurrentLevel().snail_speed);
             spawnProgress = spawnDelay;
+            spawned_snail = true;
 
             for (Delivery* delivery : deliveries) {
                 delivery->getDestination()->getChatBubble().addLetter(delivery->getSender());
