@@ -49,9 +49,10 @@ public:
 
     GraphNode* hitScan(const sf::Vector2f& hit);
 
-    constexpr static sf::Color SNAIL_COLOR_RED = sf::Color(232, 59, 59);
-    constexpr static sf::Color SNAIL_COLOR_BLUE = sf::Color(77, 155, 230);
-    constexpr static sf::Color SNAIL_COLOR_YELLOW = sf::Color(251, 255, 134);
+    constexpr static sf::Color SNAIL_COLOR_BLUE = sf::Color(99, 155, 59);
+    constexpr static sf::Color SNAIL_COLOR_YELLOW = sf::Color(251, 242, 54);
+    constexpr static sf::Color SNAIL_COLOR_GREEN = sf::Color(153, 229, 80);
+    constexpr static sf::Color SNAIL_COLOR_RED = sf::Color(217, 87, 99);
 
     bool isMoving();
 
