@@ -95,6 +95,8 @@ public:
     PostOffice* getPostOffice(int id);
 
     Friend* getFriend(int id);
+
+    int getCurrentLevelNumber() const;
 };
 
 

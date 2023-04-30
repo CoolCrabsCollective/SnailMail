@@ -350,3 +350,7 @@ const Level &World::getCurrentLevel() const {
     return currentLevel;
 }
 
+int World::getCurrentLevelNumber() const {
+    return currentLevelNumber;
+}
+
