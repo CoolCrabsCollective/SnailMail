@@ -31,6 +31,7 @@ World::World(wiz::AssetLoader &assets)
 
     Snail* snail = new Snail(*this, getGraph()->getNodes()[0], snail_colors[0]);
     snails.push_back(snail);
+    addEntity(snail);
 
     entitySelection = new EntitySelection(*this);
 
