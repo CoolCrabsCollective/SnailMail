@@ -45,7 +45,7 @@ void Mission::tick(float delta) {
                 snail_already_exists = true;
             }
 
-            if(s->getLocation() == startPoint)
+            if(s->getLocation() == startPoint && !s->isMoving())
             {
                 snail_already_at_post_office = true;
             }
@@ -72,7 +72,16 @@ void Mission::tick(float delta) {
                 allComplete = false;
         }
 
-        if(allComplete && snail->getLocation() == startPoint) {
+        bool is_at_a_post_office = false;
+        for(auto& [k, v] : world.getPostOffices())
+        {
+            if(snail->getLocation() == v->getLocation())
+            {
+                is_at_a_post_office = true;
+                break;
+            }
+        }
+        if(allComplete && is_at_a_post_office) {
             // mission completed
             snail->deleteYourself();
             snail = nullptr;

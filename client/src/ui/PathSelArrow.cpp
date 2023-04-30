@@ -31,13 +31,13 @@ void PathSelArrow::updatePositions(GraphNode* currentNode, sf::Color snail_color
     graphNodes.clear();
     for (GraphNode* neighbor : currentNode->getNeighbors()) {
         Path& path = world.getGraph()->getPath(currentNode, neighbor);
-        if (path.cummed && snail_color == path.cumColor)
+        if (path.isBlocked(currentNode, snail_color))
             continue;
 
         bool neighbor_blocking = false;
         for(Snail* snail : world.getSnails())
         {
-            if(neighbor == snail->getLocation())
+            if(neighbor == snail->getLocation() && snail->isMoving() && snail->getDestination() == currentNode)
             {
                 neighbor_blocking = true;
                 break;

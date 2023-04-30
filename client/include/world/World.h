@@ -45,6 +45,10 @@ protected:
     std::vector<Mission*> missions;
     std::unordered_map<int, Friend*> friends;
     std::unordered_map<int, PostOffice*> postOffices;
+public:
+    const std::unordered_map<int, PostOffice *> &getPostOffices() const;
+
+protected:
 
     void removeFromZOrderMap(Entity* entity);
 

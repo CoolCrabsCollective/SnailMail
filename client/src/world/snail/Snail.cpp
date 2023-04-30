@@ -83,8 +83,7 @@ void Snail::moveLocation(GraphNode* node) {
         return;
 
     Path& path = world.getGraph()->getPath(getLocation(), node);
-    if(!world.getGraph()->areAdjacent(getLocation(), node)
-    || (path.cummed && path.cumColor == snail_color))
+    if(path.isBlocked(getLocation(), snail_color))
         return;
 
     moving = true;
@@ -103,14 +102,32 @@ void Snail::moveLocation(GraphNode* node) {
 
 void Snail::tickMovement(float delta) {
     currentProgressRate = progressRate / locDiff.length();
+    float prevProgress = movingProgress;
     movingProgress += delta * currentProgressRate;
     Path& path = world.getGraph()->getPath(getLocation(), getDestination());
-    if (movingProgress < 1.0f) {
+
+    float progressCap = 1.0f;
+
+    for(Snail* snail : world.getSnails()) {
+        if(snail == this)
+            continue;
+
+        if(!snail->moving && snail->getLocation() == getDestination()) {
+            progressCap = std::min(progressCap, 1.0f - 2.0f / locDiff.length());
+        }
+        if(snail->moving && snail->getLocation() == getLocation() && snail->getDestination() == getDestination()) {
+            if(snail->getMovingProgress() > prevProgress)
+                progressCap = std::min(snail->getMovingProgress() - 2.0f / locDiff.length(), progressCap);
+        }
+    }
+
+    movingProgress = std::min(movingProgress, progressCap);
+
+    if(movingProgress < 1.0f) {
         actualPosition = this->getLocation()->getPosition() + locDiff * movingProgress;
-        path.setCumColor(snail_color);
-        path.setCumminess(movingProgress, getLocation() >= getDestination());
+        path.addSlime(getLocation(), std::min(movingProgress + 0.5f / locDiff.length(), 1.0f), prevProgress, snail_color);
     } else {
-        path.setCummed(true);
+        path.addSlime(getLocation(), 1.0f, prevProgress, snail_color);
         setLocation(getDestination());
         moving = false;
         actualPosition = getPosition();
@@ -137,4 +154,8 @@ bool Snail::isMoving() {
 
 void Snail::setProgressRate(float progressRate) {
     Snail::progressRate = progressRate;
+}
+
+float Snail::getMovingProgress() const {
+    return movingProgress;
 }

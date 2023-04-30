@@ -55,7 +55,7 @@ struct Level {
     int deliveriesForGold = 1;
     float snail_speed = 2.f;
     static Level getLevel(int levelNumber);
-    const static Level LEVELS[];
+    const static std::vector<Level> LEVELS;
 };
 
 
