@@ -43,14 +43,14 @@ void LoadingScreen::render(sf::RenderTarget& target) {
 void LoadingScreen::show() {
 
 	getGame().getAssets().loadAll(GameAssets::ALL);
-	getGame().getAssets().finishLoading(GameAssets::SANS_TTF);
+	getGame().getAssets().finishLoading(GameAssets::THE_RIGHT_FONT);
 	getGame().getAssets().finishLoading(GameAssets::WHITE_PIXEL);
 
 	sprite.setTexture(*getGame().getAssets().get(GameAssets::WHITE_PIXEL));
 
 	message.setString("Loading at a snail's pace...");
 
-	message.setFont(*getGame().getAssets().get(GameAssets::SANS_TTF));
+	message.setFont(*getGame().getAssets().get(GameAssets::THE_RIGHT_FONT));
 
 	getGame().addWindowListener(this);
 }

@@ -89,7 +89,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_time_distance, snail_margin + snail_offset});
             number_text.setString(time_str);
             number_text.setFillColor(sf::Color::Black);
-            number_text.setFont(*world.getAssets().get(GameAssets::SANS_TTF));
+            number_text.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
 
             if(activeDeliveries[j]->isExpired())
             {

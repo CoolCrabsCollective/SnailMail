@@ -11,7 +11,10 @@ const Level Level::LEVELS[] = {
             .friends = { { LADYBUG, false, 2 }},
             .offices = { { false, 0 }},
             .snailCount = 1,
-            .missions = { { 1.0f, 0, 0, { { 0, false, 10.0f }, }}}
+            .missions = { { 1.0f, 0, 0, { { 0, false, 10.0f }, }}},
+            .deliveriesForBronze = 1,
+            .deliveriesForSilver = 1,
+            .deliveriesForGold = 2,
         },
         {
             .seeded = true,
@@ -25,7 +28,10 @@ const Level Level::LEVELS[] = {
                           {{0, true, 15.0f},
                            {1, true, 20.0f},
                           },}
-            }
+            },
+            .deliveriesForBronze = 2,
+            .deliveriesForSilver = 3,
+            .deliveriesForGold = 4,
         },
         {
                 .seeded = true,
@@ -41,7 +47,10 @@ const Level Level::LEVELS[] = {
                                 { { 0, true, 10.0f },
                                   { 1, true, 20.0f },
                                   { 2, true, 30.0f },
-                                  { 3, true, 50.0f }} } }
+                                  { 3, true, 50.0f }} } },
+                .deliveriesForBronze = 2,
+                .deliveriesForSilver = 3,
+                .deliveriesForGold = 4,
         },
         {
                 .seeded = true,
@@ -62,7 +71,10 @@ const Level Level::LEVELS[] = {
                                 { { 3, true, 16.0f },
                                   { 1, true, 27.0f },
                                   { 0, true, 38.0f },
-                                  { 2, true, 60.0f }} } }
+                                  { 2, true, 60.0f }} } },
+                .deliveriesForBronze = 2,
+                .deliveriesForSilver = 3,
+                .deliveriesForGold = 4,
         }
 
 

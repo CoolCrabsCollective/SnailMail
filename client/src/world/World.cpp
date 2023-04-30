@@ -24,10 +24,11 @@ const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_GREEN
 };
 
-World::World(wiz::AssetLoader &assets)
+World::World(wiz::AssetLoader &assets, LevelCompleteMenu& completeMenu)
     : assets(assets),
-      view({ 16.0f, 9.0f }, { 32.0f, 18.0f }),
-      zOrderMap() {
+      completeMenu(completeMenu),
+      zOrderMap(),
+      view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
 
     graph = new Graph(*this);
     addEntity(graph);
@@ -213,14 +214,12 @@ void World::tick(float delta) {
     toAdd.clear();
 
     if(allMissionsCompleted) {
-        std::cout << "Level complete! Loading next one" << std::endl;
-        currentLevelNumber++;
-        generateLevel(Level::getLevel(currentLevelNumber));
+        //completeMenu.show(true, 0, 0, 0, 0, 0, 10.0f);
+        loadNextLevel();
     }
 }
 
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-
     target.setView(view);
     target.draw(background);
 
@@ -312,3 +311,13 @@ const std::vector<Mission *> &World::getMissions() const {
 Friend* World::getFriend(int id) {
     return friends[id];
 }
+
+void World::loadNextLevel() {
+    currentLevelNumber++;
+    generateLevel(Level::getLevel(currentLevelNumber));
+}
+
+void World::retry() {
+
+}
+

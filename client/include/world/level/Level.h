@@ -47,11 +47,11 @@ struct Level {
     std::vector<LevelPostOffice> offices = { { true, 0 } };
     int snailCount = 1;
 
+    std::vector<LevelDeliveryMission> missions = { { 0.0f, 0, 0, { { 0, true, 10.0f } } } };
+
     int deliveriesForBronze = 1;
     int deliveriesForSilver = 1;
     int deliveriesForGold = 1;
-
-    std::vector<LevelDeliveryMission> missions = { { 0.0f, 0, 0, { { 0, true, 10.0f } } } };
 
     static Level getLevel(int levelNumber);
     const static Level LEVELS[];
