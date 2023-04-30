@@ -12,13 +12,13 @@ class World;
 
 class ChatBubble {
     mutable sf::Sprite bubbleSprite;
-    mutable sf::Sprite* letterSprite;
+    mutable sf::Sprite letterSprite;
 
     const sf::Vector2f bubbleRenderOffset = {1.7f, -1.7f};
-    const sf::Vector2f letterRenderOffset = {2.f, 2.f};
+    const sf::Vector2f letterRenderOffset = {0.f, -.25f};
 
 public:
-    ChatBubble(World &world, sf::Color bubbleColor, sf::Sprite* letterSprite);
+    ChatBubble(World &world, sf::Color bubbleColor, const sf::Texture & letterTexture);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states, const sf::Vector2f& friendlyPos) const;
 
