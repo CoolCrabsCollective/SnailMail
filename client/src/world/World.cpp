@@ -13,6 +13,9 @@
 #include "world/friends/Bee.h"
 #include "world/PostOffice.h"
 #include "world/level/Mission.h"
+#include "world/friends/Mouse.h"
+#include "world/friends/Frog.h"
+
 
 const sf::Color World::snail_colors[] = {
         sf::Color(232, 59, 59),
@@ -108,8 +111,10 @@ void World::generateLevel(Level level) {
                 addEntity(new Bee(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
             case MOUSE:
+                addEntity(new Mouse(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
             case FROG:
+                addEntity(new Frog(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
         }
         used_positions.insert(lfriend.hardcodedVertex);
@@ -149,8 +154,10 @@ void World::generateLevel(Level level) {
                 addEntity(new Bee(*this, graph->getNodes()[randVertex]));
                 break;
             case MOUSE:
+                addEntity(new Mouse(*this, graph->getNodes()[randVertex]));
                 break;
             case FROG:
+                addEntity(new Frog(*this, graph->getNodes()[randVertex]));
                 break;
         }
         used_positions.insert(randVertex);

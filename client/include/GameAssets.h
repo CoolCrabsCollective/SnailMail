@@ -27,8 +27,10 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, GRAPH_VERTEX, ("gfx/graph_vertex.png"))
     ASSET(wiz::TextureAsset, SNAILY, ("gfx/snaily.png"))
     ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
-    ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/lady_bug.png"))
-    ASSET(wiz::TextureAsset, BEE, ("gfx/bee.png"))
+    ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/kawaii_ladybug.png"))
+    ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
+    ASSET(wiz::TextureAsset, MOUSE, ("gfx/kawaii_mouse.png"))
+    ASSET(wiz::TextureAsset, FROG, ("gfx/kawaii_frog.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, POST_OFFICE, ("gfx/post_office.png"))
 
