@@ -2,6 +2,7 @@
 // Created by Alexander Winter on 2023-04-29.
 //
 
+#include <iostream>
 #include "world/level/Mission.h"
 #include "world/PostOffice.h"
 #include "world/level/Delivery.h"

@@ -33,15 +33,17 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     target.draw(background);
 
     float snail_offset = 0;
-    for(int i = 0; i < snails.size(); i++)
+    for(int i = 0; i < missions.size(); i++)
     {
+        if(missions[i]->getSnail() == nullptr)
+            continue;
         float starting_offset = snail_offset;
         snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
         sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin, snail_margin + snail_offset};
         snail_sprite.setPosition(pos);
         snail_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
         snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
-        snail_cap_sprite.setColor(snails[i]->getSnailColor());
+        snail_cap_sprite.setColor(missions[i]->getSnail()->getSnailColor());
         snail_cap_sprite.setPosition(pos);
         snail_cap_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
 
