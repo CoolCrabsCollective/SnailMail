@@ -21,6 +21,8 @@ public:
     Sidebar(World& world);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+    constexpr static float DISTANCE_TO_SIDEBAR = 1200.f;
 };
 
 #endif //LD53_CLIENT_SIDEBAR_H

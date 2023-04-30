@@ -10,7 +10,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "input/Clickable.h"
 
-class GraphNode: public Clickable {
+class GraphNode {
     std::vector<GraphNode*> neighbors;
     sf::Vector2f position;
 public:
