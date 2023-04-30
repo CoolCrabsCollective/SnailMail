@@ -12,6 +12,7 @@
 #include "SpriteUtil.h"
 #include "world/friends/Bee.h"
 #include "world/PostOffice.h"
+#include "world/level/Mission.h"
 #include "world/friends/Mouse.h"
 #include "world/friends/Frog.h"
 
@@ -29,11 +30,7 @@ World::World(wiz::AssetLoader &assets)
     graph = new Graph(*this);
     addEntity(graph);
 
-    generateLevel(SnailLevel::getLevel(1));
-
-    Snail* snail = new Snail(*this, getGraph()->getNodes()[0], snail_colors[0]);
-    snails.push_back(snail);
-    addEntity(snail);
+    generateLevel(Level::getLevel(1));
 
     entitySelection = new EntitySelection(*this);
 
@@ -43,9 +40,25 @@ World::World(wiz::AssetLoader &assets)
     SpriteUtil::setSpriteOrigin(background, {0.5f, 0.5f});
 }
 
-void World::generateLevel(SnailLevel level) {
+Snail* World::spawnSnail(GraphNode* node, int snailId) {
+    Snail* snail = new Snail(*this, node, snail_colors[snailId % 3]);
+    snails.push_back(snail);
+    addEntity(snail);
+    return snail;
+}
 
-    // TODO CLEAR PREVIOUS LEVEL
+void World::generateLevel(Level level) {
+    for(Entity* entity : entities)
+        delete entity;
+    entities.clear();
+    snails.clear();
+    missions.clear();
+    toAdd.clear();
+    zOrderMap.clear();
+    postOffices.clear();
+
+    graph = new Graph(*this);
+    addEntity(graph);
 
     currentLevel = level;
     graph->generateLevel(level);
@@ -60,7 +73,9 @@ void World::generateLevel(SnailLevel level) {
 
     std::unordered_set<int> used_positions;
 
+    int id = -1;
     for(LevelPostOffice& postOffice : level.offices) {
+        id++;
         if(postOffice.randomPosition)
             continue;
 
@@ -70,7 +85,9 @@ void World::generateLevel(SnailLevel level) {
             continue;
         }
 
-        addEntity(new PostOffice(*this, graph->getNodes()[postOffice.hardcodedVertex]));
+        PostOffice* po = new PostOffice(*this, graph->getNodes()[postOffice.hardcodedVertex]);
+        addEntity(po);
+        postOffices.emplace(id, po);
         used_positions.insert(postOffice.hardcodedVertex);
     }
 
@@ -103,7 +120,9 @@ void World::generateLevel(SnailLevel level) {
         used_positions.insert(lfriend.hardcodedVertex);
     }
 
+    id = -1;
     for(LevelPostOffice postOffice : level.offices) {
+        id++;
         if(!postOffice.randomPosition)
             continue;
 
@@ -112,7 +131,9 @@ void World::generateLevel(SnailLevel level) {
         while(used_positions.contains(randVertex))
             randVertex = random.i(graph->getNodes().size());
 
-        addEntity(new PostOffice(*this, graph->getNodes()[randVertex]));
+        PostOffice* po = new PostOffice(*this, graph->getNodes()[randVertex]);
+        addEntity(po);
+        postOffices.emplace(id, po);
         used_positions.insert(randVertex);
     }
 
@@ -133,21 +154,33 @@ void World::generateLevel(SnailLevel level) {
                 addEntity(new Bee(*this, graph->getNodes()[randVertex]));
                 break;
             case MOUSE:
+                addEntity(new Mouse(*this, graph->getNodes()[randVertex]));
                 break;
             case FROG:
+                addEntity(new Frog(*this, graph->getNodes()[randVertex]));
                 break;
         }
         used_positions.insert(randVertex);
     }
+
+    for(LevelDeliveryMission mission : level.missions) {
+        missions.push_back(new Mission(*this, mission));
+    }
 }
 
 void World::tick(float delta) {
+
     for(Entity* entity : entities) {
         if(Tickable* tickable = dynamic_cast<Tickable*>(entity)) {
             tickable->tick(delta);
         }
     }
+
+    for(Mission* mission : missions)
+        mission->tick(delta);
+
     removeTrashToBeDeleted();
+
     for(Entity* entity : toAdd) {
         entities.push_back(entity);
 
@@ -231,7 +264,7 @@ const sf::View& World::getView() const {
     return view;
 }
 
-const std::map<ZOrder, std::vector<Entity *>> &World::getZOrderMap() const {
+const std::unordered_map<ZOrder, std::vector<Entity *>> &World::getZOrderMap() const {
     return zOrderMap;
 }
 
@@ -245,4 +278,8 @@ EntitySelection *World::getEntitySelection() const {
 
 const std::vector<Snail *> &World::getSnails() const {
     return snails;
+}
+
+PostOffice* World::getPostOffice(int id) {
+    return postOffices[id];
 }

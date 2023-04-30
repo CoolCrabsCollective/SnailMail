@@ -13,7 +13,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "Path.h"
 #include "SFML/Graphics/VertexArray.hpp"
-#include "SnailLevel.h"
+#include "world/level/Level.h"
 
 struct pair_hash {
     template <class T1, class T2>
@@ -34,7 +34,7 @@ class Graph : public Entity {
 public:
     Graph(World& world);
 
-    void generateLevel(SnailLevel level);
+    void generateLevel(Level level);
 
     const sf::Vector2f& getPosition() const override;
 
