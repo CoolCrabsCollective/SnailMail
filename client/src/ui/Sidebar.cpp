@@ -2,6 +2,7 @@
 // Created by cedric on 4/29/23.
 //
 
+#include <iostream>
 #include "ui/Sidebar.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
@@ -85,23 +86,40 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
                 throw std::runtime_error("Could not find friend for delivery!!");
             }
 
-            int time_left = std::round(activeDeliveries[j]->getTimeLeft());
+            float time_left_float = activeDeliveries[j]->getTimeLeft();
+            float modulo_float = time_left_float - std::floor(time_left_float);
+            float v = (modulo_float - 0.5f);
+            float time_multiplier = 1.f - (4 * v*v);
+            int time_left = std::round(time_left_float);
 
+            float character_size = 64.f;
+            float character_bigger_delta = 16.f;
+            float total_char_size = (character_size + character_bigger_delta * time_multiplier);
+
+            if(time_left_float >= 10.f)
+            {
+                total_char_size = character_size;
+            }
             std::string time_str = std::to_string(time_left);
-            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_time_distance, snail_margin + snail_offset});
+            number_text.setOrigin({total_char_size / 2.f, total_char_size / 2.f});
+            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_time_distance + character_size / 2.f,
+                                                 snail_margin + snail_offset});
             number_text.setString(time_str);
             number_text.setFillColor(sf::Color::Black);
+            number_text.setCharacterSize((int)total_char_size);
             number_text.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
 
             if(activeDeliveries[j]->isExpired())
             {
                 number_text.setString("X");
+                number_text.setCharacterSize(64);
             } else if(!std::isfinite(activeDeliveries[j]->getTimeLeft()))
                 number_text.setString("");
             target.draw(number_text);
 
             friend_sprite.setTexture(*friendTexture);
-            friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance, snail_margin + snail_offset});
+            friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance,
+                                                   snail_margin + snail_offset});
             SpriteUtil::setSpriteSize(friend_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.5, 0.25});
             target.draw(friend_sprite);
@@ -109,8 +127,8 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             snail_offset += offset_from_delivery;
         }
 
-        float minimum_offset =  200.f - starting_offset;
-        float total_snail_offset = std::max(snail_offset, minimum_offset);
+        float minimum_offset =  200.f;
+        float total_snail_offset = std::max(snail_offset, minimum_offset * (i + 1));
         if(i < missions.size() - 1)
         {
             sf::RectangleShape line;
@@ -119,8 +137,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             line.setPosition(sf::Vector2f {DISTANCE_TO_SIDEBAR, total_snail_offset});
             target.draw(line);
         }
+
         snail_offset = total_snail_offset;
     }
-
-
 }

@@ -15,8 +15,11 @@ MailScreen::MailScreen(wiz::Game& game)
             world(game.getAssets(), *this),
             completeMenu(world),
             sidebar(world),
-            levelIndicator(world),
+            levelSelMenu(world),
+            levelIndicator(world, levelSelMenu),
             uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }) {
+    clickables.push_back(dynamic_cast<ClickableUI*>(&levelIndicator));
+    clickables.push_back(dynamic_cast<ClickableUI*>(&levelSelMenu));
 }
 
 void MailScreen::tick(float delta) {
@@ -31,7 +34,10 @@ void MailScreen::render(sf::RenderTarget &target) {
     target.setView(uiView);
     target.draw(sidebar);
     target.draw(levelIndicator);
+
+    // Menus
     target.draw(completeMenu);
+    target.draw(levelSelMenu);
 }
 
 const std::string &MailScreen::getName() const {
@@ -56,11 +62,22 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
     sf::Vector2f clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
                                                             world.getView());
 
-    world.getEntitySelection()->clickScan(clickVector);
+    for (Snail* snail : world.getSnails()) {
+        GraphNode* hitScan = snail->hitScan(clickVector);
+        if (hitScan) {
+            break;
+        }
+    }
 
     clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
                                                             uiView);
     completeMenu.click(clickVector);
+
+    for (ClickableUI* clickable : clickables) {
+        if (clickable->hitScan(clickVector)) {
+            break;
+        }
+    }
 }
 
 void MailScreen::mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) {
@@ -73,11 +90,22 @@ void MailScreen::mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) {
 void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {
     sf::Vector2f touchVector = getWindow().mapPixelToCoords(sf::Vector2i(touchScreenEvent.x, touchScreenEvent.y), world.getView());
 
-    world.getEntitySelection()->clickScan(touchVector);
+    for (Snail* snail : world.getSnails()) {
+        GraphNode* hitScan = snail->hitScan(touchVector);
+        if (hitScan) {
+            break;
+        }
+    }
 
     touchVector = getWindow().mapPixelToCoords(sf::Vector2i(touchScreenEvent.x, touchScreenEvent.y),
                                                uiView);
     completeMenu.click(touchVector);
+
+    for (ClickableUI* clickable : clickables) {
+        if (clickable->hitScan(touchVector)) {
+            break;
+        }
+    }
 }
 
 void MailScreen::keyReleased(const sf::Event::KeyEvent &keyEvent) {

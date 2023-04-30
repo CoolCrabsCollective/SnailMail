@@ -6,8 +6,11 @@
 #include "GameAssets.h"
 #include "world/World.h"
 #include "SpriteUtil.h"
+#include "ui/LevelSelMenu.h"
 
-LevelIndicator::LevelIndicator(World &world) : world(world) {
+LevelIndicator::LevelIndicator(World &world, LevelSelMenu& levelSelMenu) : ClickableUI({25.0f, 25.0f},
+                                                           sf::Vector2f{25.0f, 25.0f} + sf::Vector2f{50.f, 50.f} ),
+                                                           world(world), levelSelMenu(levelSelMenu) {
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_INDICATOR));
     backgroundSprite.setPosition(mainOffset);
 
@@ -37,4 +40,10 @@ void LevelIndicator::draw(sf::RenderTarget &target, const sf::RenderStates &stat
 
 
     target.draw(label);
+}
+
+void LevelIndicator::hitAction(bool& isHit) {
+    if (isHit) {
+        levelSelMenu.setIsOpen(true);
+    }
 }

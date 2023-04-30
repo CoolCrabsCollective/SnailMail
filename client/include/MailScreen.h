@@ -17,6 +17,7 @@
 #include "ui/Sidebar.h"
 #include "ui/LevelCompleteMenu.h"
 #include "ui/LevelIndicator.h"
+#include "ui/LevelSelMenu.h"
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SnailMail";
@@ -24,7 +25,10 @@ class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::I
     LevelCompleteMenu completeMenu;
     Sidebar sidebar;
     LevelIndicator levelIndicator;
+    LevelSelMenu levelSelMenu;
     sf::View uiView;
+
+    std::vector<ClickableUI*> clickables;
 
 public:
     MailScreen(wiz::Game& game);

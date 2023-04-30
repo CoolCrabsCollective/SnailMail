@@ -17,7 +17,8 @@
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
 
-	ASSET(wiz::MusicAsset, SNAIL_FRIENDS_60, ("music/Snail_Friends_60_bpm.ogg"))
+	ASSET(wiz::MusicAsset, SNAILYS_SONG, ("music/snailys_song_v1.mp3"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_60, ("music/Snail_Friends_60_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_70, ("music/Snail_Friends_70_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_80, ("music/Snail_Friends_80_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_90, ("music/Snail_Friends_90_bpm.ogg"))
@@ -27,7 +28,6 @@ namespace GameAssets {
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_130, ("music/Snail_Friends_130_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_140, ("music/Snail_Friends_140_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_150, ("music/Snail_Friends_150_bpm.ogg"))
-
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
 	ASSET(wiz::FontAsset, THE_RIGHT_FONT, ("font/VT323-Regular.ttf"))
 
@@ -39,6 +39,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, POST_OFFICE, ("gfx/post_office.png"))
+
+    // TITLE SCREEN
+    ASSET(wiz::TextureAsset, TITLE_SCREEN_BACKGROUND, ("gfx/title_screen_background.jpg"))
 
     // FRIENDS (KAWAII OR THICC)
     ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
@@ -53,6 +56,7 @@ namespace GameAssets {
     // UI
     ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))
     ASSET(wiz::TextureAsset, CHAT_BUBBLE, ("gfx/ui/chat_bubble.png"))
+    ASSET(wiz::TextureAsset, CHAT_BUBBLE_MAD, ("gfx/ui/chat_bubble_mad.png"))
     ASSET(wiz::TextureAsset, BEE_LETTER, ("gfx/ui/letters/bee_icon.png"))
     ASSET(wiz::TextureAsset, FROG_LETTER, ("gfx/ui/letters/frog_icon.png"))
     ASSET(wiz::TextureAsset, LADY_BUG_LETTER, ("gfx/ui/letters/lady_bug_icon.png"))
@@ -60,6 +64,8 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, BUTTON, ("gfx/ui/button.png"))
     ASSET(wiz::TextureAsset, ALEXS_DESIRE, ("gfx/ui/alexs_desire.png"))
     ASSET(wiz::TextureAsset, LEVEL_INDICATOR, ("gfx/ui/level_sel/level_indicator.png"))
+    ASSET(wiz::TextureAsset, LEVEL_SEL_MENU_BACKDROP, ("gfx/ui/level_sel/level_sel_menu_backdrop.png"))
+    ASSET(wiz::TextureAsset, LEVEL_SEL_MENU_EXIT, ("gfx/ui/level_sel/level_sel_menu_exit.png"))
 
     // SHELLS
     ASSET(wiz::TextureAsset, BRONZE_SHELL, ("gfx/ui/shells/bronze.png"))
