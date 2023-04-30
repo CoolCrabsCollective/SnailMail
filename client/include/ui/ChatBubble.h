@@ -5,8 +5,11 @@
 #ifndef LD53_CLIENT_CHATBUBBLE_H
 #define LD53_CLIENT_CHATBUBBLE_H
 
+#include <vector>
+#include <queue>
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "world/level/Level.h"
 
 class World;
 
@@ -17,10 +20,18 @@ class ChatBubble {
     const sf::Vector2f bubbleRenderOffset = {1.7f, -1.7f};
     const sf::Vector2f letterRenderOffset = {0.f, -.25f};
 
+    const std::vector<sf::Texture> letterTextures;
+
+    std::queue<FriendType> letterQueue;
+
 public:
-    ChatBubble(World &world, sf::Color bubbleColor, const sf::Texture & letterTexture);
+    ChatBubble(World &world, sf::Color bubbleColor);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states, const sf::Vector2f& friendlyPos) const;
+
+    void addLetter(FriendType letter);
+
+    void popLetter();
 
     ~ChatBubble() = default;
 };

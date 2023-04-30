@@ -8,7 +8,6 @@
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
 
-Frog::Frog(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::FROG),
-                                                   *world.getAssets().get(GameAssets::FROG_LETTER)) {
+Frog::Frog(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::FROG)) {
 
 }

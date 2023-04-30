@@ -11,8 +11,7 @@
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
 
-Bee::Bee(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::BEE),
-                                                 *world.getAssets().get(GameAssets::BEE_LETTER)) {
+Bee::Bee(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::BEE)) {
 
 }
 
