@@ -34,6 +34,7 @@ namespace GameAssets {
 
     // UI
     ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))
+    ASSET(wiz::TextureAsset, CHAT_BUBBLE, ("gfx/ui/chat_bubble.png"))
 }
 
 
