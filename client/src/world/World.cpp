@@ -43,7 +43,7 @@ World::World(wiz::AssetLoader &assets)
 }
 
 Snail* World::spawnSnail(GraphNode* node, int snailId) {
-    Snail* snail = new Snail(*this, node, snail_colors[snailId % 3]);
+    Snail* snail = new Snail(*this, node, snail_colors[snailId % 4]);
     snails.push_back(snail);
     addEntity(snail);
     return snail;
