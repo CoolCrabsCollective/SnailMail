@@ -25,12 +25,13 @@ const sf::Color World::snail_colors[] = {
 
 World::World(wiz::AssetLoader &assets)
     : assets(assets),
-      view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
+      view({ 16.0f, 9.0f }, { 32.0f, 18.0f }),
+      zOrderMap() {
 
     graph = new Graph(*this);
     addEntity(graph);
 
-    generateLevel(Level::getLevel(1));
+    generateLevel(Level::getLevel(currentLevelNumber));
 
     entitySelection = new EntitySelection(*this);
 
@@ -56,6 +57,7 @@ void World::generateLevel(Level level) {
     toAdd.clear();
     zOrderMap.clear();
     postOffices.clear();
+    friends.clear();
 
     graph = new Graph(*this);
     addEntity(graph);
@@ -91,7 +93,9 @@ void World::generateLevel(Level level) {
         used_positions.insert(postOffice.hardcodedVertex);
     }
 
+    id = -1;
     for(LevelFriend lfriend : level.friends) {
+        id++;
         if(lfriend.randomPosition)
             continue;
 
@@ -103,20 +107,23 @@ void World::generateLevel(Level level) {
             continue;
         }
 
+        Friend* spawned = nullptr;
+
         switch(lfriend.type) {
             case LADYBUG:
-                addEntity(new LadyBug(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                addEntity(spawned = new LadyBug(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
             case BEE:
-                addEntity(new Bee(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                addEntity(spawned = new Bee(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
             case MOUSE:
-                addEntity(new Mouse(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                addEntity(spawned = new Mouse(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
             case FROG:
-                addEntity(new Frog(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                addEntity(spawned = new Frog(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
         }
+        friends.emplace(id, spawned);
         used_positions.insert(lfriend.hardcodedVertex);
     }
 
@@ -137,7 +144,9 @@ void World::generateLevel(Level level) {
         used_positions.insert(randVertex);
     }
 
+    id = -1;
     for(LevelFriend lfriend : level.friends) {
+        id++;
         if(!lfriend.randomPosition)
             continue;
 
@@ -146,20 +155,23 @@ void World::generateLevel(Level level) {
         while(used_positions.contains(randVertex))
             randVertex = random.i(graph->getNodes().size());
 
+        Friend* spawned = nullptr;
+
         switch(lfriend.type) {
             case LADYBUG:
-                addEntity(new LadyBug(*this, graph->getNodes()[randVertex]));
+                addEntity(spawned = new LadyBug(*this, graph->getNodes()[randVertex]));
                 break;
             case BEE:
-                addEntity(new Bee(*this, graph->getNodes()[randVertex]));
+                addEntity(spawned = new Bee(*this, graph->getNodes()[randVertex]));
                 break;
             case MOUSE:
-                addEntity(new Mouse(*this, graph->getNodes()[randVertex]));
+                addEntity(spawned = new Mouse(*this, graph->getNodes()[randVertex]));
                 break;
             case FROG:
-                addEntity(new Frog(*this, graph->getNodes()[randVertex]));
+                addEntity(spawned = new Frog(*this, graph->getNodes()[randVertex]));
                 break;
         }
+        friends.emplace(id, spawned);
         used_positions.insert(randVertex);
     }
 
@@ -176,8 +188,14 @@ void World::tick(float delta) {
         }
     }
 
-    for(Mission* mission : missions)
+    bool allMissionsCompleted = true;
+
+    for(Mission* mission : missions) {
         mission->tick(delta);
+        if(!mission->isCompleted())
+            allMissionsCompleted = false;
+    }
+
 
     removeTrashToBeDeleted();
 
@@ -192,6 +210,12 @@ void World::tick(float delta) {
             zOrderMap[key].insert(zOrderMap[key].begin(), entity);
     }
     toAdd.clear();
+
+    if(allMissionsCompleted) {
+        std::cout << "Level complete! Loading next one" << std::endl;
+        currentLevelNumber++;
+        generateLevel(Level::getLevel(currentLevelNumber));
+    }
 }
 
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -208,14 +232,9 @@ void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
 void World::addEntity(Entity* entity) {
     toAdd.push_back(entity);
-
-    if(!zOrderMap.contains(entity->getZOrder()))
-        zOrderMap[entity->getZOrder()] = {entity};
-    else
-        zOrderMap[entity->getZOrder()].insert(zOrderMap[entity->getZOrder()].begin(), entity);
 }
 
-const std::vector<Entity *> &World::getEntities() const {
+const std::vector<Entity*>& World::getEntities() const {
     return entities;
 }
 
@@ -227,6 +246,9 @@ void World::removeTrashToBeDeleted() {
             entities.erase(entities.begin() + i);
             removeFromZOrderMap(entity);
 
+            if(dynamic_cast<Snail*>(entity))
+                snails.erase(std::find(snails.begin(), snails.end(), entity));
+
             delete entity;
         } else {
             i++;
@@ -235,7 +257,6 @@ void World::removeTrashToBeDeleted() {
 }
 
 void World::removeFromZOrderMap(Entity *entity) {
-
     ZOrder key = entity->getZOrder();
 
     if(!zOrderMap.contains(key))
@@ -264,7 +285,7 @@ const sf::View& World::getView() const {
     return view;
 }
 
-const std::unordered_map<ZOrder, std::vector<Entity *>> &World::getZOrderMap() const {
+const std::unordered_map<ZOrder, std::vector<Entity*>>& World::getZOrderMap() const {
     return zOrderMap;
 }
 
@@ -272,14 +293,18 @@ Graph* World::getGraph() const {
     return graph;
 }
 
-EntitySelection *World::getEntitySelection() const {
+EntitySelection* World::getEntitySelection() const {
     return entitySelection;
 }
 
-const std::vector<Snail *> &World::getSnails() const {
+const std::vector<Snail*>& World::getSnails() const {
     return snails;
 }
 
 PostOffice* World::getPostOffice(int id) {
     return postOffices[id];
+}
+
+Friend* World::getFriend(int id) {
+    return friends[id];
 }

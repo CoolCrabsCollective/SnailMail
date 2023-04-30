@@ -15,7 +15,7 @@ PostOffice::PostOffice(World &world, GraphNode *node)
 }
 
 const sf::Vector2f &PostOffice::getPosition() const {
-    return startLocation->getPosition();
+    return location->getPosition();
 }
 
 ZOrder PostOffice::getZOrder() const {

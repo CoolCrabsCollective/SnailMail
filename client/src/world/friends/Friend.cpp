@@ -13,7 +13,7 @@ Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture, const 
 }
 
 const sf::Vector2f& Friend::getPosition() const {
-    return getStartNode()->getPosition();
+    return getLocation()->getPosition();
 }
 
 sf::Vector2f Friend::getVisualSize() const {

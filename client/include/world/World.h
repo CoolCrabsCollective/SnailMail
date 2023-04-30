@@ -20,6 +20,7 @@
 #include "input/EntitySelection.h"
 #include "world/snail/Snail.h"
 
+class Friend;
 class PostOffice;
 class Mission;
 
@@ -40,10 +41,12 @@ protected:
 
     Level currentLevel;
     std::vector<Mission*> missions;
+    std::unordered_map<int, Friend*> friends;
     std::unordered_map<int, PostOffice*> postOffices;
 
     void removeFromZOrderMap(Entity* entity);
 
+    int currentLevelNumber = 1;
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 
@@ -71,11 +74,13 @@ public:
 
     Graph* getGraph() const;
 
-    const std::vector<Snail *> &getSnails() const;
+    const std::vector<Snail*>& getSnails() const;
 
     Snail* spawnSnail(GraphNode *node, int i);
 
     PostOffice* getPostOffice(int id);
+
+    Friend* getFriend(int id);
 };
 
 

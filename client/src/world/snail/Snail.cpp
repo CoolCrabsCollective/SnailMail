@@ -31,8 +31,12 @@ ZOrder Snail::getZOrder() const {
     return ZOrder::Snail_ZOrder;
 }
 
+void Snail::deleteYourself() {
+    deleteMyself = true;
+}
+
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    if (!isMoving)
+    if (!moving)
         pathSelArrow->draw(target, states);
 
     snail_sprite.setPosition(actualPosition);
@@ -54,7 +58,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.5f, 1.f});
     SpriteUtil::setSpriteOrigin(snail_cap_sprite, sf::Vector2f{0.5f, 1.f});
-    if(!isMoving)
+    if(!moving)
     {
         snail_sprite.setRotation(sf::radians(0));
         snail_cap_sprite.setRotation(sf::radians(0));
@@ -65,27 +69,27 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 }
 
 void Snail::tick(float delta) {
-    if (isMoving) {
+    if (moving) {
         tickMovement(delta);
         arrowPosUpdated = false;
     } else {
         if (!arrowPosUpdated) {
-            pathSelArrow->updatePositions(getStartNode());
+            pathSelArrow->updatePositions(getLocation());
             arrowPosUpdated = true;
         }
     }
 }
 
 void Snail::moveLocation(GraphNode* node) {
-    if (isMoving || !world.getGraph()->areAdjacent(getStartNode(), node) || !node)
+    if (moving || !world.getGraph()->areAdjacent(getLocation(), node) || !node)
         return;
 
-    if(!world.getGraph()->areAdjacent(getStartNode(), node)
-    || world.getGraph()->getPath(getStartNode(), node).cummed)
+    if(!world.getGraph()->areAdjacent(getLocation(), node)
+    || world.getGraph()->getPath(getLocation(), node).cummed)
         return;
 
-    isMoving = true;
-    setTargetLocation(node);
+    moving = true;
+    setDestination(node);
 
     const sf::Vector2f& startLoc = getPosition();
     const sf::Vector2f& endLoc = getTargetPosition();
@@ -102,24 +106,29 @@ void Snail::tickMovement(float delta) {
     currentProgressRate = progressRate / locDiff.length();
     movingProgress += delta * currentProgressRate;
     if (movingProgress < 1.0f) {
-        actualPosition = this->getStartNode()->getPosition() + locDiff * movingProgress;
-        world.getGraph()->getPath(getStartNode(), getTargetNode()).setCumminess(movingProgress, getStartNode() >= getTargetNode());
+        actualPosition = this->getLocation()->getPosition() + locDiff * movingProgress;
+        world.getGraph()->getPath(getLocation(), getDestination()).setCumminess(movingProgress,
+                                                                               getLocation() >= getDestination());
     } else {
 
-        world.getGraph()->getPath(getStartNode(), getTargetNode()).setCummed(true);
-        setLocation(getTargetNode());
-        isMoving = false;
+        world.getGraph()->getPath(getLocation(), getDestination()).setCummed(true);
+        setLocation(getDestination());
+        moving = false;
         actualPosition = getPosition();
         movingProgress = .0f;
     }
 }
 
 GraphNode* Snail::hitScan(const sf::Vector2f& hit) {
-    if (isMoving)
+    if (moving)
         return nullptr;
 
     GraphNode* target = pathSelArrow->hitScanAll(hit);
     if (target)
         moveLocation(target);
     return target;
+}
+
+bool Snail::isMoving() {
+    return moving;
 }
