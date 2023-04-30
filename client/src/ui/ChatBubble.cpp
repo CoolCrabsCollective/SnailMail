@@ -7,7 +7,7 @@
 #include "GameAssets.h"
 #include "SpriteUtil.h"
 
-ChatBubble::ChatBubble(World &world, sf::Color bubbleColor) {
+ChatBubble::ChatBubble(World &world, sf::Color bubbleColor) : world(world) {
     bubbleSprite.setTexture(*world.getAssets().get(GameAssets::CHAT_BUBBLE));
     bubbleSprite.setColor(bubbleColor);
 
@@ -23,17 +23,39 @@ void ChatBubble::draw(sf::RenderTarget &target, const sf::RenderStates &states, 
     if (letterQueue.empty())
         return;
 
+    if(is_mad)
+    {
+        bubbleSprite.setTexture(*world.getAssets().get(GameAssets::CHAT_BUBBLE_MAD));
+    }
     SpriteUtil::setSpriteSize(bubbleSprite, sf::Vector2f{1.5f, 1.5f});
     SpriteUtil::setSpriteOrigin(bubbleSprite, sf::Vector2f{0.5f, 0.5f});
 
     bubbleSprite.setPosition(friendlyPos + bubbleRenderOffset);
-    target.draw(bubbleSprite);
 
     SpriteUtil::setSpriteSize(letterSprite, sf::Vector2f{.75f, .50f});
     SpriteUtil::setSpriteOrigin(letterSprite, sf::Vector2f{0.5f, 0.5f});
 
     letterSprite.setPosition(friendlyPos + bubbleRenderOffset + letterRenderOffset);
-    target.draw(letterSprite);
+
+    if(is_shaking)
+    {
+        float displacement_x = distribution(generator) * shake_amount;
+        float displacement_y = distribution(generator) * shake_amount;
+        bubbleSprite.setPosition({bubbleSprite.getPosition().x + displacement_x, bubbleSprite.getPosition().y + displacement_y});
+        letterSprite.setPosition({letterSprite.getPosition().x + displacement_x, letterSprite.getPosition().y + displacement_y});
+    }
+    target.draw(bubbleSprite);
+
+    if(!is_mad)
+        target.draw(letterSprite);
+}
+
+void ChatBubble::setIsShaking(bool isShaking) {
+    is_shaking = isShaking;
+}
+
+void ChatBubble::setIsMad(bool isMad) {
+    is_mad = isMad;
 }
 
 void ChatBubble::addLetter(FriendType letter) {

@@ -45,7 +45,7 @@ void Mission::tick(float delta) {
                 snail_already_exists = true;
             }
 
-            if(s->getLocation() == startPoint)
+            if(s->getLocation() == startPoint && !s->isMoving())
             {
                 snail_already_at_post_office = true;
             }

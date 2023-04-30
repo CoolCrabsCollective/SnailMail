@@ -17,7 +17,8 @@
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
 
-	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
+	ASSET(wiz::MusicAsset, SNAILYS_SONG, ("music/snailys_song_v1.mp3"))
+    ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
 	ASSET(wiz::FontAsset, THE_RIGHT_FONT, ("font/VT323-Regular.ttf"))
 
@@ -29,6 +30,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, POST_OFFICE, ("gfx/post_office.png"))
+
+    // TITLE SCREEN
+    ASSET(wiz::TextureAsset, TITLE_SCREEN_BACKGROUND, ("gfx/title_screen_background.jpg"))
 
     // FRIENDS (KAWAII OR THICC)
     ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
@@ -43,6 +47,7 @@ namespace GameAssets {
     // UI
     ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))
     ASSET(wiz::TextureAsset, CHAT_BUBBLE, ("gfx/ui/chat_bubble.png"))
+    ASSET(wiz::TextureAsset, CHAT_BUBBLE_MAD, ("gfx/ui/chat_bubble_mad.png"))
     ASSET(wiz::TextureAsset, BEE_LETTER, ("gfx/ui/letters/bee_icon.png"))
     ASSET(wiz::TextureAsset, FROG_LETTER, ("gfx/ui/letters/frog_icon.png"))
     ASSET(wiz::TextureAsset, LADY_BUG_LETTER, ("gfx/ui/letters/lady_bug_icon.png"))

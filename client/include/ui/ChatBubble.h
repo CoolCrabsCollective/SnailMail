@@ -9,6 +9,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/level/Level.h"
+#include <random>
 
 class World;
 
@@ -22,6 +23,14 @@ class ChatBubble {
     std::vector<sf::Texture*> letterTextures;
 
     std::vector<FriendType> letterQueue;
+    World& world;
+
+
+    float shake_amount = 0.05f;
+    bool is_mad = false;
+    bool is_shaking = false;
+    mutable std::default_random_engine generator;
+    mutable std::uniform_real_distribution<float> distribution{-1.0f, 1.0f};
 
 public:
     ChatBubble(World &world, sf::Color bubbleColor);
@@ -33,6 +42,10 @@ public:
     void popLetter(FriendType letter);
 
     ~ChatBubble() = default;
+
+    void setIsShaking(bool isShaking);
+
+    void setIsMad(bool isMad);
 };
 
 #endif //LD53_CLIENT_CHATBUBBLE_H

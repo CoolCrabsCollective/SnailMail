@@ -13,7 +13,7 @@ void LoadingScreen::tick(float delta) {
 	getGame().getAssets().update(16.0f);
 
 	if(getGame().getAssets().isAllLoaded())
-		getGame().setScreen(std::shared_ptr<MailScreen>(new MailScreen(getGame())));
+		getGame().setScreen(std::shared_ptr<TitleScreen>(new TitleScreen(getGame())));
 }
 
 void LoadingScreen::render(sf::RenderTarget& target) {
@@ -41,7 +41,6 @@ void LoadingScreen::render(sf::RenderTarget& target) {
 }
 
 void LoadingScreen::show() {
-
 	getGame().getAssets().loadAll(GameAssets::ALL);
 	getGame().getAssets().finishLoading(GameAssets::THE_RIGHT_FONT);
 	getGame().getAssets().finishLoading(GameAssets::WHITE_PIXEL);

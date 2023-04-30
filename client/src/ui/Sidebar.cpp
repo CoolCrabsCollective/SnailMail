@@ -2,6 +2,7 @@
 // Created by cedric on 4/29/23.
 //
 
+#include <iostream>
 #include "ui/Sidebar.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
@@ -109,8 +110,8 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             snail_offset += offset_from_delivery;
         }
 
-        float minimum_offset =  200.f - starting_offset;
-        float total_snail_offset = std::max(snail_offset, minimum_offset);
+        float minimum_offset =  200.f;
+        float total_snail_offset = std::max(snail_offset, minimum_offset * (i + 1));
         if(i < missions.size() - 1)
         {
             sf::RectangleShape line;
@@ -119,8 +120,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             line.setPosition(sf::Vector2f {DISTANCE_TO_SIDEBAR, total_snail_offset});
             target.draw(line);
         }
+
         snail_offset = total_snail_offset;
     }
-
-
 }

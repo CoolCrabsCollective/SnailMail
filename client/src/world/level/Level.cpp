@@ -11,7 +11,10 @@ const std::vector<Level> Level::LEVELS = {
                 .friends = { { LADYBUG, false, 2 }},
                 .offices = { { false, 0 }},
                 .snailCount = 1,
-                .missions = { { 1.0f, 0, 0, { { 0, false, 10.0f }, }}},
+                .missions = {
+                        { 1.0f, 0, 0, { { 0, false, 10.0f }, }}
+
+                },
                 .deliveriesForBronze = 0,
                 .deliveriesForSilver = 0,
                 .deliveriesForGold = 1,
@@ -93,7 +96,7 @@ const std::vector<Level> Level::LEVELS = {
                                       { { 3, true, 23.0f },
                                               { 1, true, 30.0f },
                                               { 0, true, 43.0f },
-                                              { 2, true, 60.0f }} } },
+                                              { 2, true, 60.0f }} }},
                 .deliveriesForBronze = 2,
                 .deliveriesForSilver = 3,
                 .deliveriesForGold = 4,

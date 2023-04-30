@@ -23,6 +23,7 @@ class Friend : public GraphEntity, public Submissive, public Breedable {
     float timeTillNextAnim = 0;
     const float frameDelay;
     const float animationDelay;
+    bool isMad = false;
 
 public:
     Friend(World& world, GraphNode* node, const sf::Texture &texture, float frameDelay, float animationDelay);
