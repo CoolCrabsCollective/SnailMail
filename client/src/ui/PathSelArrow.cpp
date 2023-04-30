@@ -31,7 +31,7 @@ void PathSelArrow::updatePositions(GraphNode* currentNode, sf::Color snail_color
     graphNodes.clear();
     for (GraphNode* neighbor : currentNode->getNeighbors()) {
         Path& path = world.getGraph()->getPath(currentNode, neighbor);
-        if (path.cummed && snail_color == path.cumColor)
+        if (path.isBlocked(currentNode, snail_color))
             continue;
 
         bool neighbor_blocking = false;

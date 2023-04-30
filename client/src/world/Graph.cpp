@@ -148,9 +148,7 @@ void Graph::generateLevel(Level level) {
         else
             final_pair = std::pair(node2, node1);
 
-        adjacencyMap.emplace(final_pair, Path(*world.getAssets().get(GameAssets::PATH),
-                                              *world.getAssets().get(GameAssets::CUM_PATH),
-                                              final_pair.first->getPosition(), final_pair.second->getPosition(), world.getView()));
+        adjacencyMap.emplace(final_pair, Path(world.getAssets(),final_pair.first, final_pair.second));
     } while(it < 500000);
 
     if(!isConnected() || hasLeaf()) {

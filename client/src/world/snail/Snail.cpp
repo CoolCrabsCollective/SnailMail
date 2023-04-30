@@ -84,7 +84,7 @@ void Snail::moveLocation(GraphNode* node) {
 
     Path& path = world.getGraph()->getPath(getLocation(), node);
     if(!world.getGraph()->areAdjacent(getLocation(), node)
-    || (path.cummed && path.cumColor == snail_color))
+    || path.isBlocked(getLocation(), snail_color))
         return;
 
     moving = true;
@@ -103,14 +103,14 @@ void Snail::moveLocation(GraphNode* node) {
 
 void Snail::tickMovement(float delta) {
     currentProgressRate = progressRate / locDiff.length();
+    float prevProgress = movingProgress;
     movingProgress += delta * currentProgressRate;
     Path& path = world.getGraph()->getPath(getLocation(), getDestination());
-    if (movingProgress < 1.0f) {
+    if(movingProgress < 1.0f) {
         actualPosition = this->getLocation()->getPosition() + locDiff * movingProgress;
-        path.setCumColor(snail_color);
-        path.setCumminess(movingProgress, getLocation() >= getDestination());
+        path.addSlime(getLocation(), std::min(movingProgress + 0.5f / locDiff.length(), 1.0f), prevProgress, snail_color);
     } else {
-        path.setCummed(true);
+        path.addSlime(getLocation(), 1.0f, prevProgress, snail_color);
         setLocation(getDestination());
         moving = false;
         actualPosition = getPosition();
