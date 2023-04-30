@@ -214,7 +214,8 @@ void World::tick(float delta) {
     toAdd.clear();
 
     if(allMissionsCompleted) {
-        completeMenu.show(true, 0, 0, 0, 0, 0, 10.0f);
+        //completeMenu.show(true, 0, 0, 0, 0, 0, 10.0f);
+        loadNextLevel();
     }
 }
 
