@@ -20,6 +20,7 @@
 #include "input/EntitySelection.h"
 #include "world/snail/Snail.h"
 #include "ui/LevelCompleteMenu.h"
+#include "WIZ/asset/MusicAsset.h"
 
 class Friend;
 class PostOffice;
@@ -101,6 +102,10 @@ public:
     Friend* getFriend(int id);
 
     int getCurrentLevelNumber() const;
+
+    void stopAllMusic();
+
+    const wiz::MusicAsset& getSong(int number);
 };
 
 

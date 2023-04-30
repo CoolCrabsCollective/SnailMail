@@ -53,6 +53,13 @@ Snail* World::spawnSnail(GraphNode* node, int snailId, float speed) {
 }
 
 void World::generateLevel(Level level) {
+
+    stopAllMusic();
+
+    const wiz::MusicAsset& song = getSong(currentLevelNumber);
+    getAssets().get(song)->setLoop(true);
+    getAssets().get(song)->play();
+
     for(Entity* entity : entities)
         delete entity;
     entities.clear();
@@ -356,5 +363,33 @@ int World::getCurrentLevelNumber() const {
 
 const std::unordered_map<int, PostOffice *> &World::getPostOffices() const {
     return postOffices;
+}
+
+void World::stopAllMusic() {
+    getAssets().get(GameAssets::SNAIL_FRIENDS_60)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_70)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_80)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_90)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_100)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_110)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_120)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_130)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_140)->stop();
+    getAssets().get(GameAssets::SNAIL_FRIENDS_150)->stop();
+}
+
+const wiz::MusicAsset& World::getSong(int levelNumber) {
+    switch(levelNumber) {
+        case 1: return GameAssets::SNAIL_FRIENDS_60;
+        case 2: return GameAssets::SNAIL_FRIENDS_70;
+        case 3: return GameAssets::SNAIL_FRIENDS_80;
+        case 4: return GameAssets::SNAIL_FRIENDS_90;
+        case 5: return GameAssets::SNAIL_FRIENDS_100;
+        case 6: return GameAssets::SNAIL_FRIENDS_110;
+        case 7: return GameAssets::SNAIL_FRIENDS_120;
+        case 8: return GameAssets::SNAIL_FRIENDS_130;
+        case 9: return GameAssets::SNAIL_FRIENDS_140;
+        default: return GameAssets::SNAIL_FRIENDS_150;
+    }
 }
 

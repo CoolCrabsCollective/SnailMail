@@ -17,7 +17,17 @@
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
 
-	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
+	ASSET(wiz::MusicAsset, SNAIL_FRIENDS_60, ("music/Snail_Friends_60_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_70, ("music/Snail_Friends_70_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_80, ("music/Snail_Friends_80_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_90, ("music/Snail_Friends_90_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_100, ("music/Snail_Friends_100_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_110, ("music/Snail_Friends_110_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_120, ("music/Snail_Friends_120_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_130, ("music/Snail_Friends_130_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_140, ("music/Snail_Friends_140_bpm.ogg"))
+    ASSET(wiz::MusicAsset, SNAIL_FRIENDS_150, ("music/Snail_Friends_150_bpm.ogg"))
+
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
 	ASSET(wiz::FontAsset, THE_RIGHT_FONT, ("font/VT323-Regular.ttf"))
 
