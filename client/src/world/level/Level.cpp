@@ -72,7 +72,7 @@ const Level Level::LEVELS[] = {
 };
 
 Level Level::getLevel(int levelNumber) {
-    if(levelNumber > 3)
+    if(levelNumber > 4)
         return Level();
 
     return LEVELS[levelNumber - 1];
