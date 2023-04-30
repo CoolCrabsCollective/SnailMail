@@ -11,10 +11,12 @@ Mission::Mission(World& world, LevelDeliveryMission& levelMission)
         spawnDelay(levelMission.spawnDelay),
         spawnProgress(-0.01f),
         snailId(levelMission.snailId),
-        startPoint(world.getPostOffice(levelMission.startPostOfficeId)->getStartNode()) {
+        startPoint(world.getPostOffice(levelMission.startPostOfficeId)->getLocation()) {
 
     for(LevelDelivery& levelDelivery : levelMission.deliveries) {
-        // deliveries.push_back(new Delivery(levelDelivery.timeLimit, ));
+        deliveries.push_back(new Delivery(*this,
+                                          levelDelivery.timeLimit,
+                                          world.getFriend(levelDelivery.friendId)));
     }
 }
 
@@ -25,6 +27,9 @@ Mission::~Mission() {
 }
 
 void Mission::tick(float delta) {
+    if(isCompleted())
+        return;
+
     if(spawnProgress < spawnDelay) {
         spawnProgress += delta;
 
@@ -33,8 +38,20 @@ void Mission::tick(float delta) {
             spawnProgress = spawnDelay;
         }
     } else {
+        bool allComplete = true;
+
         for(Delivery* delivery : deliveries) {
             delivery->tick(delta);
+
+            if(!delivery->isCompleted())
+                allComplete = false;
+        }
+
+        if(allComplete && snail->getLocation() == startPoint) {
+            // mission completed
+            snail->deleteYourself();
+            snail = nullptr;
+            completed = true;
         }
     }
 }
@@ -49,5 +66,9 @@ bool Mission::hasSpawnedSnail() const {
 
 Snail *Mission::getSnail() {
     return snail;
+}
+
+bool Mission::isCompleted() const {
+    return completed;
 }
 

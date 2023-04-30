@@ -13,7 +13,7 @@ class PathSelArrow;
 class Snail : public GraphEntity, public Tickable {
     mutable sf::Sprite snail_sprite;
     mutable sf::Sprite snail_cap_sprite;
-    bool isMoving = false;
+    bool moving = false;
     float movingProgress = 0.f;
     float progressRate = 2.f;
     float currentProgressRate = 0;
@@ -25,6 +25,9 @@ class Snail : public GraphEntity, public Tickable {
     PathSelArrow* pathSelArrow;
     bool arrowPosUpdated = false;
     sf::Color snail_color;
+
+    bool deleteMyself = false;
+
 public:
     Snail(World& world, GraphNode* node, sf::Color snail_color);
 
@@ -50,6 +53,14 @@ public:
     constexpr static sf::Color SNAIL_COLOR_BLUE = sf::Color(77, 155, 230);
     constexpr static sf::Color SNAIL_COLOR_YELLOW = sf::Color(251, 255, 134);
 
+    bool isMoving();
+
+    void deleteYourself();
+
+    [[nodiscard]]
+    virtual bool shouldBeRemoved() const override {
+        return deleteMyself;
+    }
 };
 
 

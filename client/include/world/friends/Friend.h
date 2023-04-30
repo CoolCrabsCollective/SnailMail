@@ -16,7 +16,7 @@ class Friend : public GraphEntity {
     ChatBubble chatBubble;
 
 public:
-    Friend(World& world, GraphNode* node, const sf::Texture& texture, const sf::Texture &letterTexture);
+    Friend(World& world, GraphNode* node, const sf::Texture &texture);
 
     const sf::Vector2f& getPosition() const;
 

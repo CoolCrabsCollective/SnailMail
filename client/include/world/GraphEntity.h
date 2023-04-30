@@ -10,30 +10,30 @@
 
 class GraphEntity : public Entity {
 protected:
-    GraphNode* startLocation = nullptr;
-    GraphNode* targetLocation = nullptr;
+    GraphNode* location = nullptr;
+    GraphNode* destination = nullptr;
 
 public:
-    GraphEntity(World& world, GraphNode* node) : Entity(world), startLocation(node) {}
+    GraphEntity(World& world, GraphNode* node) : Entity(world), location(node) {}
 
     [[nodiscard]]
     virtual const sf::Vector2f& getPosition() const = 0;
 
     [[nodiscard]]
-    const sf::Vector2f& getTargetPosition() { return targetLocation->getPosition(); }
+    const sf::Vector2f& getTargetPosition() { return destination->getPosition(); }
 
     [[nodiscard]]
-    GraphNode* getTargetNode() const { return targetLocation; }
+    GraphNode* getDestination() const { return destination; }
 
     [[nodiscard]]
-    GraphNode* getStartNode() const { return startLocation; }
+    GraphNode* getLocation() const { return location; }
 
-    void setLocation(GraphNode *location) {
-        GraphEntity::startLocation = location;
+    void setLocation(GraphNode* location) {
+        GraphEntity::location = location;
     }
 
-    void setTargetLocation(GraphNode *targetLocation) {
-        GraphEntity::targetLocation = targetLocation;
+    void setDestination(GraphNode* destination) {
+        GraphEntity::destination = destination;
     }
 
     virtual ZOrder getZOrder() const = 0;

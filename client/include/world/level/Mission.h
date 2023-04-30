@@ -23,6 +23,7 @@ class Mission : public Tickable {
     std::vector<Delivery*> deliveries;
 
     Snail* snail = nullptr;
+    bool completed = false;
 public:
     Mission(World& world, LevelDeliveryMission& levelMission);
 
@@ -44,6 +45,12 @@ public:
      */
     [[nodiscard]]
     Snail* getSnail();
+
+    /**
+     * @return true if the mission is completed, meaning the snail is despawned
+     */
+    [[nodiscard]]
+    bool isCompleted() const;
 };
 
 

@@ -8,7 +8,6 @@
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
 
-LadyBug::LadyBug(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::LADY_BUG),
-                                                         *world.getAssets().get(GameAssets::LADY_BUG_LETTER)) {
+LadyBug::LadyBug(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::LADY_BUG)) {
 
 }

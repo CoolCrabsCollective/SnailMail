@@ -7,13 +7,13 @@
 #include "SpriteUtil.h"
 #include "GameAssets.h"
 
-Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture, const sf::Texture &letterTexture) : GraphEntity(world, node),
-                                        chatBubble(world, sf::Color(255, 255, 255), letterTexture) {
+Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture) : GraphEntity(world, node),
+                                        chatBubble(world, sf::Color(255, 255, 255)) {
     sprite.setTexture(texture);
 }
 
 const sf::Vector2f& Friend::getPosition() const {
-    return getStartNode()->getPosition();
+    return getLocation()->getPosition();
 }
 
 sf::Vector2f Friend::getVisualSize() const {

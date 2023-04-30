@@ -9,6 +9,8 @@
 #include "world/friends/Friend.h"
 
 class Delivery : public Tickable {
+
+    Mission& mission;
     float timeLimit;
     float timeLeft;
 
@@ -17,13 +19,15 @@ class Delivery : public Tickable {
     bool completed;
 public:
 
-    Delivery(float timeLimit, Friend *destination);
+    Delivery(Mission& mission, float timeLimit, Friend *destination);
 
     void tick(float delta) override;
 
     bool isCompleted() const;
 
     bool isExpired() const;
+
+    float getTimeLeft() const;
 
     Friend *getDestination() const;
 };

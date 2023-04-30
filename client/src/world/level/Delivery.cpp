@@ -3,19 +3,28 @@
 //
 
 #include "world/level/Delivery.h"
+#include "world/level/Mission.h"
 
-Delivery::Delivery(float timeLimit,
+Delivery::Delivery(Mission& mission,
+                   float timeLimit,
                    Friend* destination)
-        : timeLimit(timeLimit),
+        : mission(mission),
+          timeLimit(timeLimit),
           timeLeft(timeLimit),
-          destination(destination) {}
+          destination(destination),
+          completed(false) {}
 
 void Delivery::tick(float delta) {
-    if(completed)
+    if(completed || !mission.hasSpawnedSnail())
         return;
 
-    if(timeLeft > 0.0f) {
-        timeLeft -= 0.0f;
+    if(isExpired())
+        return;
+
+    if(mission.getSnail()->getLocation() == destination->getLocation() && !mission.getSnail()->isMoving()) {
+        completed = true;
+    } else {
+        timeLeft -= delta;
         if(timeLeft < 0.0f)
             timeLeft = 0.0f;
     }
@@ -31,4 +40,8 @@ bool Delivery::isExpired() const {
 
 Friend *Delivery::getDestination() const {
     return destination;
+}
+
+float Delivery::getTimeLeft() const {
+    return timeLeft;
 }

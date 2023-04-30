@@ -5,6 +5,12 @@
 #include "ui/Sidebar.h"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
+#include "world/level/Mission.h"
+#include "world/level/Delivery.h"
+#include "world/friends/LadyBug.h"
+#include "world/friends/Mouse.h"
+#include "world/friends/Frog.h"
+#include "world/friends/Bee.h"
 
 Sidebar::Sidebar(World& world) : world(world) {}
 
@@ -19,8 +25,6 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     std::vector<Snail*> snails = world.getSnails();
 
     std::vector<Mission*> missions = world.getMissions();
-    std::vector<std::vector<int>> delivery_ids = {{0, 1}, {1, 2, 3}, {0, 3}};
-    std::vector<std::vector<int>> time_left = {{7, 12}, {3, 15, 22}, {17, 25}};
 
     sf::RectangleShape background;
     background.setSize(sf::Vector2f{400.f, 900.f});
@@ -43,20 +47,42 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         target.draw(snail_sprite);
         target.draw(snail_cap_sprite);
 
-        std::vector<int>& deliveries = delivery_ids[i];
-        std::vector<int>& times = time_left[i];
+        const std::vector<Delivery*>& deliveries = missions[i]->getDeliveries();
 
-        std::vector<sf::Texture*> friend_textures = {
-                world.getAssets().get(GameAssets::LADY_BUG),
-                world.getAssets().get(GameAssets::BEE),
-                world.getAssets().get(GameAssets::FROG),
-                world.getAssets().get(GameAssets::MOUSE)
-        };
-
-        for(int j = 0; j < deliveries.size(); j++)
+        std::vector<Delivery*> activeDeliveries;
+        for(Delivery* d : deliveries)
         {
-            int delivery_id = deliveries[j];
-            int time_left = times[j];
+            if(!d->isCompleted())
+            {
+                activeDeliveries.push_back(d);
+            }
+        }
+
+
+        for(int j = 0; j < activeDeliveries.size(); j++)
+        {
+            Friend* friend_to_deliver = activeDeliveries[j]->getDestination();
+            sf::Texture* friendTexture = nullptr;
+            if (dynamic_cast<LadyBug*>(friend_to_deliver))
+            {
+                friendTexture = world.getAssets().get(GameAssets::LADY_BUG);
+            }else if(dynamic_cast<Bee*>(friend_to_deliver)){
+
+                friendTexture = world.getAssets().get(GameAssets::BEE);
+            }
+            else if(dynamic_cast<Frog*>(friend_to_deliver)){
+
+                friendTexture = world.getAssets().get(GameAssets::FROG);
+            }
+            else if(dynamic_cast<Mouse*>(friend_to_deliver)){
+
+                friendTexture = world.getAssets().get(GameAssets::MOUSE);
+            }
+            else {
+                throw std::runtime_error("Could not find friend for delivery!!");
+            }
+
+            int time_left = std::round(activeDeliveries[j]->getTimeLeft());
 
             std::string time_str = std::to_string(time_left);
             number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_time_distance, snail_margin + snail_offset});
@@ -64,12 +90,13 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             number_text.setFillColor(sf::Color::Black);
             number_text.setFont(*world.getAssets().get(GameAssets::SANS_TTF));
 
+            if(activeDeliveries[j]->isExpired())
+            {
+                number_text.setString("X");
+            }
             target.draw(number_text);
 
-
-
-            sf::Texture* texture = friend_textures[delivery_id];
-            friend_sprite.setTexture(*texture);
+            friend_sprite.setTexture(*friendTexture);
             friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance, snail_margin + snail_offset});
             SpriteUtil::setSpriteSize(friend_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.5, 0.25});
@@ -79,7 +106,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         }
 
 
-        if(i < colors.size() - 1)
+        if(i < snails.size() - 1)
         {
             sf::RectangleShape line;
             line.setFillColor(sf::Color::Black);
