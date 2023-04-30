@@ -73,10 +73,8 @@ void Snail::tick(float delta) {
         tickMovement(delta);
         arrowPosUpdated = false;
     } else {
-        if (!arrowPosUpdated) {
-            pathSelArrow->updatePositions(getLocation(), snail_color);
-            arrowPosUpdated = true;
-        }
+        pathSelArrow->updatePositions(getLocation(), snail_color);
+        arrowPosUpdated = true;
     }
 }
 
