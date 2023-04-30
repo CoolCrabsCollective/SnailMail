@@ -55,6 +55,8 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, BUTTON, ("gfx/ui/button.png"))
     ASSET(wiz::TextureAsset, ALEXS_DESIRE, ("gfx/ui/alexs_desire.png"))
     ASSET(wiz::TextureAsset, LEVEL_INDICATOR, ("gfx/ui/level_sel/level_indicator.png"))
+    ASSET(wiz::TextureAsset, LEVEL_SEL_MENU_BACKDROP, ("gfx/ui/level_sel/level_sel_menu_backdrop.png"))
+    ASSET(wiz::TextureAsset, LEVEL_SEL_MENU_EXIT, ("gfx/ui/level_sel/level_sel_menu_exit.png"))
 
     // SHELLS
     ASSET(wiz::TextureAsset, BRONZE_SHELL, ("gfx/ui/shells/bronze.png"))

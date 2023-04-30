@@ -17,7 +17,6 @@
 #include "SFML/Graphics/View.hpp"
 #include "Graph.h"
 #include "SFML/Graphics/Sprite.hpp"
-#include "input/EntitySelection.h"
 #include "world/snail/Snail.h"
 #include "ui/LevelCompleteMenu.h"
 
@@ -39,7 +38,6 @@ protected:
     std::vector<Snail*> snails;
 
     mutable sf::Sprite background;
-    EntitySelection* entitySelection = nullptr;
 
     Level currentLevel;
     std::vector<Mission*> missions;
@@ -85,8 +83,6 @@ public:
     const sf::View& getView() const;
 
     const std::unordered_map<ZOrder, std::vector<Entity *>>& getZOrderMap() const;
-
-    EntitySelection* getEntitySelection() const;
 
     Graph* getGraph() const;
 
