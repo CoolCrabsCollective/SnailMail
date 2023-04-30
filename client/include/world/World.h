@@ -28,7 +28,7 @@ protected:
     const sf::View view;
 
     Graph* graph = nullptr;
-    Snail* snail = nullptr;
+    std::vector<Snail*> snails;
 
     void removeFromZOrderMap(Entity* entity);
 
@@ -58,9 +58,9 @@ public:
 
     EntitySelection *getEntitySelection() const;
 
-    void handleSelected();
-
     Graph *getGraph() const;
+
+    const std::vector<Snail *> &getSnails() const;
 };
 
 

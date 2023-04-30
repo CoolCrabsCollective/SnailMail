@@ -42,7 +42,7 @@ public:
 
     void tickMovement(float delta);
 
-    bool hitScan(const sf::Vector2f& hit);
+    GraphNode* hitScan(const sf::Vector2f& hit);
 };
 
 #endif //LD53_CLIENT_SNAIL_H
