@@ -32,6 +32,7 @@ namespace GameAssets {
 
     // FRIENDS (KAWAII OR THICC)
     ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
+    ASSET(wiz::TextureAsset, BEE_SPRITE_SHEET, ("gfx/bee_sprite_sheet.png"))
     ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/kawaii_ladybug.png"))
     ASSET(wiz::TextureAsset, LADY_BUG_SPRITE_SHEET, ("gfx/ladybug_sprite_sheet.png"))
     ASSET(wiz::TextureAsset, MOUSE, ("gfx/kawaii_mouse.png"))
