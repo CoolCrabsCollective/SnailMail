@@ -19,9 +19,10 @@
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SnailMail";
-    LevelCompleteMenu completeMenu;
     World world;
+    LevelCompleteMenu completeMenu;
     Sidebar sidebar;
+    sf::View uiView;
 
 public:
     MailScreen(wiz::Game& game);
@@ -38,11 +39,15 @@ public:
 
     void windowClosed() override;
 
+    void mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) override;
+
     void mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseButtonEvent) override;
 
     void touchBegan(const sf::Event::TouchEvent &touchScreenEvent) override;
 
     void keyReleased(const sf::Event::KeyEvent &keyEvent) override;
+
+    LevelCompleteMenu& getCompleteMenu();
 };
 
 #endif //LD53_CLIENT_MAILSCREEN_H

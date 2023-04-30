@@ -24,13 +24,14 @@
 class Friend;
 class PostOffice;
 class Mission;
+class MailScreen;
 
 class World : public Tickable, public sf::Drawable {
 protected:
     const static sf::Color snail_colors[];
 
     wiz::AssetLoader& assets;
-    LevelCompleteMenu& completeMenu;
+    MailScreen& screen;
     std::vector<Entity*> entities, toAdd;
     mutable std::unordered_map<ZOrder, std::vector<Entity*>> zOrderMap;
     const sf::View view;
@@ -49,10 +50,11 @@ protected:
     void removeFromZOrderMap(Entity* entity);
 
     int currentLevelNumber = 1;
+    float timeSpent = 0.0f;
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 
-    World(wiz::AssetLoader& assets, LevelCompleteMenu& completeMenu);
+    World(wiz::AssetLoader& assets, MailScreen& screen);
 
     void generateLevel(Level level);
 

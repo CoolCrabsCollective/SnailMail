@@ -15,7 +15,8 @@
 #include "world/level/Mission.h"
 #include "world/friends/Mouse.h"
 #include "world/friends/Frog.h"
-
+#include "MailScreen.h"
+#include "world/level/Delivery.h"
 
 const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_BLUE,
@@ -24,9 +25,9 @@ const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_GREEN
 };
 
-World::World(wiz::AssetLoader &assets, LevelCompleteMenu& completeMenu)
+World::World(wiz::AssetLoader &assets, MailScreen& screen)
     : assets(assets),
-      completeMenu(completeMenu),
+      screen(screen),
       zOrderMap(),
       view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
 
@@ -60,6 +61,7 @@ void World::generateLevel(Level level) {
     zOrderMap.clear();
     postOffices.clear();
     friends.clear();
+    timeSpent = 0.0f;
 
     graph = new Graph(*this);
     addEntity(graph);
@@ -184,12 +186,14 @@ void World::generateLevel(Level level) {
 
 void World::tick(float delta) {
 
+    if(!screen.getCompleteMenu().isVisible())
+        timeSpent += delta;
+
     for(Entity* entity : entities) {
         if(Tickable* tickable = dynamic_cast<Tickable*>(entity)) {
             tickable->tick(delta);
         }
     }
-
     bool allMissionsCompleted = true;
 
     for(Mission* mission : missions) {
@@ -213,9 +217,29 @@ void World::tick(float delta) {
     }
     toAdd.clear();
 
-    if(allMissionsCompleted) {
-        //completeMenu.show(true, 0, 0, 0, 0, 0, 10.0f);
-        loadNextLevel();
+    if(!screen.getCompleteMenu().isVisible() && allMissionsCompleted) {
+        int deliveriesCompleted = 0;
+        int deliveriesMissed = 0;
+
+
+        for(Mission* mission : missions) {
+            for(Delivery* delivery : mission->getDeliveries()) {
+                if(delivery->isCompleted()) {
+                    deliveriesCompleted++;
+                } else if(delivery->isExpired()) {
+                    deliveriesMissed++;
+                }
+            }
+        }
+
+        screen.getCompleteMenu().show(deliveriesCompleted >= currentLevel.deliveriesForBronze,
+                                      deliveriesCompleted,
+                                      deliveriesMissed,
+                                      currentLevel.deliveriesForBronze,
+                                      currentLevel.deliveriesForSilver,
+                                      currentLevel.deliveriesForGold,
+                                      std::max(50.0f * deliveriesCompleted - 25.0f * deliveriesMissed,
+                                                    100.0f * deliveriesCompleted - 50.0f * deliveriesMissed - timeSpent * 20.0f));
     }
 }
 
@@ -318,6 +342,6 @@ void World::loadNextLevel() {
 }
 
 void World::retry() {
-
+    generateLevel(Level::getLevel(currentLevelNumber));
 }
 

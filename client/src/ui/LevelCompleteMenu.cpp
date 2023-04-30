@@ -6,12 +6,18 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "GameAssets.h"
 #include "SpriteUtil.h"
+#include "world/World.h"
 
-LevelCompleteMenu::LevelCompleteMenu(wiz::AssetLoader& assets)
-    : assets(assets),
+LevelCompleteMenu::LevelCompleteMenu(World& world)
+    : world(world),
+        assets(world.getAssets()),
         visible(false),
         won(false),
-        hasPreviousBest(false) {
+        hasPreviousBest(false),
+        retryHovered(false),
+        nextHovered(false),
+        retryScale(1.0f),
+        nextScale(1.0f) {
     background.setTexture(*assets.get(GameAssets::WHITE_PIXEL));
     background.setColor(sf::Color(0, 0, 0, 100));
     background.setPosition({0.0f, 0.0f });
@@ -31,23 +37,30 @@ void LevelCompleteMenu::show(bool success,
                              float score) {
     visible = true;
     won = success;
+    retryScale = 1.0f;
+    nextScale = 1.0f;
+    retryHovered = false;
+    nextHovered = false;
 
     if(!success) {
         shell.setTexture(*assets.get(GameAssets::LOSER_SHELL), true);
-        nextShellRequirement.setString("Complete 3 for Silver");
-    }
-    else if(deliveriesCompleted >= deliveriesForGold)
+        nextShellRequirement.setString("Complete " + std::to_string(deliveriesForBronze) + " to win");
+    } else if(deliveriesCompleted >= deliveriesForGold) {
         shell.setTexture(*assets.get(GameAssets::GOLD_SHELL), true);
-    else if(deliveriesCompleted >= deliveriesForSilver)
+        nextShellRequirement.setString("");
+    } else if(deliveriesCompleted >= deliveriesForSilver) {
         shell.setTexture(*assets.get(GameAssets::SILVER_SHELL), true);
-    else
+        nextShellRequirement.setString("Complete " + std::to_string(deliveriesForGold) + " for gold");
+    } else {
         shell.setTexture(*assets.get(GameAssets::BRONZE_SHELL), true);
+        nextShellRequirement.setString("Complete " + std::to_string(deliveriesForGold) + " for silver");
+    }
 
     shell.setPosition({ 300.0f, 200.0f });
     SpriteUtil::setSpriteSize(shell, { 200.0f, 200.0f });
     SpriteUtil::setSpriteOrigin(shell, { 0.0f, 0.0f });
 
-    title.setString(success ? "Success!" : "Wow you really suck");
+    title.setString(success ? "Success!" : "Too late!");
     title.setFillColor(sf::Color::White);
     title.setCharacterSize(100);
     title.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
@@ -75,7 +88,7 @@ void LevelCompleteMenu::show(bool success,
     scoreText.setPosition({ 610.0f, 500.0f});
     scoreText.setStyle(sf::Text::Bold);
 
-    hasPreviousBest = true;
+    hasPreviousBest = false;
     yourBest.setString("Your best:");
     yourBest.setFillColor(sf::Color::White);
     yourBest.setCharacterSize(45);
@@ -118,26 +131,47 @@ void LevelCompleteMenu::show(bool success,
     retryButton.setCharacterSize(90);
     retryButton.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
     textRect = retryButton.getLocalBounds();
-    retryButton.setPosition({ 500.0f - textRect.width / 2.0f, 675.0f});
+    retryButton.setPosition({ 500.0f, 675.0f + textRect.height / 2.0f});
+    retryButton.setOrigin({ 0.5f * textRect.width, 0.5f * textRect.height });
 
     nextButton.setString("Next");
     nextButton.setFillColor(sf::Color::White);
     nextButton.setCharacterSize(90);
     nextButton.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
     textRect = nextButton.getLocalBounds();
-    nextButton.setPosition({ 900.0f - textRect.width / 2.0f, 675.0f});
+    nextButton.setPosition({ 900.0f, 675.0f + textRect.height / 2.0f});
+    nextButton.setOrigin({ 0.5f * textRect.width, 0.5f * textRect.height });
 
     nextShellRequirement.setFillColor(sf::Color::White);
     nextShellRequirement.setCharacterSize(45);
     nextShellRequirement.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
     nextShellRequirement.setPosition({200.0f, 400.0f});
-
 }
 
 void LevelCompleteMenu::hide() {
     visible = false;
+}
 
+void LevelCompleteMenu::tick(float delta) {
+    if(retryHovered) {
+        retryScale += delta * 8.0f;
+        if(retryScale > 1.2f)
+            retryScale = 1.2f;
+    } else {
+        retryScale -= delta * 10.0f;
+        if(retryScale < 1.0f)
+            retryScale = 1.0f;
+    }
 
+    if(nextHovered) {
+        nextScale += delta * 8.0f;
+        if(nextScale > 1.2f)
+            nextScale = 1.2f;
+    } else {
+        nextScale -= delta * 10.0f;
+        if(nextScale < 1.0f)
+            nextScale = 1.0f;
+    }
 }
 
 void LevelCompleteMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -162,11 +196,54 @@ void LevelCompleteMenu::draw(sf::RenderTarget &target, const sf::RenderStates &s
         target.draw(bestScore);
     }
     buttonBackground.setPosition({ 500.0f, 735.0f });
+    buttonBackground.setScale(buttonBackground.getScale() * retryScale);
     target.draw(buttonBackground);
+    retryButton.setScale(retryButton.getScale() * retryScale);
     target.draw(retryButton);
+    retryButton.setScale(retryButton.getScale() / retryScale);
+    buttonBackground.setScale(buttonBackground.getScale() / retryScale);
+
     if(won) {
         buttonBackground.setPosition({ 900.0f, 735.0f });
+        buttonBackground.setScale(buttonBackground.getScale() * nextScale);
         target.draw(buttonBackground);
+        nextButton.setScale(nextButton.getScale() * nextScale);
         target.draw(nextButton);
+        nextButton.setScale(nextButton.getScale() / nextScale);
+        buttonBackground.setScale(buttonBackground.getScale() / nextScale);
     }
+}
+
+void LevelCompleteMenu::click(sf::Vector2f position) {
+    if(!visible)
+        return;
+
+    if(position.x >= 375.0f && position.x <= 625.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
+        world.retry();
+        hide();
+    }
+
+    if(won && position.x >= 775.0f && position.x <= 1025.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
+        world.loadNextLevel();
+        hide();
+    }
+}
+
+void LevelCompleteMenu::hover(sf::Vector2f position) {
+    if(!visible)
+        return;
+
+    retryHovered = false;
+    nextHovered = false;
+    if(position.x >= 375.0f && position.x <= 625.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
+        retryHovered = true;
+    }
+
+    if(won && position.x >= 775.0f && position.x <= 1025.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
+        nextHovered = true;
+    }
+}
+
+bool LevelCompleteMenu::isVisible() {
+    return visible;
 }

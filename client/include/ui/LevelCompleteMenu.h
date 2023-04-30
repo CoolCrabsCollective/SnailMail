@@ -9,8 +9,12 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "WIZ/asset/AssetLoader.h"
+#include "world/Tickable.h"
 
-class LevelCompleteMenu : public sf::Drawable {
+class World;
+
+class LevelCompleteMenu : public sf::Drawable, public Tickable {
+    World& world;
     wiz::AssetLoader& assets;
 
     bool visible, won;
@@ -31,11 +35,15 @@ class LevelCompleteMenu : public sf::Drawable {
     sf::Text bestScore;
 
     mutable sf::Sprite buttonBackground;
-    sf::Text retryButton, nextButton;
+    mutable sf::Text retryButton, nextButton;
+    float retryScale, nextScale;
+    bool retryHovered, nextHovered;
 public:
-    LevelCompleteMenu(wiz::AssetLoader& assets);
+    LevelCompleteMenu(World& world);
 
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+
+    void tick(float delta) override;
 
     void show(bool success,
               int deliveriesCompleted,
@@ -46,6 +54,12 @@ public:
               float score);
 
     void hide();
+
+    void click(sf::Vector2f position);
+
+    void hover(sf::Vector2f position);
+
+    bool isVisible();
 };
 
 

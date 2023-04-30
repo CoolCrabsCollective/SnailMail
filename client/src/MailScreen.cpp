@@ -12,21 +12,22 @@
 
 MailScreen::MailScreen(wiz::Game& game)
         : Screen(game),
-            completeMenu(game.getAssets()),
-            world(game.getAssets(), completeMenu),
-            sidebar(world) {
+            world(game.getAssets(), *this),
+            completeMenu(world),
+            sidebar(world),
+            uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }) {
 }
 
 void MailScreen::tick(float delta) {
-    world.tick(delta / 1000.f);
+    world.tick(delta / 1000.0f);
+    completeMenu.tick(delta / 1000.0f);
 }
 
 void MailScreen::render(sf::RenderTarget &target) {
     target.clear(sf::Color::Green);
-    target.setView(sf::View({800.0f, 450.0f}, { 1600.0f, 900.0f }));
     target.draw(world);
 
-    target.setView(sf::View({800.0f, 450.0f}, { 1600.0f, 900.0f }));
+    target.setView(uiView);
     target.draw(sidebar);
     target.draw(completeMenu);
 }
@@ -54,18 +55,37 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
                                                             world.getView());
 
     world.getEntitySelection()->clickScan(clickVector);
+
+    clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
+                                                            uiView);
+    completeMenu.click(clickVector);
+}
+
+void MailScreen::mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) {
+
+    sf::Vector2f clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseMoveEvent.x, mouseMoveEvent.y),
+                                               uiView);
+    completeMenu.hover(clickVector);
 }
 
 void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {
     sf::Vector2f touchVector = getWindow().mapPixelToCoords(sf::Vector2i(touchScreenEvent.x, touchScreenEvent.y), world.getView());
 
     world.getEntitySelection()->clickScan(touchVector);
+
+    touchVector = getWindow().mapPixelToCoords(sf::Vector2i(touchScreenEvent.x, touchScreenEvent.y),
+                                               uiView);
+    completeMenu.click(touchVector);
 }
 
 void MailScreen::keyReleased(const sf::Event::KeyEvent &keyEvent) {
-    if(keyEvent.code == sf::Keyboard::Escape) {
-        completeMenu.show(false, 0, 10, 0, 0, 0, 0.0f);
-    } else if(keyEvent.code == sf::Keyboard::N) {
+    if(keyEvent.code == sf::Keyboard::N) {
         world.loadNextLevel();
+    } else if(keyEvent.code == sf::Keyboard::R) {
+        world.retry();
     }
+}
+
+LevelCompleteMenu& MailScreen::getCompleteMenu() {
+    return completeMenu;
 }
