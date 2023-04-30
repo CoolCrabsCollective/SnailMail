@@ -28,7 +28,6 @@ class MailScreen;
 
 class World : public Tickable, public sf::Drawable {
 protected:
-    const static sf::Color snail_colors[];
 
     wiz::AssetLoader& assets;
     MailScreen& screen;
@@ -46,9 +45,18 @@ protected:
     std::vector<Mission*> missions;
     std::unordered_map<int, Friend*> friends;
     std::unordered_map<int, PostOffice*> postOffices;
+public:
+    const std::unordered_map<int, PostOffice *> &getPostOffices() const;
+
+protected:
 
     void removeFromZOrderMap(Entity* entity);
 
+public:
+    const Level &getCurrentLevel() const;
+    const static sf::Color snail_colors[];
+
+protected:
     int currentLevelNumber = 1;
     float timeSpent = 0.0f;
 public:
@@ -86,11 +94,13 @@ public:
 
     const std::vector<Mission *> &getMissions() const;
 
-    Snail* spawnSnail(GraphNode *node, int i);
+    Snail* spawnSnail(GraphNode *node, int i, float snail_speed);
 
     PostOffice* getPostOffice(int id);
 
     Friend* getFriend(int id);
+
+    int getCurrentLevelNumber() const;
 };
 
 

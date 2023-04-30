@@ -27,12 +27,18 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, GRAPH_VERTEX, ("gfx/graph_vertex.png"))
     ASSET(wiz::TextureAsset, SNAILY, ("gfx/snaily.png"))
     ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
-    ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/kawaii_ladybug.png"))
-    ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
-    ASSET(wiz::TextureAsset, MOUSE, ("gfx/kawaii_mouse.png"))
-    ASSET(wiz::TextureAsset, FROG, ("gfx/kawaii_frog.png"))
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, POST_OFFICE, ("gfx/post_office.png"))
+
+    // FRIENDS (KAWAII OR THICC)
+    ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
+    ASSET(wiz::TextureAsset, BEE_SPRITE_SHEET, ("gfx/bee_sprite_sheet.png"))
+    ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/kawaii_ladybug.png"))
+    ASSET(wiz::TextureAsset, LADY_BUG_SPRITE_SHEET, ("gfx/ladybug_sprite_sheet.png"))
+    ASSET(wiz::TextureAsset, MOUSE, ("gfx/kawaii_mouse.png"))
+    ASSET(wiz::TextureAsset, MOUSE_SPRITE_SHEET, ("gfx/mouse_sprite_sheet.png"))
+    ASSET(wiz::TextureAsset, FROG, ("gfx/kawaii_frog.png"))
+    ASSET(wiz::TextureAsset, FROG_SPRITE_SHEET, ("gfx/frog_sprite_sheet.png"))
 
     // UI
     ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))
@@ -43,6 +49,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, MOUSE_LETTER, ("gfx/ui/letters/mouse_icon.png"))
     ASSET(wiz::TextureAsset, BUTTON, ("gfx/ui/button.png"))
     ASSET(wiz::TextureAsset, ALEXS_DESIRE, ("gfx/ui/alexs_desire.png"))
+    ASSET(wiz::TextureAsset, LEVEL_INDICATOR, ("gfx/ui/level_sel/level_indicator.png"))
 
     // SHELLS
     ASSET(wiz::TextureAsset, BRONZE_SHELL, ("gfx/ui/shells/bronze.png"))

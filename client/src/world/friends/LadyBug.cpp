@@ -8,6 +8,10 @@
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
 
-LadyBug::LadyBug(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::LADY_BUG)) {
+LadyBug::LadyBug(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::LADY_BUG_SPRITE_SHEET), 0.3f, 2.0f) {
 
+}
+
+const FriendType LadyBug::getFriendType() const {
+    return LADYBUG;
 }

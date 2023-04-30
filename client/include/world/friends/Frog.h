@@ -13,6 +13,8 @@
 class Frog : public Friend {
 public:
     Frog(World& world, GraphNode* node);
+
+    const FriendType getFriendType() const override;
 };
 
 #endif //LD53_CLIENT_FROG_H

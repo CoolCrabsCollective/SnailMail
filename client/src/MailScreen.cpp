@@ -15,6 +15,7 @@ MailScreen::MailScreen(wiz::Game& game)
             world(game.getAssets(), *this),
             completeMenu(world),
             sidebar(world),
+            levelIndicator(world),
             uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }) {
 }
 
@@ -29,6 +30,7 @@ void MailScreen::render(sf::RenderTarget &target) {
 
     target.setView(uiView);
     target.draw(sidebar);
+    target.draw(levelIndicator);
     target.draw(completeMenu);
 }
 
