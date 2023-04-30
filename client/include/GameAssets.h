@@ -30,6 +30,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, POST_OFFICE, ("gfx/post_office.png"))
 
+    // TITLE SCREEN
+    ASSET(wiz::TextureAsset, TITLE_SCREEN_BACKGROUND, ("gfx/title_screen_background.jpg"))
+
     // FRIENDS (KAWAII OR THICC)
     ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
     ASSET(wiz::TextureAsset, BEE_SPRITE_SHEET, ("gfx/bee_sprite_sheet.png"))

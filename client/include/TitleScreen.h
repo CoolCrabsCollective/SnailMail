@@ -8,12 +8,14 @@
 #include <WIZ/game/Screen.h>
 #include <SW/SelbaWard.hpp>
 #include <SW/Common.hpp>
+#include "SFML/Graphics/Text.hpp"
 
 class TitleScreen : public wiz::Screen, public wiz::WindowListener {
 	std::string name = "TitleScreen";
 
-	sf::Sprite logo;
 	sf::Sprite background;
+    sf::Text message;
+    sf::Text subtext;
 
 	sw::NinePatch ninepatch;
 public:
