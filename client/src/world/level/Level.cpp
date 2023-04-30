@@ -10,8 +10,13 @@ const std::vector<Level> Level::LEVELS = {
                 .nodeCount = 3,
                 .friends = { { LADYBUG, false, 2 }},
                 .offices = { { false, 0 }},
-                .snailCount = 1,
-                .missions = { { 1.0f, 0, 0, { { 0, false, 10.0f }, }}},
+                .snailCount = 3,
+                .missions = {
+                        { 1.0f, 0, 0, { { 0, false, 10.0f }, }},
+                        { 2.0f, 0, 1, { { 0, false, 10.0f }, }},
+                        { 3.0f, 0, 2, { { 0, false, 10.0f }, }}
+
+                },
                 .deliveriesForBronze = 0,
                 .deliveriesForSilver = 0,
                 .deliveriesForGold = 1,

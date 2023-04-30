@@ -67,6 +67,8 @@ public:
     virtual bool shouldBeRemoved() const override {
         return deleteMyself;
     }
+
+    float getMovingProgress() const;
 };
 
 

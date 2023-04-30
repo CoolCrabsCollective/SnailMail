@@ -3,76 +3,138 @@
 //
 
 #include "world/Path.h"
+#include "GameAssets.h"
 
-Path::Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view)
-    : p1(p1), p2(p2), pathTexture(pathTexture), cumTexture(cumTexture), cummed(false) {
-    sf::Vector2f edge_vector = p2 - p1;
-    float edge_vector_mag = edge_vector.length();
-
-    // Draws from p1 to p2
-    sf::Vector2f edge_vector_dir = edge_vector.normalized();
-    sf::Vector2f cur_pos = p1;
-
-   while ((cur_pos - p1).length() < edge_vector_mag) {
-       sf::Sprite sprite = sf::Sprite(pathTexture);
-       sprite.setOrigin({sprite.getLocalBounds().width / 2.f, sprite.getLocalBounds().height / 2.f});
-       sprite.setPosition(cur_pos);
-       sprite.setScale({1.0f / sprite.getTexture()->getSize().x / float(PATH_TO_NODE_RATIO), 1.0f / sprite.getTexture()->getSize().y / float(PATH_TO_NODE_RATIO)});
-       sprite.rotate(sf::Vector2f(1.0f, 0.0f).angleTo(edge_vector_dir));
-       sprites.push_back(sprite);
-
-        cur_pos = cur_pos + edge_vector_dir * (1.0f / float(PATH_TO_NODE_RATIO));
-    }
+Path::Path(wiz::AssetLoader &assets,
+           GraphNode *node1,
+           GraphNode *node2)
+    : sprite(),
+        slimeSprite(),
+        node1(node1),
+        node2(node2),
+        slimes() {
+    sf::Texture* pathTex = assets.get(GameAssets::PATH);
+    sf::Texture* slimeTex = assets.get(GameAssets::CUM_PATH);
+    pathTex->setRepeated(true);
+    slimeTex->setRepeated(true);
+    sprite.setTexture(*pathTex);
+    slimeSprite.setTexture(*slimeTex);
 }
 
 void Path::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    for (sf::Sprite sprite : sprites) {
-        target.draw(sprite);
-    }
-    for(sf::Sprite c_sprite : c_sprites) {
-        target.draw(c_sprite);
-    }
-}
 
-void Path::setCumminess(float cumLevel, bool backdoor) {
-    unsigned int total_sprites = sprites.size();
-    unsigned int sprites_to_cum = std::ceil(total_sprites * cumLevel);
+    sf::Vector2f vec = node2->getPosition() - node1->getPosition();
+    float dst = vec.length();
 
-    if (!backdoor) {
-        for (int i = 0 ; i < total_sprites ; i++) {
-            if (sprites_to_cum-- == 0)
-                return;
+    sprite.setPosition(node1->getPosition());
+    sprite.setOrigin({ 0.0f, 0.5f * sprite.getTexture()->getSize().y });
+    sprite.setScale(sf::Vector2f(2.0f / sprite.getTexture()->getSize().x,
+                                     1.0f / sprite.getTexture()->getSize().y));
+    sprite.setRotation(vec.angle());
+    int sizeY = sprite.getTexture()->getSize().y;
+    sprite.setTextureRect(sf::IntRect({0, 0},
+                                          {(int)round(dst / 2.0f * sprite.getTexture()->getSize().x), sizeY}));
+    target.draw(sprite);
 
-            sf::Sprite c_sprite = sprites.at(i);
-            c_sprite.setPosition(sprites.at(i).getPosition());
-            c_sprite.setScale(sprites.at(i).getScale());
-            c_sprite.setOrigin(sprites.at(i).getOrigin());
-            c_sprite.setRotation(sprites.at(i).getRotation());
-            c_sprite.setTexture(cumTexture);
-            c_sprite.setColor(cumColor);
-            c_sprites.push_back(c_sprite);
-        }
-    } else {
-        for (int i = total_sprites - 1 ; i > 0 ; i--) {
-            if (sprites_to_cum-- == 0)
-                return;
-
-            sf::Sprite c_sprite = sprites.at(i);
-            c_sprite.setPosition(sprites.at(i).getPosition());
-            c_sprite.setScale(sprites.at(i).getScale());
-            c_sprite.setOrigin(sprites.at(i).getOrigin());
-            c_sprite.setRotation(sprites.at(i).getRotation());
-            c_sprite.setTexture(cumTexture);
-            c_sprite.setColor(cumColor);
-            c_sprites.push_back(c_sprite);
+    for(const Slime& slime : slimes) {
+        if(!slime.forward && slime.start != 0.0f || slime.end == 1.0f) {
+            slimeSprite.setPosition(node2->getPosition() - vec * (1.0f - slime.end));
+            slimeSprite.setOrigin({ 0.0f, 0.5f * slimeSprite.getTexture()->getSize().y });
+            slimeSprite.setScale(sf::Vector2f(2.0f / slimeSprite.getTexture()->getSize().x,
+                                              1.0f / slimeSprite.getTexture()->getSize().y));
+            slimeSprite.setRotation((-vec).angle());
+            int sizeY = slimeSprite.getTexture()->getSize().y;
+            slimeSprite.setTextureRect(sf::IntRect({(int)round((dst * (1.0f - slime.end)) / 2.0f * slimeSprite.getTexture()->getSize().x), 0},
+                                                   {(int)round((dst * (slime.end - slime.start)) / 2.0f * slimeSprite.getTexture()->getSize().x), sizeY}));
+            slimeSprite.setColor({ slime.color.r, slime.color.g, slime.color.b, 250 });
+            target.draw(slimeSprite);
+        } else {
+            slimeSprite.setPosition(node1->getPosition() + vec * slime.start);
+            slimeSprite.setOrigin({ 0.0f, 0.5f * slimeSprite.getTexture()->getSize().y });
+            slimeSprite.setScale(sf::Vector2f(2.0f / slimeSprite.getTexture()->getSize().x,
+                                              1.0f / slimeSprite.getTexture()->getSize().y));
+            slimeSprite.setRotation(vec.angle());
+            int sizeY = slimeSprite.getTexture()->getSize().y;
+            slimeSprite.setTextureRect(sf::IntRect({(int)round((dst * slime.start) / 2.0f * slimeSprite.getTexture()->getSize().x), 0},
+                                                   {(int)round((dst * (slime.end - slime.start)) / 2.0f * slimeSprite.getTexture()->getSize().x), sizeY}));
+            slimeSprite.setColor({ slime.color.r, slime.color.g, slime.color.b, 250 });
+            target.draw(slimeSprite);
         }
     }
 }
 
-void Path::setCumColor(sf::Color color) {
-    this->cumColor = color;
+
+bool Path::isBlocked(GraphNode *enterNode, sf::Color color) const {
+    if(enterNode != node1 && enterNode != node2)
+        return false;
+
+    for(const Slime& slime : slimes) {
+        if(slime.color == color) {
+            if(enterNode == node1) {
+                if(slime.start == 0.0f)
+                    return true;
+            } else {
+                if(slime.end == 1.0f)
+                    return true;
+            }
+        }
+    }
+
+    return false;
 }
 
-void Path::setCummed(bool cummed) {
-    this->cummed = cummed;
+void Path::addSlime(GraphNode* enterNode,
+                    float position,
+                    float previous,
+                    sf::Color color) {
+    if(enterNode != node1) {
+        position = 1.0f - position;
+        previous = 1.0f - previous;
+    }
+
+    bool found = false;
+    for(int i = 0; i < slimes.size(); i++) {
+        Slime& slime = slimes[i];
+        if(slime.color == color) {
+            if(previous > slime.end || previous < slime.start)
+                continue; // not in
+
+            if(enterNode == node1) {
+                slime.end = std::max(slime.end, position);
+            } else {
+                slime.start = std::min(slime.start, position);
+            }
+            found = true;
+        } else {
+            if(position > slime.end || position < slime.start)
+                continue; // not in
+
+            if(enterNode == node1) {
+                slime.start = std::max(slime.start, position);
+            } else {
+                slime.end = std::min(slime.end, position);
+            }
+
+            if(slime.start >= slime.end) {
+                slimes.erase(slimes.begin() + i);
+                i--;
+            }
+        }
+    }
+
+    if(!found) {
+        Slime slime;
+        slime.color = color;
+        if(enterNode == node1) {
+            slime.start = 0.0f;
+            slime.end = position;
+            slime.forward = true;
+        } else {
+            slime.end = 1.0f;
+            slime.start = position;
+            slime.forward = false;
+        }
+
+        slimes.push_back(slime);
+    }
 }
