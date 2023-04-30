@@ -32,6 +32,7 @@ namespace GameAssets {
 
     // FRIENDS (KAWAII OR THICC)
     ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
+    ASSET(wiz::TextureAsset, BEE_SPRITE_SHEET, ("gfx/bee_sprite_sheet.png"))
     ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/kawaii_ladybug.png"))
     ASSET(wiz::TextureAsset, LADY_BUG_SPRITE_SHEET, ("gfx/ladybug_sprite_sheet.png"))
     ASSET(wiz::TextureAsset, MOUSE, ("gfx/kawaii_mouse.png"))
@@ -47,6 +48,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, MOUSE_LETTER, ("gfx/ui/letters/mouse_icon.png"))
     ASSET(wiz::TextureAsset, BUTTON, ("gfx/ui/button.png"))
     ASSET(wiz::TextureAsset, ALEXS_DESIRE, ("gfx/ui/alexs_desire.png"))
+    ASSET(wiz::TextureAsset, LEVEL_INDICATOR, ("gfx/ui/level_sel/level_indicator.png"))
 
     // SHELLS
     ASSET(wiz::TextureAsset, BRONZE_SHELL, ("gfx/ui/shells/bronze.png"))
