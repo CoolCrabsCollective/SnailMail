@@ -8,6 +8,6 @@
 #include "SFML/Graphics.hpp"
 #include "SpriteUtil.h"
 
-Mouse::Mouse(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::MOUSE)) {
+Mouse::Mouse(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::MOUSE), 10.0f, 10.0f) {
 
 }

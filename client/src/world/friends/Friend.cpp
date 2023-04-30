@@ -7,9 +7,11 @@
 #include "SpriteUtil.h"
 #include "GameAssets.h"
 
-Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture) : GraphEntity(world, node),
-                                        chatBubble(world, sf::Color(255, 255, 255)) {
+Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture, float frameDelay, float animationDelay) : GraphEntity(world, node),
+                    chatBubble(world, sf::Color(255, 255, 255)), frameDelay(frameDelay), animationDelay(animationDelay) {
     sprite.setTexture(texture);
+    spriteRect = sf::IntRect({0, 0}, {FRIEND_TEXTURE_SIZE, FRIEND_TEXTURE_SIZE});
+    sprite.setTextureRect(spriteRect);
 }
 
 const sf::Vector2f& Friend::getPosition() const {
@@ -28,8 +30,22 @@ void Friend::draw(sf::RenderTarget& target, const sf::RenderStates& states) cons
     chatBubble.draw(target, states, getPosition());
 
     sprite.setPosition(getPosition());
-    SpriteUtil::setSpriteSize(sprite, sf::Vector2f{1.95f, 2.});
-    SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5, 1.});
+    SpriteUtil::setSpriteSizeUsingTextureRect(sprite, sf::Vector2f{1.95f, 2.});
+    SpriteUtil::setSpriteOriginUsingTextureRect(sprite, sf::Vector2f{0.5, 1.});
     target.draw(sprite);
 }
 
+void Friend::tick(float delta) {
+    if (timeTillNextAnim <= 0) {
+        if (spriteRect.left == sprite.getTexture()->getSize().x - FRIEND_TEXTURE_SIZE) {
+            spriteRect.left = 0;
+            timeTillNextAnim += animationDelay;
+        } else {
+            spriteRect.left += FRIEND_TEXTURE_SIZE;
+        }
+        sprite.setTextureRect(spriteRect);
+        timeTillNextAnim += frameDelay;
+    } else {
+        timeTillNextAnim -= delta;
+    }
+}
