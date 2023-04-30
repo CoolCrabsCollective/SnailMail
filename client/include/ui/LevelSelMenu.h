@@ -8,11 +8,11 @@
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Text.hpp"
-#include "input/Clickable.h"
+#include "input/ClickableUI.h"
 
 class World;
 
-class LevelSelMenu : public sf::Drawable, public Clickable {
+class LevelSelMenu : public sf::Drawable, public ClickableUI {
     mutable sf::Sprite backgroundSprite;
     mutable sf::Text label;
 
@@ -36,6 +36,8 @@ public:
     bool getIsOpen() const;
 
     void setIsOpen(bool isOpen);
+
+    void hitAction(bool& isHit) override;
 
     ~LevelSelMenu() = default;
 };

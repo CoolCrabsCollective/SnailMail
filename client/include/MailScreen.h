@@ -28,7 +28,7 @@ class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::I
     LevelSelMenu levelSelMenu;
     sf::View uiView;
 
-    std::vector<Clickable*> clickables;
+    std::vector<ClickableUI*> clickables;
 
 public:
     MailScreen(wiz::Game& game);

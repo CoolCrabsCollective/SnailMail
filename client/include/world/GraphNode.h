@@ -8,7 +8,7 @@
 
 #include <vector>
 #include "SFML/System/Vector2.hpp"
-#include "input/Clickable.h"
+#include "input/ClickableUI.h"
 
 class GraphNode {
     std::vector<GraphNode*> neighbors;

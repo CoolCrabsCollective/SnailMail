@@ -7,8 +7,9 @@
 #include "SpriteUtil.h"
 #include "world/World.h"
 
-LevelSelMenu::LevelSelMenu(World &world) : Clickable(buttonOffset, buttonOffset + sf::Vector2f{50.f, 50.f},
-                                                     mainOffset, &isOpen, &isOpen), world(world) {
+LevelSelMenu::LevelSelMenu(World &world) : ClickableUI(sf::Vector2f{1070.0f, 280.0f},
+                                                       sf::Vector2f{1070.0f, 280.0f} + sf::Vector2f{70.f, 70.f}),
+                                                       world(world) {
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_BACKDROP));
     backgroundSprite.setPosition(mainOffset);
     SpriteUtil::setSpriteSize(backgroundSprite, mainSize);
@@ -39,5 +40,13 @@ bool LevelSelMenu::getIsOpen() const {
 }
 
 void LevelSelMenu::setIsOpen(bool isOpen) {
+    clickable = isOpen;
     LevelSelMenu::isOpen = isOpen;
+}
+
+void LevelSelMenu::hitAction(bool& isHit) {
+    if (isHit) {
+        clickable = false;
+        isOpen = false;
+    }
 }

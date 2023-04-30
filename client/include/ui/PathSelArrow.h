@@ -8,7 +8,7 @@
 #include "world/Tickable.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
-#include "input/Clickable.h"
+#include "input/ClickableUI.h"
 #include "world/GraphNode.h"
 
 class World;
