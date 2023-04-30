@@ -18,9 +18,10 @@
 
 
 const sf::Color World::snail_colors[] = {
-        sf::Color(232, 59, 59),
-        sf::Color(77, 155, 230),
-        sf::Color(251, 255, 134)
+        Snail::SNAIL_COLOR_BLUE,
+        Snail::SNAIL_COLOR_YELLOW,
+        Snail::SNAIL_COLOR_RED,
+        Snail::SNAIL_COLOR_GREEN
 };
 
 World::World(wiz::AssetLoader &assets, LevelCompleteMenu& completeMenu)
@@ -43,7 +44,7 @@ World::World(wiz::AssetLoader &assets, LevelCompleteMenu& completeMenu)
 }
 
 Snail* World::spawnSnail(GraphNode* node, int snailId) {
-    Snail* snail = new Snail(*this, node, snail_colors[snailId % 3]);
+    Snail* snail = new Snail(*this, node, snail_colors[snailId % 4]);
     snails.push_back(snail);
     addEntity(snail);
     return snail;

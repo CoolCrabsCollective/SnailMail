@@ -25,12 +25,26 @@ void PathSelArrow::draw(sf::RenderTarget& target, const sf::RenderStates& states
     }
 }
 
-void PathSelArrow::updatePositions(GraphNode* currentNode) {
+void PathSelArrow::updatePositions(GraphNode* currentNode, sf::Color snail_color) {
     arrowPositions.clear();
     arrowAngles.clear();
     graphNodes.clear();
     for (GraphNode* neighbor : currentNode->getNeighbors()) {
-        if (world.getGraph()->getPath(currentNode, neighbor).cummed)
+        Path& path = world.getGraph()->getPath(currentNode, neighbor);
+        if (path.cummed && snail_color == path.cumColor)
+            continue;
+
+        bool neighbor_blocking = false;
+        for(Snail* snail : world.getSnails())
+        {
+            if(neighbor == snail->getLocation())
+            {
+                neighbor_blocking = true;
+                break;
+            }
+        }
+
+        if(neighbor_blocking)
             continue;
 
         sf::Vector2f dir = neighbor->getPosition() - currentNode->getPosition();

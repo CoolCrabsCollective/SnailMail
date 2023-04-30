@@ -12,10 +12,12 @@
 class Path : public sf::Drawable, public sf::Transformable {
 public:
     std::vector<sf::Sprite> sprites;
+    std::vector<sf::Sprite> c_sprites;
     sf::Vector2f& p1;
     sf::Vector2f& p2;
     sf::Texture pathTexture;
     sf::Texture cumTexture;
+    sf::Color cumColor;
     bool cummed;
 
     Path(const sf::Texture& pathTexture, const sf::Texture& cumTexture, sf::Vector2f p1, sf::Vector2f p2, sf::View view);
@@ -23,7 +25,8 @@ public:
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
     void setCumminess(float cumLevel, bool backdoor);
-    void setCummed(float cummed);
+    void setCumColor(sf::Color color);
+    void setCummed(bool cummed);
 };
 
 

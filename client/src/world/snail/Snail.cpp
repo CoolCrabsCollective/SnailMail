@@ -36,7 +36,7 @@ void Snail::deleteYourself() {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    if (!moving)
+    if (!moving && arrowPosUpdated)
         pathSelArrow->draw(target, states);
 
     snail_sprite.setPosition(actualPosition);
@@ -73,10 +73,8 @@ void Snail::tick(float delta) {
         tickMovement(delta);
         arrowPosUpdated = false;
     } else {
-        if (!arrowPosUpdated) {
-            pathSelArrow->updatePositions(getLocation());
-            arrowPosUpdated = true;
-        }
+        pathSelArrow->updatePositions(getLocation(), snail_color);
+        arrowPosUpdated = true;
     }
 }
 
@@ -84,8 +82,9 @@ void Snail::moveLocation(GraphNode* node) {
     if (moving || !world.getGraph()->areAdjacent(getLocation(), node) || !node)
         return;
 
+    Path& path = world.getGraph()->getPath(getLocation(), node);
     if(!world.getGraph()->areAdjacent(getLocation(), node)
-    || world.getGraph()->getPath(getLocation(), node).cummed)
+    || (path.cummed && path.cumColor == snail_color))
         return;
 
     moving = true;
@@ -105,13 +104,13 @@ void Snail::moveLocation(GraphNode* node) {
 void Snail::tickMovement(float delta) {
     currentProgressRate = progressRate / locDiff.length();
     movingProgress += delta * currentProgressRate;
+    Path& path = world.getGraph()->getPath(getLocation(), getDestination());
     if (movingProgress < 1.0f) {
         actualPosition = this->getLocation()->getPosition() + locDiff * movingProgress;
-        world.getGraph()->getPath(getLocation(), getDestination()).setCumminess(movingProgress,
-                                                                               getLocation() >= getDestination());
+        path.setCumColor(snail_color);
+        path.setCumminess(movingProgress, getLocation() >= getDestination());
     } else {
-
-        world.getGraph()->getPath(getLocation(), getDestination()).setCummed(true);
+        path.setCummed(true);
         setLocation(getDestination());
         moving = false;
         actualPosition = getPosition();
