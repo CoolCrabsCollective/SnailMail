@@ -16,6 +16,7 @@ class Delivery : public Tickable {
     float timeLeft;
 
     Friend* destination;
+    FriendType sender;
 
     bool completed;
 public:
@@ -31,6 +32,8 @@ public:
     float getTimeLeft() const;
 
     Friend *getDestination() const;
+
+    FriendType getSender() const;
 };
 
 

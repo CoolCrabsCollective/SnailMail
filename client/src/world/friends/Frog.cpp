@@ -11,3 +11,7 @@
 Frog::Frog(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::FROG)) {
 
 }
+
+const FriendType Frog::getFriendType() const {
+    return FROG;
+}

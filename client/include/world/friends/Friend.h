@@ -25,6 +25,10 @@ public:
     ZOrder getZOrder() const override;
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+    ChatBubble& getChatBubble();
+
+    virtual const FriendType getFriendType() const = 0;
 };
 
 #endif //LD53_CLIENT_FRIEND_H

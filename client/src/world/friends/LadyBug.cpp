@@ -11,3 +11,7 @@
 LadyBug::LadyBug(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::LADY_BUG)) {
 
 }
+
+const FriendType LadyBug::getFriendType() const {
+    return LADYBUG;
+}

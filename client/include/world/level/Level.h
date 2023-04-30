@@ -9,10 +9,11 @@
 #include "grand.h"
 
 enum FriendType {
-    LADYBUG,
-    BEE,
+    LADYBUG = 0,
+    BEE = 1,
     MOUSE,
-    FROG
+    FROG,
+    FRIEND_TYPE_LENGTH
 };
 
 struct LevelFriend {

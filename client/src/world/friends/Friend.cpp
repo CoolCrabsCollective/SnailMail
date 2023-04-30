@@ -33,3 +33,7 @@ void Friend::draw(sf::RenderTarget& target, const sf::RenderStates& states) cons
     target.draw(sprite);
 }
 
+ChatBubble& Friend::getChatBubble() {
+    return chatBubble;
+}
+

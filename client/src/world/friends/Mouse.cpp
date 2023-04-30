@@ -11,3 +11,6 @@
 Mouse::Mouse(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::MOUSE)) {
 
 }
+const FriendType Mouse::getFriendType() const {
+    return MOUSE;
+}
