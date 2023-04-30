@@ -29,7 +29,7 @@ public:
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const;
 
-    void updatePositions(GraphNode* currentNode);
+    void updatePositions(GraphNode* currentNode, sf::Color snail_color);
 
     GraphNode* hitScanAll(const sf::Vector2f& hit);
 
