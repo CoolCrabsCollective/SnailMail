@@ -7,9 +7,10 @@
 #include "GameAssets.h"
 #include "world/World.h"
 
-PathSelArrow::PathSelArrow(World &world) : Clickable({-.5f, -.5f}, {.5f, .5f}),
+PathSelArrow::PathSelArrow(World &world, sf::Color color) : Clickable({-.5f, -.5f}, {.5f, .5f}),
                                                                             world(world) {
     sprite.setTexture(*world.getAssets().get(GameAssets::PATH_SEL_ARROW));
+    sprite.setColor(color);
 }
 
 void PathSelArrow::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {

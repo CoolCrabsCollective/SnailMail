@@ -25,7 +25,7 @@ class PathSelArrow: public Clickable {
     float spawnRadius = 2.0f;
 
 public:
-    PathSelArrow(World &world);
+    PathSelArrow(World &world, sf::Color color);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const;
 

@@ -18,7 +18,7 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity
     if(!node->getNeighbors().empty())
         moveLocation(node->getNeighbors()[0]);
 
-    pathSelArrow = new PathSelArrow(world);
+    pathSelArrow = new PathSelArrow(world, snail_color);
 }
 
 const sf::Vector2f &Snail::getPosition() const {
