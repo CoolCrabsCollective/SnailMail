@@ -12,6 +12,8 @@
 #include "SpriteUtil.h"
 #include "world/friends/Bee.h"
 #include "world/PostOffice.h"
+#include "world/friends/Mouse.h"
+#include "world/friends/Frog.h"
 
 
 const sf::Color World::snail_colors[] = {
@@ -92,8 +94,10 @@ void World::generateLevel(SnailLevel level) {
                 addEntity(new Bee(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
             case MOUSE:
+                addEntity(new Mouse(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
             case FROG:
+                addEntity(new Frog(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
         }
         used_positions.insert(lfriend.hardcodedVertex);
