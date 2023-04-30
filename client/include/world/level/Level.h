@@ -53,7 +53,7 @@ struct Level {
     int deliveriesForBronze = 1;
     int deliveriesForSilver = 1;
     int deliveriesForGold = 1;
-
+    float snail_speed = 2.f;
     static Level getLevel(int levelNumber);
     const static Level LEVELS[];
 };

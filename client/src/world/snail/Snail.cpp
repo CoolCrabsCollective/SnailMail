@@ -134,3 +134,7 @@ const sf::Color &Snail::getSnailColor() const {
 bool Snail::isMoving() {
     return moving;
 }
+
+void Snail::setProgressRate(float progressRate) {
+    Snail::progressRate = progressRate;
+}

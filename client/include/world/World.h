@@ -49,6 +49,10 @@ protected:
 
     void removeFromZOrderMap(Entity* entity);
 
+public:
+    const Level &getCurrentLevel() const;
+
+protected:
     int currentLevelNumber = 1;
     float timeSpent = 0.0f;
 public:
@@ -86,7 +90,7 @@ public:
 
     const std::vector<Mission *> &getMissions() const;
 
-    Snail* spawnSnail(GraphNode *node, int i);
+    Snail* spawnSnail(GraphNode *node, int i, float snail_speed);
 
     PostOffice* getPostOffice(int id);
 
