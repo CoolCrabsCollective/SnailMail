@@ -8,13 +8,15 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/GraphEntity.h"
 #include "world/World.h"
+#include "ui/ChatBubble.h"
 
 class Friend : public GraphEntity {
     mutable sf::Sprite sprite;
 
+    ChatBubble chatBubble;
 
 public:
-    Friend(World& world, GraphNode* node, const sf::Texture& texture);
+    Friend(World& world, GraphNode* node, const sf::Texture& texture, const sf::Texture &letterTexture);
 
     const sf::Vector2f& getPosition() const;
 

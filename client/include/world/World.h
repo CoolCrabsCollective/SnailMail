@@ -38,6 +38,7 @@ protected:
     SnailLevel currentLevel;
 
     const static sf::Color snail_colors[];
+
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 
