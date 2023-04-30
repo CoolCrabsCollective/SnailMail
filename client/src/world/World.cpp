@@ -36,8 +36,6 @@ World::World(wiz::AssetLoader &assets, MailScreen& screen)
 
     generateLevel(Level::getLevel(currentLevelNumber));
 
-    entitySelection = new EntitySelection(*this);
-
     background.setTexture(*assets.get(GameAssets::BACKGROUND));
     background.setPosition(view.getCenter());
     SpriteUtil::setSpriteSize(background, view.getSize());
@@ -316,10 +314,6 @@ const std::unordered_map<ZOrder, std::vector<Entity*>>& World::getZOrderMap() co
 
 Graph* World::getGraph() const {
     return graph;
-}
-
-EntitySelection* World::getEntitySelection() const {
-    return entitySelection;
 }
 
 const std::vector<Snail*>& World::getSnails() const {

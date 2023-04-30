@@ -7,7 +7,7 @@
 #include "GameAssets.h"
 #include "world/World.h"
 
-PathSelArrow::PathSelArrow(World &world, sf::Color color) : Clickable({-.5f, -.5f}, {.5f, .5f}),
+PathSelArrow::PathSelArrow(World &world, sf::Color color) : boundingBoxBL({-.5f, -.5f}), boundingBoxTR({.5f, .5f}),
                                                                             world(world) {
     sprite.setTexture(*world.getAssets().get(GameAssets::PATH_SEL_ARROW));
     sprite.setColor(color);
@@ -69,4 +69,14 @@ GraphNode* PathSelArrow::hitScanAll(const sf::Vector2f &hit) {
     }
 
     return nullptr;
+}
+
+bool PathSelArrow::hitScan(const sf::Vector2f& hit, const sf::Vector2f& entityPos) {
+    sf::Vector2f boundingBoxBottomLeft = entityPos + boundingBoxBL;
+    sf::Vector2f boundingBoxTopRight = entityPos + boundingBoxTR;
+
+    bool xBound = hit.x >= boundingBoxBottomLeft.x && hit.x <= boundingBoxTopRight.x;
+    bool yBound = hit.y >= boundingBoxBottomLeft.y && hit.y <= boundingBoxTopRight.y;
+
+    return xBound && yBound;
 }

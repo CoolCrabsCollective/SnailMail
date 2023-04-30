@@ -12,9 +12,16 @@ private:
     sf::Vector2f boundingBoxBL;
     sf::Vector2f boundingBoxTR;
 
-public:
-    Clickable(sf::Vector2f boundingBoxBL, sf::Vector2f boundingBoxTR);
+    sf::Vector2f entityPos;
 
+    bool* triggerFlag = nullptr;
+    bool* activeFlag = nullptr;
+
+public:
+    Clickable(sf::Vector2f boundingBoxBL, sf::Vector2f boundingBoxTR, sf::Vector2f entityPos,
+              bool* triggerFlag, bool* activeFlag);
+
+    bool hitScan(const sf::Vector2f& hit);
     bool hitScan(const sf::Vector2f& hit, const sf::Vector2f& entityPos);
 };
 
