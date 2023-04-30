@@ -37,7 +37,7 @@ void PathSelArrow::updatePositions(GraphNode* currentNode, sf::Color snail_color
         bool neighbor_blocking = false;
         for(Snail* snail : world.getSnails())
         {
-            if(neighbor == snail->getLocation())
+            if(neighbor == snail->getLocation() && snail->isMoving() && snail->getDestination() == currentNode)
             {
                 neighbor_blocking = true;
                 break;
