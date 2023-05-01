@@ -116,7 +116,7 @@ const std::vector<Level> Level::LEVELS = {
                 .adjacency_list = {{0, 1}, {1, 2}, {2, 3}, {2, 4}, {3, 4} , {4, 5}, {5, 6}, {5, 7}, {6, 7},
                                    {7, 8}, {8, 9}, {8, 10}, {9, 10}},
         },
-        // LEVEL 7: Roadblock
+        // LEVEL 7
         {
                 .name = "Roadblock",
                 .friends = { { LADYBUG, false, 1 },
@@ -134,8 +134,8 @@ const std::vector<Level> Level::LEVELS = {
                                       {{ 0, true, 15.0f },
                                               { 2, true, 20.0f },} }},
                 .deliveriesForBronze = 2,
-                .deliveriesForSilver = 3,
-                .deliveriesForGold = 4,
+                .deliveriesForSilver = 4,
+                .deliveriesForGold = 6,
                 .snail_speed = 5.f,
                 .custom = true,
                 .nodes = {{2.5f, 2.f}, {9.5f, 10.7f}, {6.8f, 15.3f}, {18.f, 9.4f},
