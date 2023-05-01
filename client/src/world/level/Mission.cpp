@@ -53,8 +53,7 @@ void Mission::tick(float delta) {
 
 
         if(spawnProgress >= spawnDelay && !snail_already_at_post_office && !snail_already_exists) {
-            snail = world.spawnSnail(startPoint, snailId, world
-            .getCurrentLevel().snail_speed);
+            snail = world.spawnSnail(startPoint, snailId, 5.f);
             spawnProgress = spawnDelay;
             spawned_snail = true;
 

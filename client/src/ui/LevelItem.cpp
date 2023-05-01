@@ -64,7 +64,7 @@ void LevelItem::draw(sf::RenderTarget &target, const sf::RenderStates &states) c
 
 void LevelItem::hitAction(bool& isHit) {
     if (isHit) {
-        world.generateLevel(Level::getLevel(levelNum));
+        world.generateLevel(Level::getLevel(levelNum), levelNum);
         world.setCurrentLevelNumber(levelNum);
         bool hit = true;
         levelSelMenu.hitAction(hit);

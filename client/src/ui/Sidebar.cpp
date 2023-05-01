@@ -103,7 +103,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.5, 0.5});
 
         snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
-        snail_cap_sprite.setColor(snail_color);
+        snail_cap_sprite.setColor(sf::Color(snail_color.r, snail_color.g, snail_color.b, snail_is_queued ? 160 : 255));
         snail_cap_sprite.setPosition(pos);
         snail_cap_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
         SpriteUtil::setSpriteOrigin(snail_cap_sprite, sf::Vector2f{0.5, 0.5});
