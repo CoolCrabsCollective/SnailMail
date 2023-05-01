@@ -9,6 +9,7 @@
 #include "input/ClickableUI.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "ui/LevelIndicator.h"
 
 class World;
 class LevelSelMenu;
@@ -27,12 +28,11 @@ class LevelItem : public sf::Drawable, public ClickableUI {
     std::string levelNumString;
 
     World& world;
-    LevelSelMenu& levelSelMenu;
 
     int levelNum = 0;
 
 public:
-    LevelItem(World &world, LevelSelMenu& levelSelMenu, sf::Vector2f parentMenuOffset, int levelNum);
+    LevelItem(World &world, sf::Vector2f parentMenuOffset, int levelNum);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 

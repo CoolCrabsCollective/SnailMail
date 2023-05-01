@@ -68,7 +68,6 @@ void World::generateLevel(Level level) {
     postOffices.clear();
     friends.clear();
     timeSpent = 0.0f;
-
     graph = new Graph(*this);
     addEntity(graph);
 
@@ -385,5 +384,9 @@ const wiz::MusicAsset& World::getSong(int levelNumber) {
         case 9: return GameAssets::SNAIL_FRIENDS_140;
         default: return GameAssets::SNAIL_FRIENDS_150;
     }
+}
+
+void World::setCurrentLevelNumber(int currentLevelNumber) {
+    World::currentLevelNumber = currentLevelNumber;
 }
 

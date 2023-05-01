@@ -102,6 +102,8 @@ public:
     void stopAllMusic();
 
     const wiz::MusicAsset& getSong(int number);
+
+    void setCurrentLevelNumber(int currentLevelNumber);
 };
 
 

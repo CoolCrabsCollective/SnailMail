@@ -59,6 +59,10 @@ void LevelSelMenu::hitAction(bool& isHit) {
 
 void LevelSelMenu::populateLevels() {
     for (int i = 0; i<Level::LEVELS.size(); i++) {
-        levelItems.push_back(new LevelItem(world, *this, mainOffset, i));
+        levelItems.push_back(new LevelItem(world, mainOffset, i + 1));
     }
+}
+
+const std::vector<LevelItem *> &LevelSelMenu::getLevelItems() const {
+    return levelItems;
 }

@@ -20,6 +20,9 @@ MailScreen::MailScreen(wiz::Game& game)
             uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }) {
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelIndicator));
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelSelMenu));
+    for (LevelItem* itemLevel : levelSelMenu.getLevelItems()) {
+        clickables.push_back(dynamic_cast<ClickableUI*>(itemLevel));
+    }
 }
 
 void MailScreen::tick(float delta) {
