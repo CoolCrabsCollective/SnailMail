@@ -58,7 +58,8 @@ void Graph::generateLevel(Level level) {
         {
             GraphNode* p1 = nodes[pair.first];
             GraphNode* p2 = nodes[pair.second];
-
+            p1->addNeighbor(p2);
+            p2->addNeighbor(p1);
             if(p2 < p1)
             {
                 GraphNode* tmp = p1;
