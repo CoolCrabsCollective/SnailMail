@@ -77,14 +77,14 @@ void LevelItem::updateMetal() {
     if (!world.getScoreSaver().hasScore(levelNum))
         return;
 
-    Level currentLevel = world.getCurrentLevel();
+    Level level = Level::getLevel(levelNum);
 
     int deliveriesCompleted = world.getScoreSaver().loadScoreForLevel(levelNum).delivered;
 
-    if(deliveriesCompleted >= currentLevel.deliveriesForGold) {
+    if(deliveriesCompleted >= level.deliveriesForGold) {
         metalSprite.setTexture(*world.getAssets().get(GameAssets::GOLD_SHELL), true);
         drawMetal = true;
-    } else if(deliveriesCompleted >= currentLevel.deliveriesForSilver) {
+    } else if(deliveriesCompleted >= level.deliveriesForSilver) {
         metalSprite.setTexture(*world.getAssets().get(GameAssets::SILVER_SHELL), true);
         drawMetal = true;
     } else {
