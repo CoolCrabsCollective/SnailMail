@@ -43,8 +43,6 @@ void Snail::deleteYourself() {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    pathSelArrow->draw(target, states);
-
     snail_sprite.setPosition(actualPosition);
     snail_cap_sprite.setPosition(actualPosition);
     SpriteUtil::setSpriteSize(snail_sprite, sf::Vector2f{2., 2.});
@@ -81,6 +79,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     target.draw(snail_sprite);
     target.draw(snail_cap_sprite);
+    pathSelArrow->draw(target, states);
 }
 
 void Snail::tick(float delta) {
