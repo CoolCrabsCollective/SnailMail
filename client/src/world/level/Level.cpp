@@ -115,13 +115,13 @@ const std::vector<Level> Level::LEVELS = {
                 .adjacency_list = {{0, 1}, {1, 2}, {2, 3}, {2, 4}, {3, 4} , {4, 5}, {5, 6}, {5, 7}, {6, 7},
                                    {7, 8}, {8, 9}, {8, 10}, {9, 10}},
         },
-        // LEVEL 7
+        // LEVEL 7: Roadblock
         {
                 .friends = { { LADYBUG, false, 1 },
                              { FROG, false, 3 },
                              { MOUSE, false, 2 } },
                 .offices = { { false, 0 }, },
-                .snailCount = 3,
+                .snailCount = 2,
                 .missions = { { 1.0f, 0, 0,
                                       { { 2, true, 15.0f },
                                               { 1, true, 20.0f }} },
@@ -140,7 +140,7 @@ const std::vector<Level> Level::LEVELS = {
                           {21.f, 16.f}},
                 .adjacency_list = {{0, 1}, {0,2}, {0,3}, {1,3}, {1,2}, {2,4}, {3,4}},
         },
-        // Desirable Detour
+        // Level 8: Desirable Detour
         {
                 .friends = {{ FROG, false, 1 },
                             { LADYBUG, false, 3 },
