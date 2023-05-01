@@ -1,7 +1,6 @@
 //
 // Created by cedric on 4/29/23.
 //
-#include <iostream>
 #include "world/friends/Friend.h"
 #include "world/World.h"
 #include "SFML/Graphics.hpp"
@@ -9,9 +8,17 @@
 #include "world/level/Mission.h"
 #include "world/level/Delivery.h"
 
-Friend::Friend(World &world, GraphNode *node, const sf::Texture &texture, float frameDelay, float animationDelay) : GraphEntity(world, node),
-                    chatBubble(world, sf::Color(255, 255, 255)), frameDelay(frameDelay), animationDelay(animationDelay) {
+Friend::Friend(World &world,
+               GraphNode *node,
+               const sf::Texture &texture,
+               float frameDelay,
+               float animationDelay)
+    : GraphEntity(world, node),
+        chatBubble(world, sf::Color(255, 255, 255)),
+        frameDelay(frameDelay),
+        animationDelay(animationDelay) {
     sprite.setTexture(texture);
+    sprite.setPosition(getPosition());
     spriteRect = sf::IntRect({0, 0}, {FRIEND_TEXTURE_SIZE, FRIEND_TEXTURE_SIZE});
     sprite.setTextureRect(spriteRect);
     GRand queue;
@@ -32,14 +39,19 @@ ZOrder Friend::getZOrder() const {
 
 void Friend::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     chatBubble.draw(target, states, getPosition());
-
-    sprite.setPosition(getPosition());
     SpriteUtil::setSpriteSizeUsingTextureRect(sprite, sf::Vector2f{1.95f, 2.});
-    SpriteUtil::setSpriteOriginUsingTextureRect(sprite, sf::Vector2f{isFuckingSnailman ? 1.f : 0.5f, 1.});
+    SpriteUtil::setSpriteOriginUsingTextureRect(sprite, sf::Vector2f{0.5f, 1.});
     target.draw(sprite);
 }
 
 void Friend::tick(float delta) {
+
+    sf::Vector2f newPos = getPosition() + (isFuckingSnailman ? sf::Vector2f { -1.0f, 0.0f } : sf::Vector2f { 0.0f, 0.0f });
+
+    float trans = pow(0.99f, delta * 1000.0f);
+
+    sprite.setPosition(newPos * (1.0f - trans) + sprite.getPosition() * trans);
+
     if (timeTillNextAnim <= 0) {
         if (spriteRect.left == sprite.getTexture()->getSize().x - FRIEND_TEXTURE_SIZE) {
             spriteRect.left = 0;

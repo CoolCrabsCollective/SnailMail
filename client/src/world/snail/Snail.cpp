@@ -20,6 +20,8 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color)
 
     snail_cap_sprite.setColor(snail_color);
     actualPosition = node->getPosition();
+    snail_sprite.setPosition(actualPosition);
+    snail_cap_sprite.setPosition(actualPosition);
 
     pathSelArrow = new PathSelectionArrowUI(world, snail_color);
     clickSound.setBuffer(*world.getAssets().get(GameAssets::CLICK));
@@ -43,10 +45,8 @@ void Snail::deleteYourself() {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    snail_sprite.setPosition(actualPosition);
-    snail_cap_sprite.setPosition(actualPosition);
-    SpriteUtil::setSpriteSize(snail_sprite, sf::Vector2f{2., 2.});
-    SpriteUtil::setSpriteSize(snail_cap_sprite, sf::Vector2f{2., 2.});
+    SpriteUtil::setSpriteSize(snail_sprite, sf::Vector2f{2.0f, 2.0f});
+    SpriteUtil::setSpriteSize(snail_cap_sprite, sf::Vector2f{2.0f, 2.0f});
     float scaleX = snail_sprite.getScale().x;
     float scaleY = snail_sprite.getScale().y;
     if(locDiff.x >= 0) {
@@ -60,14 +60,9 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.5f, 1.f});
     SpriteUtil::setSpriteOrigin(snail_cap_sprite, sf::Vector2f{0.5f, 1.f});
     if(!moving) {
-        snail_sprite.setRotation(sf::radians(0));
-        snail_cap_sprite.setRotation(sf::radians(0));
-
         for (auto ent : world.getEntities()) {
-            if (Friend* frend = dynamic_cast<Friend*>(ent)) {
-                if (frend->getLocation() == location) {
-                    snail_cap_sprite.move({1.0f, 0.0f});
-                    snail_sprite.move({1.0f, 0.0f});
+            if (Friend* friend2 = dynamic_cast<Friend*>(ent)) {
+                if (friend2->getLocation() == location) {
 
                     snail_sprite.setScale(sf::Vector2f {std::abs(snail_sprite.getScale().x) * -1, snail_sprite.getScale().y});
                     snail_cap_sprite.setScale(sf::Vector2f {std::abs(snail_cap_sprite.getScale().x) * -1, snail_cap_sprite.getScale().y});
@@ -79,7 +74,7 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     target.draw(snail_sprite);
     target.draw(snail_cap_sprite);
-    pathSelArrow->draw(target, states);
+    target.draw(*pathSelArrow);
 }
 
 void Snail::tick(float delta) {
@@ -89,6 +84,41 @@ void Snail::tick(float delta) {
         blockedMoving = false;
 
     pathSelArrow->tick(delta, moving, getLocation(), snail_color);
+
+    sf::Vector2f spritePos = actualPosition;
+    float desiredAngle = 0.0f;
+
+    if(!moving) {
+        for (auto ent : world.getEntities()) {
+            if (Friend* friend2 = dynamic_cast<Friend*>(ent)) {
+                if (friend2->getLocation() == location) {
+                    spritePos += {1.0f, 0.0f};
+                    break;
+                }
+            }
+        }
+    } else {
+        desiredAngle = std::atan2(locDiff.y, locDiff.x);
+        if(getTargetPosition().x < getLocation()->getPosition().x)
+            desiredAngle += M_PI;
+    }
+
+    float trans = pow(0.99f, delta * 1000.0f);
+
+    float rads = snail_sprite.getRotation().asRadians();
+
+    if(abs(rads - desiredAngle) > M_PI) {
+        if(rads > desiredAngle) {
+            desiredAngle += 2 * M_PI;
+        } else {
+            desiredAngle -= 2 * M_PI;
+        }
+    }
+
+    snail_sprite.setPosition(spritePos * (1.0f - trans) + snail_sprite.getPosition() * trans);
+    snail_cap_sprite.setPosition(spritePos * (1.0f - trans) + snail_cap_sprite.getPosition() * trans);
+    snail_sprite.setRotation(sf::radians(desiredAngle) * (1.0f - trans) + snail_sprite.getRotation() * trans);
+    snail_cap_sprite.setRotation(sf::radians(desiredAngle) * (1.0f - trans) + snail_cap_sprite.getRotation() * trans);
 }
 
 void Snail::moveLocation(GraphNode* node) {
@@ -102,15 +132,9 @@ void Snail::moveLocation(GraphNode* node) {
     moving = true;
     setDestination(node);
 
-    const sf::Vector2f& startLoc = getPosition();
+    const sf::Vector2f& startLoc = getLocation()->getPosition();
     const sf::Vector2f& endLoc = getTargetPosition();
     locDiff = endLoc - startLoc;
-    float angle = std::atan2(locDiff.y, locDiff.x);
-    if(endLoc.x < startLoc.x)
-        angle += M_PI;
-
-    snail_sprite.setRotation(sf::radians(angle));
-    snail_cap_sprite.setRotation(sf::radians(angle));
 }
 
 bool Snail::hasMovementOption() {
@@ -160,12 +184,12 @@ void Snail::tickMovement(float delta) {
 
     if(movingProgress < 1.0f) {
         actualPosition = this->getLocation()->getPosition() + locDiff * movingProgress;
-        path.addSlime(getLocation(), std::min(movingProgress + 0.5f / locDiff.length(), 1.0f), prevProgress, snail_color);
+        path.addSlime(getLocation(), std::min(movingProgress, 1.0f), prevProgress, snail_color);
     } else {
         path.addSlime(getLocation(), 1.0f, prevProgress, snail_color);
         setLocation(getDestination());
         moving = false;
-        actualPosition = getPosition();
+        actualPosition = getLocation()->getPosition();
         movingProgress = 0.0f;
     }
     blockedMoving = movingProgress == prevProgress;
