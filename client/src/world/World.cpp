@@ -38,7 +38,7 @@ World::World(wiz::AssetLoader &assets, MailScreen& screen)
     graph = new Graph(*this);
     addEntity(graph);
 
-    generateLevel(Level::getLevel(currentLevelNumber));
+    generateLevel(Level::getLevel(currentLevelNumber), currentLevelNumber);
 
     background.setTexture(*assets.get(GameAssets::WHITE_PIXEL));
     background.setColor({ 25, 148, 25, 255 });
@@ -58,11 +58,11 @@ Snail* World::spawnSnail(GraphNode* node, int snailId, float speed) {
     return snail;
 }
 
-void World::generateLevel(Level level) {
+void World::generateLevel(Level level, int levelNum) {
 
     stopAllMusic();
 
-    const wiz::MusicAsset& song = getSong(currentLevelNumber);
+    const wiz::MusicAsset& song = getSong(levelNum);
     getAssets().get(song)->setLoop(true);
     getAssets().get(song)->play();
 
@@ -461,12 +461,12 @@ Friend* World::getFriend(int id) {
 void World::loadNextLevel() {
     setPaused(false);
     currentLevelNumber++;
-    generateLevel(Level::getLevel(currentLevelNumber));
+    generateLevel(Level::getLevel(currentLevelNumber), currentLevelNumber);
 }
 
 void World::retry() {
     setPaused(false);
-    generateLevel(Level::getLevel(currentLevelNumber));
+    generateLevel(Level::getLevel(currentLevelNumber), currentLevelNumber);
 }
 
 const Level &World::getCurrentLevel() const {
