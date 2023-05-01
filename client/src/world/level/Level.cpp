@@ -97,7 +97,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 6
         {
-                .name = "The Great Double Cock Block",
+                .name = "Double Block",
                 .friends = {{ FROG, false, 1 },
                             { LADYBUG, false, 10 }},
                 .offices = { { false, 0 }, {false, 3}, {false, 6}},
@@ -218,6 +218,7 @@ const std::vector<Level> Level::LEVELS = {
                                    {24,25},{25,26},{26,27},{27,28},{27,29}, {15,17},{14,27}}
 
         },
+        // LEVEL 10
         {
                 .name = "The More the Merrier",
                 .seeded = true,
@@ -228,10 +229,12 @@ const std::vector<Level> Level::LEVELS = {
                 .offices = { { false, 1 }},
                 .snailCount = 3,
                 .missions = {
-                        { 1.0f, 0, 0, {{ 0, true, 15.f}}},
-                        { 5.0f, 0, 1, {{ 0, true, 15.f}}},
-                        { 10.0f, 0, 2, {{ 0, true, 15.f}}},
-                        { 15.0f, 0, 0, {{ 0, true, 15.f}}},
+                        { 1.0f, 0, 0, {{ 0, true, 13.f}}},
+                        { 5.0f, 0, 0, {{ 0, true, 13.f}}},
+                        { 10.0f, 0, 1, {{ 0, true, 13.f}}},
+                        { 15.0f, 0, 1, {{ 0, true, 13.f}}},
+                        { 20.0f, 0, 2, {{ 0, true, 13.f}}},
+                        { 25.0f, 0, 2, {{ 0, true, 13.f}}},
                 },
                 .deliveriesForBronze = 2,
                 .deliveriesForSilver = 3,

@@ -74,7 +74,7 @@ void Mission::tick(float delta) {
         bool is_at_a_post_office = false;
         for(auto& [k, v] : world.getPostOffices())
         {
-            if(snail->getLocation() == v->getLocation())
+            if(snail->getLocation() == v->getLocation() && !snail->isMoving())
             {
                 is_at_a_post_office = true;
                 break;
