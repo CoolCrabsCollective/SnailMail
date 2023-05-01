@@ -2,7 +2,7 @@
 // Created by Alexander Winter on 2023-01-07.
 //
 
-#ifndef LD52_CLIENT_MATHUTIL_H
+#ifndef LD52_CLIENT_MATHUTIL_H#
 #define LD52_CLIENT_MATHUTIL_H
 
 #include <string>
@@ -27,8 +27,8 @@ namespace MathUtil {
         return stream.str();
     }
 
-    bool segmentsIntersect(sf::Vector2f p0, sf::Vector2f p1,
-                           sf::Vector2f p2, sf::Vector2f p3) {
+    inline bool segmentsIntersect(sf::Vector2f p0, sf::Vector2f p1,
+                                  sf::Vector2f p2, sf::Vector2f p3) {
         float s1_x, s1_y, s2_x, s2_y;
         s1_x = p1.x - p0.x;     s1_y = p1.y - p0.y;
         s2_x = p3.x - p2.x;     s2_y = p3.y - p2.y;
@@ -40,7 +40,7 @@ namespace MathUtil {
         return s >= 0 && s <= 1 && t >= 0 && t <= 1;
     }
 
-    float pointSegmentDistanceSquared(sf::Vector2f point, sf::Vector2f lineStart, sf::Vector2f lineEnd) {
+    inline float pointSegmentDistanceSquared(sf::Vector2f point, sf::Vector2f lineStart, sf::Vector2f lineEnd) {
         float A = point.x - lineStart.x;
         float B = point.y - lineStart.y;
         float C = lineEnd.x - lineStart.x;
@@ -72,7 +72,7 @@ namespace MathUtil {
         return dx * dx + dy * dy;
     }
 
-    float pointSegmentDistance(sf::Vector2f point, sf::Vector2f lineStart, sf::Vector2f lineEnd) {
+    inline float pointSegmentDistance(sf::Vector2f point, sf::Vector2f lineStart, sf::Vector2f lineEnd) {
         return sqrt(pointSegmentDistanceSquared(point, lineStart, lineEnd));
     }
 }

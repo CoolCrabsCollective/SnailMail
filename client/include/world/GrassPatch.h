@@ -8,10 +8,11 @@
 #include <vector>
 #include "Entity.h"
 #include "SFML/Graphics/Sprite.hpp"
+#include "grand.h"
 
 
 class GrassPatch : public Entity, public Tickable {
-    float time;
+    float time, timeRate;
     
     mutable sf::Sprite sprite;
     std::vector<sf::Texture*> textures;

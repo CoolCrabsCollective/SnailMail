@@ -47,6 +47,8 @@ protected:
 
     bool paused = false;
 
+
+    GRand random;
 public:
     const std::unordered_map<int, PostOffice *> &getPostOffices() const;
 
@@ -109,6 +111,8 @@ public:
     void setCurrentLevelNumber(int currentLevelNumber);
 
     void setPaused(bool paused);
+
+    GRand& getRandom();
 };
 
 
