@@ -39,6 +39,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     constexpr float snail_scale = 4.f;
     constexpr float snail_time_distance = 150.f;
     constexpr float snail_friend_distance = 250.f;
+    constexpr float top_bar_offset = 75.f;
     std::vector<Snail*> snails = world.getSnails();
 
     std::vector<Mission*> missions = world.getMissions();
@@ -85,9 +86,11 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         const std::vector<Delivery*>& deliveries = missions[i]->getDeliveries();
 
         std::vector<Delivery*> activeDeliveries;
+        bool done_delivering = true;
         for(Delivery* d : deliveries) {
             if(!d->isCompleted()) {
                 activeDeliveries.push_back(d);
+                done_delivering = false;
             }
         }
 
@@ -146,8 +149,19 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             snail_offset += offset_from_delivery;
         }
 
-        float minimum_offset =  200.f;
-        float total_snail_offset = std::max(snail_offset, minimum_offset * (i + 1));
+        if(done_delivering)
+        {
+            post_office_sprite.setTexture(*world.getAssets().get(GameAssets::POST_OFFICE));
+            SpriteUtil::setSpriteSize(post_office_sprite, sf::Vector2f{70., 70.});
+            SpriteUtil::setSpriteOrigin(post_office_sprite, sf::Vector2f{0.0, 0.5});
+            post_office_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance,
+                                                   snail_margin + snail_offset});
+            target.draw(post_office_sprite);
+            snail_offset += offset_from_delivery;
+        }
+
+        float minimum_offset =  150.f;
+        float total_snail_offset = std::max(snail_offset, top_bar_offset + minimum_offset * (i + 1));
         if(i < missions.size() - 1) {
             sf::RectangleShape line;
             line.setFillColor(sf::Color(116.f, 63.f, 57.f));
