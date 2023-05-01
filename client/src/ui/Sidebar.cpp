@@ -13,10 +13,27 @@
 #include "world/friends/Frog.h"
 #include "world/friends/Bee.h"
 
-Sidebar::Sidebar(World& world) : world(world) {}
+Sidebar::Sidebar(World& world) : world(world) {
+    deliveryText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    deliveryText.setFillColor(sf::Color::White);
+    deliveryText.setCharacterSize(40);
+    deliveryText.setString("Deliveries");
+    deliveryText.setStyle(sf::Text::Underlined);
+
+    smailsmanText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    smailsmanText.setFillColor(sf::Color::White);
+    smailsmanText.setCharacterSize(32);
+    smailsmanText.setString("Smailsman");
+    smailsmanText.setStyle(sf::Text::Italic);
+
+    recipientText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    recipientText.setFillColor(sf::Color::White);
+    recipientText.setCharacterSize(32);
+    recipientText.setString("Recipient");
+    recipientText.setStyle(sf::Text::Italic);
+}
 
 void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-
     constexpr float snail_margin = 40.f;
     constexpr float distance_between_snails = 50.f;
     constexpr float offset_from_delivery = 100.f;
@@ -32,6 +49,21 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     background.setTexture(*world.getAssets().get(GameAssets::ALEXS_DESIRE));
     background.setScale({10.f, 10.f});
     target.draw(background);
+
+    sf::FloatRect deliveryRect = deliveryText.getLocalBounds();
+    deliveryText.setOrigin({deliveryRect.left + deliveryRect.width / 2.0f, deliveryRect.top + deliveryRect.height / 2.0f});
+    deliveryText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width /2, deliveryRect.height});
+    target.draw(deliveryText);
+
+    sf::FloatRect smailsmanRect = smailsmanText.getLocalBounds();
+    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
+    smailsmanText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + 25.0f, deliveryRect.height + 20.0f});
+    target.draw(smailsmanText);
+
+    sf::FloatRect recipientRect = recipientText.getLocalBounds();
+    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
+    recipientText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width - recipientRect.width - 25.0f, deliveryRect.height + 20.0f});
+    target.draw(recipientText);
 
     float snail_offset = 0;
     for(int i = 0; i < missions.size(); i++)

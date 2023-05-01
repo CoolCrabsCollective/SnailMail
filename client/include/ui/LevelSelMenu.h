@@ -9,6 +9,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "input/ClickableUI.h"
+#include "LevelItem.h"
 
 class World;
 
@@ -28,6 +29,8 @@ class LevelSelMenu : public sf::Drawable, public ClickableUI {
 
     bool isOpen = false;
 
+    std::vector<LevelItem*> levelItems;
+
 public:
     LevelSelMenu(World &world);
 
@@ -38,6 +41,10 @@ public:
     void setIsOpen(bool isOpen);
 
     void hitAction(bool& isHit) override;
+
+    void populateLevels();
+
+    const std::vector<LevelItem *> &getLevelItems() const;
 
     ~LevelSelMenu() = default;
 };

@@ -24,6 +24,8 @@ LevelSelMenu::LevelSelMenu(World &world) : ClickableUI(sf::Vector2f{1070.0f, 280
     exitButtonSprite.setPosition(mainOffset + buttonOffset);
     SpriteUtil::setSpriteSize(exitButtonSprite, sf::Vector2f{50.f, 50.f});
     SpriteUtil::setSpriteOrigin(exitButtonSprite, sf::Vector2f{0.5f, 0.5f});
+
+    populateLevels();
 }
 
 void LevelSelMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -33,6 +35,10 @@ void LevelSelMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states
     target.draw(backgroundSprite);
     target.draw(label);
     target.draw(exitButtonSprite);
+
+    for (LevelItem* levelItem : levelItems) {
+        target.draw(*levelItem);
+    }
 }
 
 bool LevelSelMenu::getIsOpen() const {
@@ -41,12 +47,28 @@ bool LevelSelMenu::getIsOpen() const {
 
 void LevelSelMenu::setIsOpen(bool isOpen) {
     clickable = isOpen;
+    for (LevelItem* levelItem : levelItems) {
+        levelItem->setClickable(clickable);
+    }
     LevelSelMenu::isOpen = isOpen;
 }
 
 void LevelSelMenu::hitAction(bool& isHit) {
     if (isHit) {
         clickable = false;
+        for (LevelItem* levelItem : levelItems) {
+            levelItem->setClickable(false);
+        }
         isOpen = false;
     }
+}
+
+void LevelSelMenu::populateLevels() {
+    for (int i = 0; i<Level::LEVELS.size(); i++) {
+        levelItems.push_back(new LevelItem(world, mainOffset, i + 1));
+    }
+}
+
+const std::vector<LevelItem *> &LevelSelMenu::getLevelItems() const {
+    return levelItems;
 }

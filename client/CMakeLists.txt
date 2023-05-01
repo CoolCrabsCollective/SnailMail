@@ -7,7 +7,6 @@ project(${PARENT_PROJECT_NAME}_client)
 
 set(WizEngine_COMMIT master)
 set(SFML_COMMIT 8f6903d00853fd3db395a557733ae65a14f37c01)
-set(BOX2D_CMAKE_COMMIT master)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -86,14 +85,6 @@ FetchContent_Declare(WizEngine
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)
 
-
-# Fetches Box2D dependency and loads its CMakeLists.txt
-FetchContent_Declare(Box2D
-        GIT_REPOSITORY https://github.com/WheezyWiseWizards/Box2D-cmake.git
-        GIT_TAG ${BOX2D_CMAKE_COMMIT})
-FetchContent_MakeAvailable(Box2D)
-FetchContent_GetProperties(Box2D SOURCE_DIR Box2D_SOURCE_DIR)
-
 # Other dependencies
 
 set(OpenGL_GL_PREFERENCE GLVND)
@@ -103,8 +94,6 @@ find_package(Threads REQUIRED)
 # include and source files
 include_directories(include ${SFML_SOURCE_DIR}/include
         ${WizEngine_SOURCE_DIR}/include
-        ${Box2D_SOURCE_DIR}/Box2D/Box2D
-        ${Box2D_SOURCE_DIR}/Box2D
         ../common/include)
 
 file(GLOB SOURCE_FILES
@@ -127,8 +116,7 @@ target_link_libraries(${PARENT_PROJECT_NAME}
         sfml-window
         sfml-graphics
         sfml-audio
-        sfml-network
-        WIZ::Box2D)
+        sfml-network)
 
 if (UNIX)
     target_link_libraries(${PARENT_PROJECT_NAME} pthread)

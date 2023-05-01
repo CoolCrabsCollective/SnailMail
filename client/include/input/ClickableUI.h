@@ -8,11 +8,10 @@
 #include "SFML/System/Vector2.hpp"
 
 class ClickableUI {
-private:
+protected:
     sf::Vector2f boundingBoxBL;
     sf::Vector2f boundingBoxTR;
 
-protected:
     bool clickable = true;
 
 public:
@@ -21,6 +20,8 @@ public:
     bool hitScan(const sf::Vector2f& hit);
 
     virtual void hitAction(bool& hit) = 0;
+
+    void setClickable(bool clickable);
 };
 
 #endif //LD53_CLIENT_CLICKABLEUI_H

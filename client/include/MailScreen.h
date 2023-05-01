@@ -10,7 +10,6 @@
 
 #include "WIZ/game/Screen.h"
 #include "WIZ/game/WindowListener.h"
-#include "Box2D/Dynamics/b2World.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/World.h"
 #include "world/Path.h"

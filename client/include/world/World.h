@@ -19,6 +19,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/snail/Snail.h"
 #include "ui/LevelCompleteMenu.h"
+#include "WIZ/asset/MusicAsset.h"
 
 class Friend;
 class PostOffice;
@@ -97,6 +98,12 @@ public:
     Friend* getFriend(int id);
 
     int getCurrentLevelNumber() const;
+
+    void stopAllMusic();
+
+    const wiz::MusicAsset& getSong(int number);
+
+    void setCurrentLevelNumber(int currentLevelNumber);
 };
 
 

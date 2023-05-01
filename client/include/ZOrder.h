@@ -6,8 +6,8 @@
 #define LD53_CLIENT_ZORDER_H
 
 enum ZOrder {
+    Grass_ZOrder,
     Path_ZOrder,
-    Goo_ZOrder,
     PostOffice_ZOrder,
     LadyBug_ZOrder,
     Snail_ZOrder,
