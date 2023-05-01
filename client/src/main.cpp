@@ -8,7 +8,6 @@
 
 #include "MailGame.h"
 #include "LoadingScreen.h"
-#include "grand.h"
 
 #include <WIZ/logging/DailyFileLogger.h>
 #include <iostream>

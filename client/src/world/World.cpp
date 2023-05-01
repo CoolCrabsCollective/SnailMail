@@ -17,6 +17,8 @@
 #include "world/friends/Frog.h"
 #include "MailScreen.h"
 #include "world/level/Delivery.h"
+#include "MathUtil.h"
+#include "world/GrassPatch.h"
 
 const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_BLUE,
@@ -75,7 +77,65 @@ void World::generateLevel(Level level) {
     currentLevel = level;
     graph->generateLevel(level);
 
-    GRand random;
+    std::vector<GrassPatch*> patches;
+
+    int it = 0;
+    do {
+        it++;
+        float x = static_cast<float>(random.d() * getView().getSize().x);
+        float y = static_cast<float>(random.d() * getView().getSize().y);
+
+        bool cancel = false;
+
+        for(GraphNode* node : graph->getNodes()) {
+            if((node->getPosition() - sf::Vector2f {x, y}).lengthSq() < MathUtil::pow2(Graph::MIN_NODE_DISTANCE / 2.0f)) {
+                cancel = true;
+                break;
+            }
+        }
+
+        if(cancel)
+            continue;
+
+        for(GrassPatch* patch : patches) {
+            if((patch->getPosition() - sf::Vector2f {x, y}).lengthSq() < MathUtil::pow2(Graph::MIN_NODE_DISTANCE / 2.0f)) {
+                cancel = true;
+                break;
+            }
+        }
+
+        if(cancel)
+            continue;
+
+
+        for(auto& path : graph->getPaths()) {
+            if(MathUtil::pointSegmentDistanceSquared({ x, y }, path.first.first->getPosition(), path.first.second->getPosition()) < MathUtil::pow2(Graph::MIN_NODE_DISTANCE / 4.0f)) {
+                cancel = true;
+                break;
+            }
+        }
+
+        if(cancel)
+            continue;
+
+        GrassType type;
+
+        if(random.d() > 0.95f) {
+            type = GrassType::RED_FLOWER;
+        } else if(random.d() > 0.90f) {
+            type = GrassType::YELLOW_FLOWER;
+        } else if(random.d() > 0.85f) {
+            type = GrassType::BLUE_FLOWER;
+        } else {
+            type = GrassType::GRASS;
+        }
+
+        patches.push_back(new GrassPatch(*this, { x, y }, type));
+
+    } while(it < 500000);
+
+    for(GrassPatch* patch : patches)
+        addEntity(patch);
 
     if(level.seeded)
         random.seed(level.seed);
@@ -191,6 +251,9 @@ void World::generateLevel(Level level) {
 }
 
 void World::tick(float delta) {
+    if (paused) {
+        return;
+    }
 
     if(!screen.getCompleteMenu().isVisible())
         timeSpent += delta;
@@ -238,14 +301,29 @@ void World::tick(float delta) {
             }
         }
 
-        screen.getCompleteMenu().show(deliveriesCompleted >= currentLevel.deliveriesForBronze,
+        bool success = deliveriesCompleted >= currentLevel.deliveriesForBronze;
+        float score = std::max(500.0f * deliveriesCompleted - 250.0f * deliveriesMissed,
+                               1000.0f * deliveriesCompleted - 500.0f * deliveriesMissed - timeSpent * 10.0f);
+
+        bool hasPreviousScore = screen.getScoreSaver().hasScore(currentLevelNumber);
+        Score previousBest;
+
+        if(hasPreviousScore)
+            previousBest = screen.getScoreSaver().loadScoreForLevel(currentLevelNumber);
+
+        if(success) {
+            screen.getScoreSaver().saveScore({ currentLevelNumber, deliveriesCompleted, deliveriesMissed, score });
+        }
+
+        screen.getCompleteMenu().show(success,
                                       deliveriesCompleted,
                                       deliveriesMissed,
                                       currentLevel.deliveriesForBronze,
                                       currentLevel.deliveriesForSilver,
                                       currentLevel.deliveriesForGold,
-                                      std::max(50.0f * deliveriesCompleted - 25.0f * deliveriesMissed,
-                                                    100.0f * deliveriesCompleted - 50.0f * deliveriesMissed - timeSpent * 20.0f));
+                                      score,
+                                      hasPreviousScore,
+                                      previousBest);
     }
 }
 
@@ -389,5 +467,13 @@ const wiz::MusicAsset& World::getSong(int levelNumber) {
 
 void World::setCurrentLevelNumber(int currentLevelNumber) {
     World::currentLevelNumber = currentLevelNumber;
+}
+
+GRand& World::getRandom() {
+    return random;
+}
+
+void World::setPaused(bool paused) {
+    World::paused = paused;
 }
 

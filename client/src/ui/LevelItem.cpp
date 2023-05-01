@@ -7,10 +7,11 @@
 #include "SpriteUtil.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "world/World.h"
+#include "ui/LevelSelMenu.h"
 
-LevelItem::LevelItem(World &world, sf::Vector2f parentMenuOffset, int levelNum) : ClickableUI({0.f, 0.f},
+LevelItem::LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f parentMenuOffset, int levelNum) : ClickableUI({0.f, 0.f},
                                                                                                                     {0.f, 0.f}),
-                                                                           world(world), parentMenuOffset(parentMenuOffset), levelNum(levelNum) {
+                                                                           world(world), levelSelMenu(levelSelMenu), parentMenuOffset(parentMenuOffset), levelNum(levelNum) {
     calculateOffsets();
 
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_ITEM));
@@ -25,6 +26,8 @@ LevelItem::LevelItem(World &world, sf::Vector2f parentMenuOffset, int levelNum) 
         levelNumString.insert(0, "0");
     }
     level_num.setString(levelNumString);
+
+    clickable = false;
 }
 
 void LevelItem::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -40,18 +43,18 @@ void LevelItem::hitAction(bool& isHit) {
     if (isHit) {
         world.generateLevel(Level::getLevel(levelNum));
         world.setCurrentLevelNumber(levelNum);
+        bool hit = true;
+        levelSelMenu.hitAction(hit);
     }
 }
 
 void LevelItem::calculateOffsets() {
-    int rowNum = 0;
-    if (levelNum > 6) {
-        rowNum = (levelNum) % 6;
-    }
+    int rowNum = (levelNum - 1) / max_per_row;
+    int rowNumOffset = (levelNum - 1) - rowNum*max_per_row;
 
-    float yPos = -45.f + (size.y + 25.f) * (float) rowNum;
+    float yPos = -85.f + (size.y + 25.f) * (float) rowNum;
 
-    float xPos = -270.f + (25.f + size.x) * (float) levelNum;
+    float xPos = -270.f + (25.f + size.x) * (float) rowNumOffset;
 
     mainOffset = parentMenuOffset + sf::Vector2f{xPos, yPos};
     numOffset = mainOffset + sf::Vector2f{-10.f, -20.f};

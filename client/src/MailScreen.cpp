@@ -17,7 +17,8 @@ MailScreen::MailScreen(wiz::Game& game)
             sidebar(world),
             levelSelMenu(world),
             levelIndicator(world, levelSelMenu),
-            uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }) {
+            uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }),
+            scoreSaver("scores/") {
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelIndicator));
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelSelMenu));
     for (LevelItem* itemLevel : levelSelMenu.getLevelItems()) {
@@ -26,6 +27,9 @@ MailScreen::MailScreen(wiz::Game& game)
 }
 
 void MailScreen::tick(float delta) {
+    world.setPaused(levelSelMenu.getIsOpen());
+    levelIndicator.setClickable(!completeMenu.isVisible());
+
     world.tick(delta / 1000.0f);
     completeMenu.tick(delta / 1000.0f);
 }
@@ -121,4 +125,8 @@ void MailScreen::keyReleased(const sf::Event::KeyEvent &keyEvent) {
 
 LevelCompleteMenu& MailScreen::getCompleteMenu() {
     return completeMenu;
+}
+
+ScoreSaver& MailScreen::getScoreSaver() {
+    return scoreSaver;
 }

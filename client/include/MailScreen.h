@@ -17,6 +17,7 @@
 #include "ui/LevelCompleteMenu.h"
 #include "ui/LevelIndicator.h"
 #include "ui/LevelSelMenu.h"
+#include "ScoreSaver.h"
 
 class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SnailMail";
@@ -28,6 +29,8 @@ class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::I
     sf::View uiView;
 
     std::vector<ClickableUI*> clickables;
+
+    ScoreSaver scoreSaver;
 
 public:
     MailScreen(wiz::Game& game);
@@ -53,6 +56,8 @@ public:
     void keyReleased(const sf::Event::KeyEvent &keyEvent) override;
 
     LevelCompleteMenu& getCompleteMenu();
+
+    ScoreSaver& getScoreSaver();
 };
 
 #endif //LD53_CLIENT_MAILSCREEN_H
