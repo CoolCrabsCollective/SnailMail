@@ -2,7 +2,6 @@
 // Created by Alexander Winter on 2023-04-29.
 //
 
-#include <iostream>
 #include "world/level/Mission.h"
 #include "world/PostOffice.h"
 #include "world/level/Delivery.h"
@@ -30,6 +29,9 @@ Mission::~Mission() {
 
 void Mission::tick(float delta) {
     if(isCompleted())
+        return;
+
+    if(!world.hasSnailMadeFirstMove && world.getSnails().size() > 0)
         return;
 
     if(!spawned_snail) {
