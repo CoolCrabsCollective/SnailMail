@@ -155,7 +155,8 @@ void LevelCompleteMenu::show(bool success,
     nextShellRequirement.setFillColor(sf::Color::White);
     nextShellRequirement.setCharacterSize(45);
     nextShellRequirement.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
-    nextShellRequirement.setPosition({200.0f, 400.0f});
+    sf::FloatRect bounds = nextShellRequirement.getGlobalBounds();
+    nextShellRequirement.setPosition({800.0f - bounds.width / 2.0f, 600.0f});
 }
 
 void LevelCompleteMenu::softlock() {

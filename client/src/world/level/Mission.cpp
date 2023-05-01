@@ -32,6 +32,9 @@ void Mission::tick(float delta) {
     if(isCompleted())
         return;
 
+    if(!world.hasSnailMadeFirstMove && world.getSnails().size() > 0)
+        return;
+
     if(!spawned_snail) {
         spawnProgress += delta;
 

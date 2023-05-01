@@ -60,6 +60,8 @@ Snail* World::spawnSnail(GraphNode* node, int snailId, float speed) {
 
 void World::generateLevel(Level level, int levelNum) {
 
+    setPaused(false);
+    hasSnailMadeFirstMove = false;
     stopAllMusic();
 
     const wiz::MusicAsset& song = getSong(levelNum);
@@ -459,12 +461,14 @@ Friend* World::getFriend(int id) {
 }
 
 void World::loadNextLevel() {
+    hasSnailMadeFirstMove = false;
     setPaused(false);
     currentLevelNumber++;
     generateLevel(Level::getLevel(currentLevelNumber), currentLevelNumber);
 }
 
 void World::retry() {
+    hasSnailMadeFirstMove = false;
     setPaused(false);
     generateLevel(Level::getLevel(currentLevelNumber), currentLevelNumber);
 }
