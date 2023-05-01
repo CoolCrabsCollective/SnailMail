@@ -221,24 +221,24 @@ const std::vector<Level> Level::LEVELS = {
         // LEVEL 10
         {
                 .name = "Pyramid",
-                .seeded = true,
-                .seed = 0xdef9,
-                .nodeCount = 4,
                 .friends = {
                         { BEE, false, 0 } },
                 .offices = { { false, 1 }},
                 .snailCount = 3,
                 .missions = {
                         { 1.0f, 0, 0, {{ 0, true, 13.f}}},
-                        { 5.0f, 0, 0, {{ 0, true, 13.f}}},
-                        { 10.0f, 0, 1, {{ 0, true, 13.f}}},
+                        { 10.0f, 0, 0, {{ 0, true, 13.f}}},
                         { 15.0f, 0, 1, {{ 0, true, 13.f}}},
-                        { 20.0f, 0, 2, {{ 0, true, 13.f}}},
-                        { 25.0f, 0, 2, {{ 0, true, 13.f}}},
+                        { 25.0f, 0, 1, {{ 0, true, 13.f}}},
+                        { 35.0f, 0, 2, {{ 0, true, 13.f}}},
+                        { 25.0f, 0, 1, {{ 0, true, 30.f}}},
                 },
                 .deliveriesForBronze = 2,
-                .deliveriesForSilver = 3,
-                .deliveriesForGold = 4,
+                .deliveriesForSilver = 5,
+                .deliveriesForGold = 6,
+                .custom = true,
+                .nodes = {{12.3f, 9.f}, {21.5f, 3.f}, {2.6f, 4.5f}, {16.f, 15.f}},
+                .adjacency_list = {{0, 1}, {0,2}, {0,3}, {1,3}, {1,2}},
         },
         {
                 .name = "Junction",
