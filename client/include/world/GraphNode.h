@@ -12,9 +12,10 @@
 
 class GraphNode {
     std::vector<GraphNode*> neighbors;
+    int id;
     sf::Vector2f position;
 public:
-    GraphNode(sf::Vector2f position);
+    GraphNode(int id, sf::Vector2f position);
 
     [[nodiscard]]
     const std::vector<GraphNode*>& getNeighbors() const;
@@ -25,6 +26,8 @@ public:
     void addNeighbor(GraphNode* node);
 
     void setPosition(const sf::Vector2f &position);
+
+    int getId();
 };
 
 
