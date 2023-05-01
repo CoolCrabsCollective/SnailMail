@@ -271,7 +271,6 @@ void World::tick(float delta) {
             allMissionsCompleted = false;
     }
 
-
     removeTrashToBeDeleted();
 
     for(Entity* entity : toAdd) {
