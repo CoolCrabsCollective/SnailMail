@@ -38,7 +38,8 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     deliveryText.setCharacterSize(32);
     deliveryText.setString("Deliveries");
     sf::FloatRect messageRect = deliveryText.getLocalBounds();
-    deliveryText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getLocalBounds().width /2, messageRect.height / 2});
+    deliveryText.setOrigin({messageRect.left + messageRect.width/2.0f, messageRect.top + messageRect.height/2.0f});
+    deliveryText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width /2, messageRect.height});
     target.draw(deliveryText);
 
     float snail_offset = 0;
