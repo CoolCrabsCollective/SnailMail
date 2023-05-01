@@ -7,13 +7,14 @@
 
 Path::Path(wiz::AssetLoader &assets,
            GraphNode *node1,
-           GraphNode *node2)
+           GraphNode *node2,
+           PathType pathType)
     : sprite(),
         slimeSprite(),
         node1(node1),
         node2(node2),
         slimes() {
-    sf::Texture* pathTex = assets.get(GameAssets::PATH);
+    sf::Texture* pathTex = assets.get(pathType == DIRT && false ? GameAssets::PATH : GameAssets::ROCK_PATH);
     sf::Texture* slimeTex = assets.get(GameAssets::CUM_PATH);
     pathTex->setRepeated(true);
     slimeTex->setRepeated(true);

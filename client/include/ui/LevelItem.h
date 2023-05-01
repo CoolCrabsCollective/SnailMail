@@ -17,6 +17,7 @@ class LevelSelMenu;
 class LevelItem : public sf::Drawable, public ClickableUI {
     mutable sf::Sprite backgroundSprite;
     mutable sf::Sprite metalSprite;
+    mutable sf::Sprite greyOutSprite;
 
     mutable sf::Text level_num;
 
