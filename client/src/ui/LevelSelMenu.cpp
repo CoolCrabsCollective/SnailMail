@@ -7,8 +7,8 @@
 #include "SpriteUtil.h"
 #include "world/World.h"
 
-LevelSelMenu::LevelSelMenu(World &world) : ClickableUI(sf::Vector2f{1070.0f, 280.0f},
-                                                       sf::Vector2f{1070.0f, 280.0f} + sf::Vector2f{70.f, 70.f}),
+LevelSelMenu::LevelSelMenu(World &world) : ClickableUI({0.f, 0.f},
+                                                       {0.f, 0.f}),
                                                        world(world) {
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_BACKDROP));
     backgroundSprite.setPosition(mainOffset);
@@ -24,6 +24,9 @@ LevelSelMenu::LevelSelMenu(World &world) : ClickableUI(sf::Vector2f{1070.0f, 280
     exitButtonSprite.setPosition(mainOffset + buttonOffset);
     SpriteUtil::setSpriteSize(exitButtonSprite, sf::Vector2f{50.f, 50.f});
     SpriteUtil::setSpriteOrigin(exitButtonSprite, sf::Vector2f{0.5f, 0.5f});
+
+    boundingBoxBL = mainOffset + buttonOffset - (sf::Vector2f{50.f, 50.f} / 2.f);
+    boundingBoxTR = mainOffset + buttonOffset + (sf::Vector2f{50.f, 50.f} / 2.f);
 
     populateLevels();
 
@@ -68,7 +71,7 @@ void LevelSelMenu::hitAction(bool& isHit) {
 void LevelSelMenu::populateLevels() {
 for (int i = 0; i<15; i++) {
 //    for (int i = 0; i<Level::LEVELS.size(); i++) {
-        levelItems.push_back(new LevelItem(world, mainOffset, i + 1));
+        levelItems.push_back(new LevelItem(world, *this, mainOffset, i + 1));
     }
 }
 

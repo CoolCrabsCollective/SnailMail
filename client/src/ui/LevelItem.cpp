@@ -7,10 +7,11 @@
 #include "SpriteUtil.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "world/World.h"
+#include "ui/LevelSelMenu.h"
 
-LevelItem::LevelItem(World &world, sf::Vector2f parentMenuOffset, int levelNum) : ClickableUI({0.f, 0.f},
+LevelItem::LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f parentMenuOffset, int levelNum) : ClickableUI({0.f, 0.f},
                                                                                                                     {0.f, 0.f}),
-                                                                           world(world), parentMenuOffset(parentMenuOffset), levelNum(levelNum) {
+                                                                           world(world), levelSelMenu(levelSelMenu), parentMenuOffset(parentMenuOffset), levelNum(levelNum) {
     calculateOffsets();
 
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_ITEM));
@@ -42,6 +43,8 @@ void LevelItem::hitAction(bool& isHit) {
     if (isHit) {
         world.generateLevel(Level::getLevel(levelNum));
         world.setCurrentLevelNumber(levelNum);
+        bool hit = true;
+        levelSelMenu.hitAction(hit);
     }
 }
 
@@ -49,7 +52,7 @@ void LevelItem::calculateOffsets() {
     int rowNum = (levelNum - 1) / max_per_row;
     int rowNumOffset = (levelNum - 1) - rowNum*max_per_row;
 
-    float yPos = -45.f + (size.y + 25.f) * (float) rowNum;
+    float yPos = -85.f + (size.y + 25.f) * (float) rowNum;
 
     float xPos = -270.f + (25.f + size.x) * (float) rowNumOffset;
 

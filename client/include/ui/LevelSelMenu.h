@@ -20,10 +20,10 @@ class LevelSelMenu : public sf::Drawable, public ClickableUI {
     mutable sf::Sprite exitButtonSprite;
 
     sf::Vector2f mainOffset = {800.0f, 450.0f};
-    sf::Vector2f labelOffset = {-40.f, -170.f};
-    sf::Vector2f buttonOffset = {310.f, -140.f};
+    sf::Vector2f labelOffset = {-40.f, -210.f};
+    sf::Vector2f buttonOffset = {310.f, -180.f};
 
-    sf::Vector2f mainSize = {800.f, 400.f};
+    sf::Vector2f mainSize = {800.f, 480.f};
 
     World& world;
 
