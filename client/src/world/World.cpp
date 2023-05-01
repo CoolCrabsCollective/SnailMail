@@ -309,6 +309,7 @@ void World::tick(float delta) {
         bool success = deliveriesCompleted >= currentLevel.deliveriesForBronze;
         float score = std::max(500.0f * deliveriesCompleted - 250.0f * deliveriesMissed,
                                1000.0f * deliveriesCompleted - 500.0f * deliveriesMissed - timeSpent * 10.0f);
+        score = std::max(score, 0.0f);
 
         bool hasPreviousScore = screen.getScoreSaver().hasScore(currentLevelNumber);
         Score previousBest;
