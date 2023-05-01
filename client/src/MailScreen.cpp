@@ -10,6 +10,7 @@
 #include "GameAssets.h"
 #include "world/World.h"
 #include "ui/Sidebar.h"
+#include "SpriteUtil.h"
 
 MailScreen::MailScreen(wiz::Game& game)
         : Screen(game),
@@ -19,12 +20,16 @@ MailScreen::MailScreen(wiz::Game& game)
             levelSelMenu(world),
             levelIndicator(world, levelSelMenu),
             uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }),
-            scoreSaver("scores/") {
+            scoreSaver("scores/"),
+            pointSprite() {
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelIndicator));
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelSelMenu));
     for (LevelItem* itemLevel : levelSelMenu.getLevelItems()) {
         clickables.push_back(dynamic_cast<ClickableUI*>(itemLevel));
     }
+    pointSprite.setTexture(*game.getAssets().get(GameAssets::WHITE_PIXEL));
+    SpriteUtil::setSpriteSize(pointSprite, { 1.0f, 1.0f });
+    SpriteUtil::setSpriteOrigin(pointSprite, { 0.5f, 0.5f });
 }
 
 void MailScreen::tick(float delta) {
@@ -38,6 +43,13 @@ void MailScreen::tick(float delta) {
 void MailScreen::render(sf::RenderTarget &target) {
     target.clear(sf::Color::Green);
     target.draw(world);
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+        for(sf::Vector2f point : points) {
+            pointSprite.setPosition(point);
+            target.draw(pointSprite);
+        }
+    }
 
     target.setView(uiView);
     target.draw(sidebar);
@@ -70,8 +82,11 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
     sf::Vector2f clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
                                                             world.getView());
 
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+        points.push_back(clickVector);
+        std::cout << clickVector.x << ", " << clickVector.y << std::endl;
+    }
 
-    std::cout << clickVector.x << ", " << clickVector.y << std::endl;
     for (Snail* snail : world.getSnails()) {
         GraphNode* hitScan = snail->hitScan(clickVector);
         if (hitScan) {
@@ -134,6 +149,9 @@ void MailScreen::keyReleased(const sf::Event::KeyEvent &keyEvent) {
         world.loadNextLevel();
     } else if(keyEvent.code == sf::Keyboard::R) {
         world.retry();
+    } else if(keyEvent.code == sf::Keyboard::P) {
+        std::cout << "=====" << std::endl;
+        points.clear();
     }
 }
 
