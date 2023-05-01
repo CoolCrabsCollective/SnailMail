@@ -8,8 +8,6 @@
 #include "world/friends/Bee.h"
 #include "world/World.h"
 #include "GameAssets.h"
-#include "SFML/Graphics.hpp"
-#include "SpriteUtil.h"
 
 Bee::Bee(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::BEE_SPRITE_SHEET), 0.3f, 2.0f) {
 

@@ -15,6 +15,8 @@ ChatBubble::ChatBubble(World &world, sf::Color bubbleColor) : world(world) {
     letterTextures.push_back(world.getAssets().get(GameAssets::BEE_LETTER));
     letterTextures.push_back(world.getAssets().get(GameAssets::MOUSE_LETTER));
     letterTextures.push_back(world.getAssets().get(GameAssets::FROG_LETTER));
+    letterTextures.push_back(world.getAssets().get(GameAssets::ANT_LETTER));
+    letterTextures.push_back(world.getAssets().get(GameAssets::DUCK_LETTER));
 
     letterSprite.setTexture(*letterTextures.front());
 }

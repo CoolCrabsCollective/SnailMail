@@ -1,7 +1,3 @@
-//
-// Created by cedric on 4/29/23.
-//
-
 #ifndef LD53_CLIENT_MAILSCREEN_H
 #define LD53_CLIENT_MAILSCREEN_H
 //
@@ -32,6 +28,8 @@ class MailScreen : public wiz::Screen, public wiz::WindowListener, public wiz::I
 
     ScoreSaver scoreSaver;
 
+    std::vector<sf::Vector2f> points;
+    sf::Sprite pointSprite;
 public:
     MailScreen(wiz::Game& game);
 

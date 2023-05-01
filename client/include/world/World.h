@@ -56,6 +56,8 @@ protected:
     int currentLevelNumber = 1;
     float timeSpent = 0.0f;
 public:
+    bool hasSnailMadeFirstMove = false;
+
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
     const static sf::Color snail_colors[];
 
