@@ -25,6 +25,12 @@ Sidebar::Sidebar(World& world) : world(world) {
     smailsmanText.setCharacterSize(32);
     smailsmanText.setString("Smailsman");
     smailsmanText.setStyle(sf::Text::Italic);
+
+    recipientText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    recipientText.setFillColor(sf::Color::White);
+    recipientText.setCharacterSize(32);
+    recipientText.setString("Recipient");
+    recipientText.setStyle(sf::Text::Italic);
 }
 
 void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -53,6 +59,11 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
     smailsmanText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + 25.0f, deliveryRect.height + 20.0f});
     target.draw(smailsmanText);
+
+    sf::FloatRect recipientRect = recipientText.getLocalBounds();
+    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
+    recipientText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width - recipientRect.width - 25.0f, deliveryRect.height + 20.0f});
+    target.draw(recipientText);
 
     float snail_offset = 0;
     for(int i = 0; i < missions.size(); i++)
