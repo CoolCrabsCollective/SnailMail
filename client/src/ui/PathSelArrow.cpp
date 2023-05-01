@@ -30,7 +30,6 @@ void PathSelectionArrowUI::draw(sf::RenderTarget& target, const sf::RenderStates
 }
 
 void PathSelectionArrowUI::tick(float delta, bool moving, GraphNode* currentNode, sf::Color snail_color) {
-    std::cout << arrows.size() << std::endl;
     if(currentArrowNode != currentNode) {
         arrows.clear();
         currentArrowNode = currentNode;
