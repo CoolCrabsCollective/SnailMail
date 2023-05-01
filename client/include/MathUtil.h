@@ -2,7 +2,7 @@
 // Created by Alexander Winter on 2023-01-07.
 //
 
-#ifndef LD52_CLIENT_MATHUTIL_H#
+#ifndef LD52_CLIENT_MATHUTIL_H
 #define LD52_CLIENT_MATHUTIL_H
 
 #include <string>

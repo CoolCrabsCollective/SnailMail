@@ -301,14 +301,29 @@ void World::tick(float delta) {
             }
         }
 
-        screen.getCompleteMenu().show(deliveriesCompleted >= currentLevel.deliveriesForBronze,
+        bool success = deliveriesCompleted >= currentLevel.deliveriesForBronze;
+        float score = std::max(500.0f * deliveriesCompleted - 250.0f * deliveriesMissed,
+                               1000.0f * deliveriesCompleted - 500.0f * deliveriesMissed - timeSpent * 10.0f);
+
+        bool hasPreviousScore = screen.getScoreSaver().hasScore(currentLevelNumber);
+        Score previousBest;
+
+        if(hasPreviousScore)
+            previousBest = screen.getScoreSaver().loadScoreForLevel(currentLevelNumber);
+
+        if(success) {
+            screen.getScoreSaver().saveScore({ currentLevelNumber, deliveriesCompleted, deliveriesMissed, score });
+        }
+
+        screen.getCompleteMenu().show(success,
                                       deliveriesCompleted,
                                       deliveriesMissed,
                                       currentLevel.deliveriesForBronze,
                                       currentLevel.deliveriesForSilver,
                                       currentLevel.deliveriesForGold,
-                                      std::max(50.0f * deliveriesCompleted - 25.0f * deliveriesMissed,
-                                                    100.0f * deliveriesCompleted - 50.0f * deliveriesMissed - timeSpent * 20.0f));
+                                      score,
+                                      hasPreviousScore,
+                                      previousBest);
     }
 }
 

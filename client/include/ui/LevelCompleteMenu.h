@@ -10,6 +10,7 @@
 #include "SFML/Graphics/Text.hpp"
 #include "WIZ/asset/AssetLoader.h"
 #include "world/Tickable.h"
+#include "ScoreSaver.h"
 
 class World;
 
@@ -51,7 +52,9 @@ public:
               int deliveriesForBronze,
               int deliveriesForSilver,
               int deliveriesForGold,
-              float score);
+              float score,
+              bool hasPreviousScore,
+              Score previousBest);
 
     void hide();
 
