@@ -79,6 +79,8 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     float snail_offset = 150.0f;
     int alpha_from_waiting = 80;
     for(int i = 0; i < missions.size(); i++) {
+        if(missions[i]->isCompleted())
+            continue;
         bool snail_is_queued = missions[i]->getSnail() == nullptr;
 
         sf::Color snail_color;
