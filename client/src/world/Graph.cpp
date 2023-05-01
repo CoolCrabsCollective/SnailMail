@@ -9,8 +9,14 @@
 #include "SpriteUtil.h"
 #include "MathUtil.h"
 
-Graph::Graph(World& world) : Entity(world), adjacencyMap(), lines(sf::Lines, 2) {
+Graph::Graph(World& world) : Entity(world), adjacencyMap(), lines(sf::Lines, 2), numberLabel() {
     sprite.setTexture(*world.getAssets().get(GameAssets::GRAPH_VERTEX));
+
+    numberLabel.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    numberLabel.setCharacterSize(50);
+    numberLabel.setScale(sf::Vector2f { 0.01f, 0.01f });
+    numberLabel.setOrigin({ 0.5f, 0.5f });
+    numberLabel.setFillColor(sf::Color::White);
 }
 
 const sf::Vector2f& Graph::getPosition() const {
@@ -37,6 +43,12 @@ void Graph::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
         SpriteUtil::setSpriteSize(sprite, sf::Vector2f{2., 2.});
         SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f{0.5f, 0.5f});
         target.draw(sprite);
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+            numberLabel.setString(std::to_string(node->getId()));
+            numberLabel.setPosition(node->getPosition());
+            target.draw(numberLabel);
+        }
     }
 }
 
@@ -55,9 +67,7 @@ void Graph::generateLevel(Level level) {
     if(level.custom)
     {
         for(const std::pair<float, float>& pair : level.nodes)
-        {
-            nodes.push_back(new GraphNode({ pair.first, pair.second }));
-        }
+            nodes.push_back(new GraphNode(nodes.size(), { pair.first, pair.second }));
 
         for(const std::pair<int, int>& pair : level.adjacency_list)
         {
@@ -98,7 +108,7 @@ void Graph::generateLevel(Level level) {
             continue;
         }
 
-        nodes.push_back(new GraphNode({ x, y }));
+        nodes.push_back(new GraphNode(nodes.size(), { x, y }));
 
         minX = std::min(x, minX);
         minY = std::min(y, minY);
@@ -115,9 +125,8 @@ void Graph::generateLevel(Level level) {
     float scaleX = world.getView().getSize().x / (maxX - minX);
     float scaleY = world.getView().getSize().y / (maxY - minY);
 
-    for(GraphNode* node : nodes) {
+    for(GraphNode* node : nodes)
         node->setPosition((node->getPosition() - sf::Vector2f { minX, minY }).cwiseMul({ scaleX, scaleY }));
-    }
 
     int it = 0;
     do {

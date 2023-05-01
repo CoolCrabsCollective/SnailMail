@@ -4,7 +4,8 @@
 
 #include "world/GraphNode.h"
 
-GraphNode::GraphNode(sf::Vector2f position) : position(position) {
+GraphNode::GraphNode(int id, sf::Vector2f position)
+    : neighbors(), id(id), position(position) {
 
 }
 
@@ -22,4 +23,8 @@ void GraphNode::addNeighbor(GraphNode* node) {
 
 void GraphNode::setPosition(const sf::Vector2f& position) {
     GraphNode::position = position;
+}
+
+int GraphNode::getId() {
+    return id;
 }
