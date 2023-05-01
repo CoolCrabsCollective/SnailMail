@@ -313,7 +313,6 @@ void World::tick(float delta) {
         int deliveriesCompleted = 0;
         int deliveriesMissed = 0;
 
-
         for(Mission* mission : missions) {
             for(Delivery* delivery : mission->getDeliveries()) {
                 if(delivery->isCompleted()) {
@@ -347,6 +346,24 @@ void World::tick(float delta) {
                                       score,
                                       hasPreviousScore,
                                       previousBest);
+    }
+
+    bool allSoftLocked = true;
+
+    for(Snail* snail : snails) {
+        if(snail->isMoving() || snail->hasMovementOption())
+            allSoftLocked = false;
+    }
+
+    if(allSoftLocked) {
+        for(Mission* mission : missions) {
+            if(!mission->hasSpawnedSnail() && mission->canSpawnSnail())
+                allSoftLocked = false;
+        }
+    }
+
+    if(allSoftLocked) {
+        screen.getCompleteMenu().softlock();
     }
 }
 

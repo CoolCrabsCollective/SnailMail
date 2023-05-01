@@ -9,12 +9,11 @@
 #include "world/GraphEntity.h"
 #include "world/World.h"
 #include "ui/ChatBubble.h"
-#include "Breedable.h"
-#include "Submissive.h"
+#include "world/Tickable.h"
 
 #define FRIEND_TEXTURE_SIZE 32
 
-class Friend : public GraphEntity, public Submissive, public Breedable {
+class Friend : public GraphEntity, public Tickable {
     mutable sf::Sprite sprite;
     sf::IntRect spriteRect;
 
