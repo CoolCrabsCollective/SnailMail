@@ -17,7 +17,7 @@ protected:
 public:
     ClickableUI(sf::Vector2f boundingBoxBL, sf::Vector2f boundingBoxTR);
 
-    bool hitScan(const sf::Vector2f& hit);
+    virtual bool hitScan(const sf::Vector2f& hit);
 
     virtual void hitAction(bool& hit) = 0;
 

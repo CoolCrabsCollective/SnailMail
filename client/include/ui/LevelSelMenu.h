@@ -10,14 +10,21 @@
 #include "SFML/Graphics/Text.hpp"
 #include "input/ClickableUI.h"
 #include "LevelItem.h"
+#include "SFML/Audio/Sound.hpp"
+#include "world/Tickable.h"
 
 class World;
 
-class LevelSelMenu : public sf::Drawable, public ClickableUI {
+class LevelSelMenu : public sf::Drawable, public ClickableUI, public Tickable {
     mutable sf::Sprite backgroundSprite;
     mutable sf::Text label;
 
     mutable sf::Sprite exitButtonSprite;
+
+    mutable sf::Sprite buttonBackground;
+    mutable sf::Text restartButton;
+    float restartScale;
+    bool restartHovered;
 
     sf::Vector2f mainOffset = {800.0f, 450.0f};
     sf::Vector2f labelOffset = {-40.f, -210.f};
@@ -32,7 +39,10 @@ class LevelSelMenu : public sf::Drawable, public ClickableUI {
     std::vector<LevelItem*> levelItems;
 
 public:
+    sf::Sound clickSound;
     LevelSelMenu(World &world);
+
+    void tick(float delta) override;
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
@@ -47,6 +57,10 @@ public:
     const std::vector<LevelItem *> &getLevelItems() const;
 
     ~LevelSelMenu() = default;
+
+    void hover(sf::Vector2f position);
+
+    bool hitScan(const sf::Vector2f &hit) override;
 };
 
 #endif //LD53_CLIENT_LEVELSELMENU_H

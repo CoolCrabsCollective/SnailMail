@@ -47,7 +47,7 @@ public:
 
     void calculateOffsets();
 
-    void updateMetal();
+    void updateMedals();
 
     ~LevelItem() = default;
 };

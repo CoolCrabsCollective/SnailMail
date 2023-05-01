@@ -9,9 +9,15 @@
 #include "world/World.h"
 #include "ui/LevelSelMenu.h"
 
-LevelItem::LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f parentMenuOffset, int levelNum) : ClickableUI({0.f, 0.f},
-                                                                                                                    {0.f, 0.f}),
-                                                                           world(world), levelSelMenu(levelSelMenu), parentMenuOffset(parentMenuOffset), levelNum(levelNum) {
+LevelItem::LevelItem(World& world,
+                     LevelSelMenu& levelSelMenu,
+                     sf::Vector2f parentMenuOffset,
+                     int levelNum)
+    : ClickableUI({0.f, 0.f}, {0.f, 0.f}),
+       world(world),
+       levelSelMenu(levelSelMenu),
+       parentMenuOffset(parentMenuOffset),
+       levelNum(levelNum) {
     calculateOffsets();
 
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_ITEM));
@@ -81,7 +87,7 @@ void LevelItem::calculateOffsets() {
     ClickableUI::boundingBoxTR = mainOffset + (size / 2.f);
 }
 
-void LevelItem::updateMetal() {
+void LevelItem::updateMedals() {
     drawMetal = false;
     clickable = true;
 
