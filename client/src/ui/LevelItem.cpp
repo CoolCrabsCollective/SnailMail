@@ -44,8 +44,20 @@ LevelItem::LevelItem(World& world,
     clickable = false;
 }
 
+void LevelItem::tick(float delta) {
+    if(hovered) {
+        backgroundScale += delta * 8.0f;
+        if(backgroundScale > 1.2f)
+            backgroundScale = 1.2f;
+    } else {
+        backgroundScale -= delta * 10.0f;
+        if(backgroundScale < 1.0f)
+            backgroundScale = 1.0f;
+    }
+}
+
 void LevelItem::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    SpriteUtil::setSpriteSize(backgroundSprite, size);
+    SpriteUtil::setSpriteSize(backgroundSprite, size * backgroundScale);
     SpriteUtil::setSpriteOrigin(backgroundSprite, sf::Vector2f{0.5f, 0.5f});
     target.draw(backgroundSprite);
 
@@ -113,3 +125,8 @@ void LevelItem::updateMedals() {
         metalSprite.setTexture(*world.getAssets().get(GameAssets::BRONZE_SHELL), true);
     }
 }
+
+void LevelItem::hoverAction(bool& isHit) {
+    hovered = isHit;
+}
+
