@@ -271,6 +271,29 @@ void World::tick(float delta) {
             allMissionsCompleted = false;
     }
 
+    bool all_deliveries_have_expired = true;
+    if(!allMissionsCompleted)
+    {
+        // Check if all the remaining deliveries have expired
+        for(Mission* mission : missions)
+        {
+            if(!mission->isCompleted())
+            {
+                for(Delivery* delivery : mission->getDeliveries())
+                {
+                    if(!delivery->isCompleted() && !delivery->isExpired()) {
+                        all_deliveries_have_expired = false;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if(all_deliveries_have_expired)
+    {
+        allMissionsCompleted = true;
+    }
 
     removeTrashToBeDeleted();
 
