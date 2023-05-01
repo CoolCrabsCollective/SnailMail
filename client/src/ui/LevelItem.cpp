@@ -17,6 +17,12 @@ LevelItem::LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f par
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_ITEM));
     backgroundSprite.setPosition(mainOffset);
 
+    greyOutSprite.setTexture(*world.getAssets().get(GameAssets::WHITE_PIXEL));
+    SpriteUtil::setSpriteSize(greyOutSprite, size);
+    SpriteUtil::setSpriteOrigin(greyOutSprite, sf::Vector2f{0.5f, 0.5f});
+    greyOutSprite.setColor(sf::Color(125, 125, 125, 125));
+    greyOutSprite.setPosition(mainOffset);
+
     metalSprite.setPosition(metalOffset);
 
     level_num.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
@@ -44,6 +50,10 @@ void LevelItem::draw(sf::RenderTarget &target, const sf::RenderStates &states) c
     }
 
     target.draw(level_num);
+
+    if (!clickable) {
+        target.draw(greyOutSprite);
+    }
 }
 
 void LevelItem::hitAction(bool& isHit) {
@@ -73,9 +83,14 @@ void LevelItem::calculateOffsets() {
 
 void LevelItem::updateMetal() {
     drawMetal = false;
+    clickable = true;
 
-    if (!world.getScoreSaver().hasScore(levelNum))
+    if (!world.getScoreSaver().hasScore(levelNum)) {
+        if (!world.getScoreSaver().hasScore(levelNum - 1))
+            clickable = false;
+
         return;
+    }
 
     Level level = Level::getLevel(levelNum);
 
