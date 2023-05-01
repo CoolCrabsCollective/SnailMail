@@ -66,6 +66,8 @@ public:
     float getMovingProgress() const;
 
     bool hover(sf::Vector2f vector2);
+
+    bool hasMovementOption();
 };
 
 

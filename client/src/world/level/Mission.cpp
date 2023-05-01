@@ -90,6 +90,20 @@ void Mission::tick(float delta) {
     }
 }
 
+bool Mission::canSpawnSnail() {
+    bool snail_already_exists = false;
+    bool snail_already_at_post_office = false;
+
+    for(Snail* s : world.getSnails()) {
+        if(s->getSnailColor() == World::snail_colors[snailId])
+            snail_already_exists = true;
+
+        if(s->getLocation() == startPoint && !s->isMoving())
+            snail_already_at_post_office = true;
+    }
+    return !snail_already_exists && !snail_already_at_post_office;
+}
+
 const std::vector<Delivery*>& Mission::getDeliveries() const {
     return deliveries;
 }
