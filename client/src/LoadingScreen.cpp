@@ -17,7 +17,6 @@ void LoadingScreen::tick(float delta) {
 }
 
 void LoadingScreen::render(sf::RenderTarget& target) {
-
 	target.clear(sf::Color(0, 0, 0, 255));
 
 	float width = target.getView().getSize().x * 0.5f;
