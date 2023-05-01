@@ -35,7 +35,7 @@ void Friend::draw(sf::RenderTarget& target, const sf::RenderStates& states) cons
 
     sprite.setPosition(getPosition());
     SpriteUtil::setSpriteSizeUsingTextureRect(sprite, sf::Vector2f{1.95f, 2.});
-    SpriteUtil::setSpriteOriginUsingTextureRect(sprite, sf::Vector2f{0.5, 1.});
+    SpriteUtil::setSpriteOriginUsingTextureRect(sprite, sf::Vector2f{isFuckingSnailman ? 1.f : 0.5f, 1.});
     target.draw(sprite);
 }
 
@@ -53,8 +53,14 @@ void Friend::tick(float delta) {
         timeTillNextAnim -= delta;
     }
 
-    isMad = false;
+    isFuckingSnailman = false;
+    for (auto s : world.getSnails()) {
+        if (s->getLocation() == location) {
+            isFuckingSnailman = true;
+        }
+    }
 
+    isMad = false;
 
     bool should_shake = false;
     for(Mission* m : world.getMissions())

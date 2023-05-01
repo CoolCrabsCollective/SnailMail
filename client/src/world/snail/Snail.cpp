@@ -61,6 +61,8 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     {
         snail_sprite.setRotation(sf::radians(0));
         snail_cap_sprite.setRotation(sf::radians(0));
+        SpriteUtil::setSpriteOrigin(snail_sprite, {1.0f,1.0f});
+        SpriteUtil::setSpriteOrigin(snail_cap_sprite, {1.0f,1.0f});
     }
 
     target.draw(snail_sprite);
