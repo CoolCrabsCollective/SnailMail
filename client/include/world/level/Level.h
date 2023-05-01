@@ -13,6 +13,7 @@ enum FriendType {
     BEE = 1,
     MOUSE,
     FROG,
+    ANT,
     FRIEND_TYPE_LENGTH
 };
 

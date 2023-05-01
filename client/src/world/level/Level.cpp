@@ -229,7 +229,7 @@ const std::vector<Level> Level::LEVELS = {
         {
                 .name = "Coquille",
                 .friends = { { LADYBUG, false, 1 },
-                             { MOUSE, false, 14 },
+                             { ANT, false, 14 },
                              { FROG, false, 26 },
                 },
                 .offices = { { false, 0}, {false, 28},

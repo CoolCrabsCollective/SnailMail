@@ -19,6 +19,7 @@
 #include "world/level/Delivery.h"
 #include "MathUtil.h"
 #include "world/GrassPatch.h"
+#include "world/friends/Ant.h"
 
 const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_BLUE,
@@ -196,6 +197,9 @@ void World::generateLevel(Level level, int levelNum) {
                 break;
             case FROG:
                 addEntity(spawned = new Frog(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                break;
+            case ANT:
+                addEntity(spawned = new Ant(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
         }
         friends.emplace(id, spawned);
