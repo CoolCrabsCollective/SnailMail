@@ -65,9 +65,9 @@ const std::vector<Level> Level::LEVELS = {
                               { 1.0f, 1, 1,
                                       { { 0, true, 9.0f },
                                               { 1, true, 14.0f },},},},
-                .deliveriesForBronze = 0,
-                .deliveriesForSilver = 1,
-                .deliveriesForGold = 2,
+                .deliveriesForBronze = 2,
+                .deliveriesForSilver = 3,
+                .deliveriesForGold = 4,
                 .snail_speed = 4.f,
                 .custom = true,
                 .nodes = {{6.f, 4.f}, {18.f, 4.f}, {21.f, 9.f}, {18.f, 14.f}, {6.f, 14.f}, {3.f, 9.f}, {12.f, 9.f}},
@@ -110,7 +110,7 @@ const std::vector<Level> Level::LEVELS = {
                 .deliveriesForBronze = 2,
                 .deliveriesForSilver = 3,
                 .deliveriesForGold = 4,
-                .snail_speed = 2.f,
+                .snail_speed = 3.f,
         },
         {
                 .seeded = true,
@@ -135,7 +135,7 @@ const std::vector<Level> Level::LEVELS = {
                 .deliveriesForBronze = 2,
                 .deliveriesForSilver = 3,
                 .deliveriesForGold = 4,
-                .snail_speed = 2.f,
+                .snail_speed = 3.f,
         }
 
 
