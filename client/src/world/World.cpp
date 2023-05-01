@@ -190,6 +190,9 @@ void World::generateLevel(Level level) {
 }
 
 void World::tick(float delta) {
+    if (paused) {
+        return;
+    }
 
     if(!screen.getCompleteMenu().isVisible())
         timeSpent += delta;
@@ -388,5 +391,9 @@ const wiz::MusicAsset& World::getSong(int levelNumber) {
 
 void World::setCurrentLevelNumber(int currentLevelNumber) {
     World::currentLevelNumber = currentLevelNumber;
+}
+
+void World::setPaused(bool paused) {
+    World::paused = paused;
 }
 

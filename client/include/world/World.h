@@ -44,6 +44,9 @@ protected:
     std::vector<Mission*> missions;
     std::unordered_map<int, Friend*> friends;
     std::unordered_map<int, PostOffice*> postOffices;
+
+    bool paused = false;
+
 public:
     const std::unordered_map<int, PostOffice *> &getPostOffices() const;
 
@@ -104,6 +107,8 @@ public:
     const wiz::MusicAsset& getSong(int number);
 
     void setCurrentLevelNumber(int currentLevelNumber);
+
+    void setPaused(bool paused);
 };
 
 
