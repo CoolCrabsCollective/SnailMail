@@ -20,6 +20,8 @@ public:
     bool hitScan(const sf::Vector2f& hit);
 
     virtual void hitAction(bool& hit) = 0;
+
+    void setClickable(bool clickable);
 };
 
 #endif //LD53_CLIENT_CLICKABLEUI_H
