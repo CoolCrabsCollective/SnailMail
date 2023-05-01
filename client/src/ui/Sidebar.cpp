@@ -69,8 +69,10 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     for(int i = 0; i < missions.size(); i++) {
         if(missions[i]->getSnail() == nullptr)
             continue;
+
+        float second_or_more_snail_offset = i > 0 ? 30.f : 0.f;
         snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
-        sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin, snail_margin + snail_offset};
+        sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin, snail_margin + snail_offset + second_or_more_snail_offset};
         snail_sprite.setPosition(pos);
         snail_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
         SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.0, 0.5});
@@ -125,7 +127,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             std::string time_str = std::to_string(time_left);
             number_text.setOrigin({total_char_size / 2.f, total_char_size / 2.f});
             number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_time_distance + character_size / 2.f,
-                                                 snail_margin + snail_offset});
+                                                 snail_margin + snail_offset + second_or_more_snail_offset});
             number_text.setString(time_str);
             number_text.setFillColor(sf::Color::Black);
             number_text.setCharacterSize((int)total_char_size);
@@ -141,7 +143,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
 
             friend_sprite.setTexture(*friendTexture);
             friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance,
-                                                   snail_margin + snail_offset});
+                                                   snail_margin + snail_offset + second_or_more_snail_offset});
             SpriteUtil::setSpriteSize(friend_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.0, 0.5});
             target.draw(friend_sprite);
@@ -155,7 +157,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             SpriteUtil::setSpriteSize(post_office_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(post_office_sprite, sf::Vector2f{0.0, 0.5});
             post_office_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance,
-                                                   snail_margin + snail_offset});
+                                                   snail_margin + snail_offset + second_or_more_snail_offset});
             target.draw(post_office_sprite);
             snail_offset += offset_from_delivery;
         }
