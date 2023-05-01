@@ -49,7 +49,7 @@ void LevelItem::calculateOffsets() {
     int rowNum = (levelNum - 1) / max_per_row;
     int rowNumOffset = (levelNum - 1) - rowNum*max_per_row;
 
-    float yPos = -45.f + (size.y + 25.f) * (float) rowNum;
+    float yPos = -85.f + (size.y + 25.f) * (float) rowNum;
 
     float xPos = -270.f + (25.f + size.x) * (float) rowNumOffset;
 
