@@ -28,6 +28,8 @@ class Graph : public Entity {
 
     mutable sf::Sprite sprite;
     mutable sf::VertexArray lines;
+
+    mutable sf::Text numberLabel;
 public:
 
     constexpr const static float MIN_NODE_DISTANCE = 5.0f;
