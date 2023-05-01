@@ -63,6 +63,8 @@ public:
     void hover(sf::Vector2f position);
 
     bool isVisible();
+
+    void softlock();
 };
 
 

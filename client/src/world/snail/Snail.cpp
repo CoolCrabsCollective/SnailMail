@@ -96,6 +96,28 @@ void Snail::moveLocation(GraphNode* node) {
     snail_cap_sprite.setRotation(sf::radians(angle));
 }
 
+bool Snail::hasMovementOption() {
+    for(GraphNode* neighbor : getLocation()->getNeighbors()) {
+        Path& path = world.getGraph()->getPath(getLocation(), neighbor);
+        if(path.isBlocked(getLocation(), snail_color))
+            continue;
+
+        bool neighbor_blocking = false;
+        for(Snail* snail: world.getSnails()) {
+            if (neighbor == snail->getLocation() && snail->isMoving() && snail->getDestination() == getLocation()) {
+                neighbor_blocking = true;
+                break;
+            }
+        }
+
+        if(neighbor_blocking)
+            continue;
+        return true;
+    }
+
+    return false;
+}
+
 void Snail::tickMovement(float delta) {
     currentProgressRate = progressRate / locDiff.length();
     float prevProgress = movingProgress;

@@ -154,6 +154,40 @@ void LevelCompleteMenu::show(bool success,
     nextShellRequirement.setPosition({200.0f, 400.0f});
 }
 
+void LevelCompleteMenu::softlock() {
+    visible = true;
+    won = false;
+
+    shell.setTexture(*assets.get(GameAssets::LOSER_SHELL), true);
+    shell.setPosition({ 700.0f, 100.0f });
+    SpriteUtil::setSpriteSize(shell, { 200.0f, 200.0f });
+    SpriteUtil::setSpriteOrigin(shell, { 0.0f, 0.0f });
+
+    nextShellRequirement.setString("");
+
+
+    title.setString("You got stuck...");
+    title.setFillColor(sf::Color::White);
+    title.setCharacterSize(100);
+    title.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
+    sf::FloatRect textRect = title.getLocalBounds();
+    title.setPosition({ 800.0f - textRect.width / 2.0f, 400.0f - textRect.height - 50.0f });
+
+    countCompleted.setString("");
+    countMissed.setString("");
+    scoreText.setString("");
+    yourBest.setString("");
+    hasPreviousBest = false;
+
+    retryButton.setString("Retry");
+    retryButton.setFillColor(sf::Color::White);
+    retryButton.setCharacterSize(90);
+    retryButton.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
+    textRect = retryButton.getLocalBounds();
+    retryButton.setPosition({ 600.0f, 675.0f + textRect.height / 2.0f});
+    retryButton.setOrigin({ 0.5f * textRect.width, 0.5f * textRect.height });
+}
+
 void LevelCompleteMenu::hide() {
     visible = false;
 }

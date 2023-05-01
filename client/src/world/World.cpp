@@ -325,6 +325,21 @@ void World::tick(float delta) {
                                       hasPreviousScore,
                                       previousBest);
     }
+
+    bool allSoftLocked = true;
+
+    for(Snail* snail : snails) {
+        if(snail->isMoving() || snail->hasMovementOption())
+            allSoftLocked = false;
+    }
+
+    if(allSoftLocked) {
+
+    }
+
+    if(allSoftLocked) {
+        //screen.getCompleteMenu().softlock();
+    }
 }
 
 void World::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
