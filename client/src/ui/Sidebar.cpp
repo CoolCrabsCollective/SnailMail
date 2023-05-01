@@ -24,27 +24,31 @@ Sidebar::Sidebar(World& world) : world(world) {
     smailsmanText.setFillColor(sf::Color::White);
     smailsmanText.setCharacterSize(30);
     smailsmanText.setString("Smailsman");
-    smailsmanText.setStyle(sf::Text::Italic);
 
     recipientText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     recipientText.setFillColor(sf::Color::White);
     recipientText.setCharacterSize(30);
     recipientText.setString("Recipient");
-    recipientText.setStyle(sf::Text::Italic);
 
     timeLeftText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     timeLeftText.setFillColor(sf::Color::White);
     timeLeftText.setCharacterSize(30);
-    timeLeftText.setString("Time Left");
-    timeLeftText.setStyle(sf::Text::Italic);
+    timeLeftText.setString("Time");
 }
 
 void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    constexpr float snail_margin = 40.f;
-    constexpr float offset_from_delivery = 100.f;
     constexpr float snail_scale = 3.f;
-    constexpr float snail_time_distance = 150.f;
-    constexpr float top_bar_offset = 75.f;
+    constexpr float v_friend_offset = 55.f;
+    constexpr float v_time_offset = 40.f;
+    constexpr float v_snail_offset = 40.f;
+    constexpr float v_distance_between_friends = 80.f;
+    constexpr float v_top_bar_offset = 130.f;
+    constexpr float v_friend_bottom_padding = 15.f;
+
+    constexpr float h_snail_spacing = 80.f;
+    constexpr float h_friend_offset = 220.f;
+    constexpr float h_time_offset = 345.f;
+
     std::vector<Snail*> snails = world.getSnails();
 
     std::vector<Mission*> missions = world.getMissions();
@@ -62,7 +66,6 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     target.draw(deliveryText);
 
     sf::FloatRect smailsmanRect = smailsmanText.getLocalBounds();
-    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
     smailsmanText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + 15.0f, deliveryRect.height + 60.0f});
     target.draw(smailsmanText);
 
@@ -72,15 +75,19 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     target.draw(recipientText);
 
     sf::FloatRect timeLeftRect = timeLeftText.getLocalBounds();
-    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
-    timeLeftText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background_width - timeLeftRect.width, recipientRect.height + 60.0f});
+    timeLeftText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + 320.f, recipientRect.height + 60.0f});
     target.draw(timeLeftText);
 
-    float snail_offset = 150.0f;
     int alpha_from_waiting = 80;
+    float last_top_bar = v_top_bar_offset;
+
+    int current_mission_index = 0;
     for(int i = 0; i < missions.size(); i++) {
         if(missions[i]->isCompleted())
+        {
             continue;
+        }
+
         bool snail_is_queued = missions[i]->getSnail() == nullptr;
 
         sf::Color snail_color;
@@ -94,9 +101,9 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         {
             snail_color = missions[i]->getSnail()->getSnailColor();
         }
-        float second_or_more_snail_offset = i > 0 ? 30.f : 0.f;
+
         snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
-        sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + background_width/6 + 7.5f, snail_margin + snail_offset + second_or_more_snail_offset};
+        sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + h_snail_spacing, last_top_bar + v_snail_offset};
         snail_sprite.setPosition(pos);
         snail_sprite.setColor(sf::Color(255.f, 255.f, 255.f, snail_is_queued ? alpha_from_waiting : 255.f));
         snail_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
@@ -162,41 +169,37 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             } else if(!std::isfinite(activeDeliveries[j]->getTimeLeft())) {
                 number_text.setString("");
             }
-            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + background_width - (snail_margin) - 5.0f, //+ snail_time_distance + character_size / 2.f,
-                                                 snail_margin + snail_offset + second_or_more_snail_offset});
+            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + h_time_offset, last_top_bar + v_time_offset + v_distance_between_friends * j});
             target.draw(number_text);
 
             friend_sprite.setTexture(*friendTexture);
             friend_sprite.setColor(sf::Color(255, 255, 255, snail_is_queued ? alpha_from_waiting : 255));
             SpriteUtil::setSpriteSize(friend_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.5, 0.5});
-            friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + (snail_margin/2) + ((0.5f)*background_width),
-                                                   snail_margin + snail_offset + second_or_more_snail_offset});
+            friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + h_friend_offset, last_top_bar + v_friend_offset + v_distance_between_friends * j});
             target.draw(friend_sprite);
-
-            snail_offset += offset_from_delivery;
         }
 
         if(done_delivering) {
             post_office_sprite.setTexture(*world.getAssets().get(GameAssets::POST_OFFICE));
             SpriteUtil::setSpriteSize(post_office_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(post_office_sprite, sf::Vector2f{0.5, 0.5});
-            post_office_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + (snail_margin/2) + ((0.5f)*background_width),
-                                                        snail_margin + snail_offset + second_or_more_snail_offset});
+            post_office_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + h_friend_offset,
+                                                        last_top_bar + v_friend_offset });
             target.draw(post_office_sprite);
-            snail_offset += offset_from_delivery;
         }
 
-        float minimum_offset =  150.f;
-        float total_snail_offset = std::max(snail_offset, top_bar_offset + minimum_offset * (i + 1));
+
+        int num_entries_in_row = std::max(static_cast<size_t>(1), activeDeliveries.size());
+        last_top_bar += num_entries_in_row * v_distance_between_friends + v_friend_bottom_padding;
         if(i < missions.size() - 1) {
             sf::RectangleShape line;
             line.setFillColor(sf::Color(116.f, 63.f, 57.f));
             line.setSize(sf::Vector2f{400.f, 10.f});
-            line.setPosition(sf::Vector2f {DISTANCE_TO_SIDEBAR, total_snail_offset});
+            line.setPosition(sf::Vector2f {DISTANCE_TO_SIDEBAR, last_top_bar});
             target.draw(line);
         }
 
-        snail_offset = total_snail_offset;
+        current_mission_index++;
     }
 }

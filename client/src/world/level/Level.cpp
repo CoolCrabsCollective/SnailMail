@@ -190,7 +190,7 @@ const std::vector<Level> Level::LEVELS = {
                              {false, 29}},
                 .snailCount = 2,
                 .missions = { { 0.5f, 1, 0,
-                                      { { 1, true, 10.0f }, {2, true, 50.0f},{ 0, true, 100.0f }, }},
+                                      { { 1, true, 10.0f }, {2, true, 50.0f},{ 0, true, 99.0f }, }},
 
                               { 0.5f, 2, 1,
                                       { {2, true, 10.0f}, {1, true, 50.0f}}}},
