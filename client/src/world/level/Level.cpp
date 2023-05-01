@@ -191,7 +191,6 @@ const std::vector<Level> Level::LEVELS = {
                 .deliveriesForBronze = 0,
                 .deliveriesForSilver = 3,
                 .deliveriesForGold = 4,
-                .snail_speed = 4.f,
                 .custom = true,
                 .nodes = {
 
@@ -254,10 +253,7 @@ const std::vector<Level> Level::LEVELS = {
                 .deliveriesForBronze = 2,
                 .deliveriesForSilver = 3,
                 .deliveriesForGold = 4,
-                .snail_speed = 3.f,
         },
-
-
 };
 
 Level Level::getLevel(int levelNumber) {
