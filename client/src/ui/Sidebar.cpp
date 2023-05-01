@@ -22,15 +22,21 @@ Sidebar::Sidebar(World& world) : world(world) {
 
     smailsmanText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     smailsmanText.setFillColor(sf::Color::White);
-    smailsmanText.setCharacterSize(32);
+    smailsmanText.setCharacterSize(30);
     smailsmanText.setString("Smailsman");
     smailsmanText.setStyle(sf::Text::Italic);
 
     recipientText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     recipientText.setFillColor(sf::Color::White);
-    recipientText.setCharacterSize(32);
+    recipientText.setCharacterSize(30);
     recipientText.setString("Recipient");
     recipientText.setStyle(sf::Text::Italic);
+
+    timeLeftText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    timeLeftText.setFillColor(sf::Color::White);
+    timeLeftText.setCharacterSize(30);
+    timeLeftText.setString("Time Left");
+    timeLeftText.setStyle(sf::Text::Italic);
 }
 
 void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -38,7 +44,6 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     constexpr float offset_from_delivery = 100.f;
     constexpr float snail_scale = 4.f;
     constexpr float snail_time_distance = 150.f;
-    constexpr float snail_friend_distance = 250.f;
     constexpr float top_bar_offset = 75.f;
     std::vector<Snail*> snails = world.getSnails();
 
@@ -61,9 +66,14 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     target.draw(smailsmanText);
 
     sf::FloatRect recipientRect = recipientText.getLocalBounds();
-    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
-    recipientText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width - recipientRect.width - 25.0f, deliveryRect.height + 20.0f});
+    recipientText.setOrigin({ smailsmanRect.width/2.0f, 0});
+    recipientText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width / 2.0f, recipientRect.height + 20.0f});
     target.draw(recipientText);
+
+    sf::FloatRect timeLeftRect = timeLeftText.getLocalBounds();
+    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
+    timeLeftText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width - timeLeftRect.width, recipientRect.height + 20.0f});
+    target.draw(timeLeftText);
 
     float snail_offset = 100.0f;
     for(int i = 0; i < missions.size(); i++) {
@@ -96,7 +106,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             }
         }
 
-        for(int j = 0; j < activeDeliveries.size(); j++) {
+        for (int j = 0; j < activeDeliveries.size(); j++) {
             Friend* friend_to_deliver = activeDeliveries[j]->getDestination();
             sf::Texture* friendTexture = nullptr;
             if (dynamic_cast<LadyBug*>(friend_to_deliver)) {
@@ -126,7 +136,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             }
             std::string time_str = std::to_string(time_left);
             number_text.setOrigin({total_char_size / 2.f, total_char_size / 2.f});
-            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_time_distance + character_size / 2.f,
+            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width / 2.0f + snail_time_distance + character_size / 2.f,
                                                  snail_margin + snail_offset + second_or_more_snail_offset});
             number_text.setString(time_str);
             number_text.setFillColor(sf::Color::Black);
@@ -142,7 +152,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             target.draw(number_text);
 
             friend_sprite.setTexture(*friendTexture);
-            friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance,
+            friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width / 2,
                                                    snail_margin + snail_offset + second_or_more_snail_offset});
             SpriteUtil::setSpriteSize(friend_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.0, 0.5});
@@ -151,12 +161,11 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             snail_offset += offset_from_delivery;
         }
 
-        if(done_delivering)
-        {
+        if(done_delivering) {
             post_office_sprite.setTexture(*world.getAssets().get(GameAssets::POST_OFFICE));
             SpriteUtil::setSpriteSize(post_office_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(post_office_sprite, sf::Vector2f{0.0, 0.5});
-            post_office_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance,
+            post_office_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width/2 + snail_margin,
                                                    snail_margin + snail_offset + second_or_more_snail_offset});
             target.draw(post_office_sprite);
             snail_offset += offset_from_delivery;
