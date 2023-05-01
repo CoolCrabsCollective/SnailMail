@@ -22,7 +22,7 @@ struct SelectionArrow {
     float alpha;
 };
 
-class PathSelectionArrowUI {
+class PathSelectionArrowUI : public sf::Drawable {
     mutable sf::Sprite sprite;
 
     World& world;
@@ -40,7 +40,7 @@ public:
 
     ~PathSelectionArrowUI() = default;
 
-    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const;
+    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
     void tick(float delta, bool moving, GraphNode* currentNode, sf::Color snail_color);
 
