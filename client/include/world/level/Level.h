@@ -48,7 +48,6 @@ struct Level {
     int nodeCount = 10;
     std::vector<LevelFriend> friends = { { LADYBUG, true, 0 } };
     std::vector<LevelPostOffice> offices = { { true, 0 } };
-    int snailCount = 1;
 
     std::vector<LevelDeliveryMission> missions = { { 0.0f, 0, 0, { { 0, true, 10.0f } } } };
 
