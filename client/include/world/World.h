@@ -113,6 +113,8 @@ public:
     void setPaused(bool paused);
 
     GRand& getRandom();
+
+    const ScoreSaver &getScoreSaver();
 };
 
 

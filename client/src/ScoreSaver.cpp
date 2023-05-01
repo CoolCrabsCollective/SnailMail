@@ -4,6 +4,7 @@
 
 #include "ScoreSaver.h"
 #include "WIZ/util/FileUtil.h"
+#include "world/level/Level.h"
 #include <string>
 #include <fstream>
 #include <cstring>
@@ -71,4 +72,14 @@ Score ScoreSaver::loadScoreForLevel(int levelNumber) const {
     file.close();
 
     return score;
+}
+
+std::vector<Score> ScoreSaver::loadAllScores() const {
+    std::vector<Score> scores;
+    for (int i = 1; i<=Level::LEVELS.size(); i++) {
+        if (hasScore(i))
+            scores.push_back(loadScoreForLevel(i));
+    }
+
+    return scores;
 }

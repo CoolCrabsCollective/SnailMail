@@ -477,3 +477,7 @@ void World::setPaused(bool paused) {
     World::paused = paused;
 }
 
+const ScoreSaver& World::getScoreSaver() {
+    return screen.getScoreSaver();
+}
+
