@@ -5,6 +5,7 @@
 // Created by Alexander Winter on 2022-03-29.
 //
 
+#include <iostream>
 #include "MailScreen.h"
 #include "GameAssets.h"
 #include "world/World.h"
@@ -69,6 +70,8 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
     sf::Vector2f clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
                                                             world.getView());
 
+
+    std::cout << clickVector.x << ", " << clickVector.y << std::endl;
     for (Snail* snail : world.getSnails()) {
         GraphNode* hitScan = snail->hitScan(clickVector);
         if (hitScan) {
@@ -77,7 +80,9 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
     }
 
     clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseButtonEvent.x, mouseButtonEvent.y),
+
                                                             uiView);
+
     completeMenu.click(clickVector);
 
     for (ClickableUI* clickable : clickables) {
