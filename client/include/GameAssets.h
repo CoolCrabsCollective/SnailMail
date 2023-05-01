@@ -37,13 +37,16 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, GRAPH_VERTEX, ("gfx/graph_vertex.png"))
     ASSET(wiz::TextureAsset, SNAILY, ("gfx/snaily.png"))
     ASSET(wiz::TextureAsset, SNAILY_CAP, ("gfx/snaily_cap.png"))
-    ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, POST_OFFICE, ("gfx/post_office.png"))
+
+    ASSET(wiz::TextureAsset, GRASS_0, ("gfx/grass/grass_0.png"))
+    ASSET(wiz::TextureAsset, GRASS_1, ("gfx/grass/grass_1.png"))
+    ASSET(wiz::TextureAsset, GRASS_2, ("gfx/grass/grass_2.png"))
 
     // TITLE SCREEN
     ASSET(wiz::TextureAsset, TITLE_SCREEN_BACKGROUND, ("gfx/title_screen_background.jpg"))
 
-    // FRIENDS (KAWAII OR THICC)
+    // FRIENDS (KAWAII ONLY)
     ASSET(wiz::TextureAsset, BEE, ("gfx/thicc_bee.png"))
     ASSET(wiz::TextureAsset, BEE_SPRITE_SHEET, ("gfx/bee_sprite_sheet.png"))
     ASSET(wiz::TextureAsset, LADY_BUG, ("gfx/kawaii_ladybug.png"))
