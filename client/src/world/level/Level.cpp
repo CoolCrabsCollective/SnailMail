@@ -79,7 +79,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 5
         {
-                .name = "Follow My Lead",
+                .name = "Follow The Leader",
                 .friends = {{ LADYBUG, false, 3 }, { BEE, false, 4 } },
                 .offices = { { false, 0 }},
                 .snailCount = 2,
@@ -117,7 +117,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 7
         {
-                .name = "Roadblock",
+                .name = "Deadlocked",
                 .friends = { { LADYBUG, false, 1 },
                              { FROG, false, 3 },
                              { MOUSE, false, 2 } },
@@ -220,7 +220,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 10
         {
-                .name = "Pyramid",
+                .name = "The More the Merrier",
                 .seeded = true,
                 .seed = 0xdef9,
                 .nodeCount = 4,
@@ -241,7 +241,7 @@ const std::vector<Level> Level::LEVELS = {
                 .deliveriesForGold = 4,
         },
         {
-                .name = "Junction",
+                .name = "Junk Town",
                 .seeded = true,
                 .seed = 0xceedbef,
                 .nodeCount = 8,
