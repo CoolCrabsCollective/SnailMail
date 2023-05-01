@@ -95,8 +95,9 @@ const std::vector<Level> Level::LEVELS = {
                 .nodes = { {5.f, 9.f}, {11.f, 9.f}, {15.f, 13.f}, {15.f, 6.f}, {18.f, 9.f},},
                 .adjacency_list = { {0, 1}, {1, 2}, {1, 3}, {3, 4},{2, 4}},
         },
-        // LEVEL 6 : The Great Double Cock Block
+        // LEVEL 6
         {
+                .name = "The Great Double Cock Block",
                 .friends = {{ FROG, false, 1 },
                             { LADYBUG, false, 10 }},
                 .offices = { { false, 0 }, {false, 3}, {false, 6}},
@@ -117,6 +118,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 7: Roadblock
         {
+                .name = "Roadblock",
                 .friends = { { LADYBUG, false, 1 },
                              { FROG, false, 3 },
                              { MOUSE, false, 2 } },
@@ -140,8 +142,9 @@ const std::vector<Level> Level::LEVELS = {
                           {21.f, 16.f}},
                 .adjacency_list = {{0, 1}, {0,2}, {0,3}, {1,3}, {1,2}, {2,4}, {3,4}},
         },
-        // Level 8: Desirable Detour
+        // Level 8
         {
+                .name = "Desirable Detour",
                 .friends = {{ FROG, false, 1 },
                             { LADYBUG, false, 3 },
                             { BEE, false, 6 },
