@@ -43,6 +43,15 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, GRASS_1, ("gfx/grass/grass_1.png"))
     ASSET(wiz::TextureAsset, GRASS_2, ("gfx/grass/grass_2.png"))
 
+    ASSET(wiz::TextureAsset, FLOWER_0, ("gfx/grass/flower_0.png"))
+    ASSET(wiz::TextureAsset, FLOWER_1, ("gfx/grass/flower_1.png"))
+
+    ASSET(wiz::TextureAsset, YELLOW_FLOWER_0, ("gfx/grass/yellow_flower_0.png"))
+    ASSET(wiz::TextureAsset, YELLOW_FLOWER_1, ("gfx/grass/yellow_flower_1.png"))
+
+    ASSET(wiz::TextureAsset, BLUE_FLOWER_0, ("gfx/grass/blue_flower_0.png"))
+    ASSET(wiz::TextureAsset, BLUE_FLOWER_1, ("gfx/grass/blue_flower_1.png"))
+
     // TITLE SCREEN
     ASSET(wiz::TextureAsset, TITLE_SCREEN_BACKGROUND, ("gfx/cover_art.png"))
 

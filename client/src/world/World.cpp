@@ -118,7 +118,19 @@ void World::generateLevel(Level level) {
         if(cancel)
             continue;
 
-        patches.push_back(new GrassPatch(*this, { x, y }));
+        GrassType type;
+
+        if(random.d() > 0.95f) {
+            type = GrassType::RED_FLOWER;
+        } else if(random.d() > 0.90f) {
+            type = GrassType::YELLOW_FLOWER;
+        } else if(random.d() > 0.85f) {
+            type = GrassType::BLUE_FLOWER;
+        } else {
+            type = GrassType::GRASS;
+        }
+
+        patches.push_back(new GrassPatch(*this, { x, y }, type));
 
     } while(it < 500000);
 
