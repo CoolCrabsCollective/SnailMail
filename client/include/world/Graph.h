@@ -28,10 +28,10 @@ class Graph : public Entity {
 
     mutable sf::Sprite sprite;
     mutable sf::VertexArray lines;
+public:
 
     constexpr const static float MIN_NODE_DISTANCE = 5.0f;
     constexpr const static float MAX_NODE_PATH_DISTANCE = 2.0f;
-public:
     Graph(World& world);
 
     void generateLevel(Level level);
@@ -53,6 +53,8 @@ public:
     bool isConnected();
 
     Path& getPath(GraphNode *node1, GraphNode *node2);
+
+    const std::unordered_map<std::pair<GraphNode *, GraphNode *>, Path, pair_hash> &getPaths() const;
 };
 
 

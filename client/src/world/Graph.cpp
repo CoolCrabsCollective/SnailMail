@@ -203,3 +203,7 @@ bool Graph::isConnected() {
 
     return visited.size() == nodes.size();
 }
+
+const std::unordered_map<std::pair<GraphNode *, GraphNode *>, Path, pair_hash> &Graph::getPaths() const {
+    return adjacencyMap;
+}

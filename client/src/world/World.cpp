@@ -17,6 +17,8 @@
 #include "world/friends/Frog.h"
 #include "MailScreen.h"
 #include "world/level/Delivery.h"
+#include "MathUtil.h"
+#include "world/GrassPatch.h"
 
 const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_BLUE,
@@ -75,7 +77,53 @@ void World::generateLevel(Level level) {
     currentLevel = level;
     graph->generateLevel(level);
 
-    GRand random;
+    std::vector<GrassPatch*> patches;
+
+    int it = 0;
+    do {
+        it++;
+        float x = static_cast<float>(random.d() * getView().getSize().x);
+        float y = static_cast<float>(random.d() * getView().getSize().y);
+
+        bool cancel = false;
+
+        for(GraphNode* node : graph->getNodes()) {
+            if((node->getPosition() - sf::Vector2f {x, y}).lengthSq() < MathUtil::pow2(Graph::MIN_NODE_DISTANCE / 2.0f)) {
+                cancel = true;
+                break;
+            }
+        }
+
+        if(cancel)
+            continue;
+
+        for(GrassPatch* patch : patches) {
+            if((patch->getPosition() - sf::Vector2f {x, y}).lengthSq() < MathUtil::pow2(Graph::MIN_NODE_DISTANCE / 2.0f)) {
+                cancel = true;
+                break;
+            }
+        }
+
+        if(cancel)
+            continue;
+
+
+        for(auto& path : graph->getPaths()) {
+            if(MathUtil::pointSegmentDistanceSquared({ x, y }, path.first.first->getPosition(), path.first.second->getPosition()) < MathUtil::pow2(Graph::MIN_NODE_DISTANCE / 4.0f)) {
+                cancel = true;
+                break;
+            }
+        }
+
+        if(cancel)
+            continue;
+
+        patches.push_back(new GrassPatch(*this, { x, y }));
+
+    } while(it < 500000);
+
+    for(GrassPatch* patch : patches)
+        addEntity(patch);
 
     if(level.seeded)
         random.seed(level.seed);
@@ -392,6 +440,10 @@ const wiz::MusicAsset& World::getSong(int levelNumber) {
 
 void World::setCurrentLevelNumber(int currentLevelNumber) {
     World::currentLevelNumber = currentLevelNumber;
+}
+
+GRand& World::getRandom() {
+    return random;
 }
 
 void World::setPaused(bool paused) {
