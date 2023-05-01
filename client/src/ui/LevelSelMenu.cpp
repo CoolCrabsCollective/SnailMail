@@ -26,6 +26,8 @@ LevelSelMenu::LevelSelMenu(World &world) : ClickableUI(sf::Vector2f{1070.0f, 280
     SpriteUtil::setSpriteOrigin(exitButtonSprite, sf::Vector2f{0.5f, 0.5f});
 
     populateLevels();
+
+    clickable = false;
 }
 
 void LevelSelMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -64,7 +66,8 @@ void LevelSelMenu::hitAction(bool& isHit) {
 }
 
 void LevelSelMenu::populateLevels() {
-    for (int i = 0; i<Level::LEVELS.size(); i++) {
+for (int i = 0; i<15; i++) {
+//    for (int i = 0; i<Level::LEVELS.size(); i++) {
         levelItems.push_back(new LevelItem(world, mainOffset, i + 1));
     }
 }

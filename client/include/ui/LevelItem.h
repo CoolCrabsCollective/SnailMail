@@ -23,13 +23,14 @@ class LevelItem : public sf::Drawable, public ClickableUI {
     sf::Vector2f mainOffset;
     sf::Vector2f numOffset;
 
-    sf::Vector2f size = {70.f, 70.f};
+    sf::Vector2f size = {100.f, 100.f};
 
     std::string levelNumString;
 
     World& world;
 
     int levelNum = 0;
+    const int max_per_row = 5;
 
 public:
     LevelItem(World &world, sf::Vector2f parentMenuOffset, int levelNum);

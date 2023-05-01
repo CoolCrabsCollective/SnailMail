@@ -25,6 +25,8 @@ LevelItem::LevelItem(World &world, sf::Vector2f parentMenuOffset, int levelNum) 
         levelNumString.insert(0, "0");
     }
     level_num.setString(levelNumString);
+
+    clickable = false;
 }
 
 void LevelItem::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -44,14 +46,12 @@ void LevelItem::hitAction(bool& isHit) {
 }
 
 void LevelItem::calculateOffsets() {
-    int rowNum = 0;
-    if (levelNum > 6) {
-        rowNum = (levelNum) % 6;
-    }
+    int rowNum = (levelNum - 1) / max_per_row;
+    int rowNumOffset = (levelNum - 1) - rowNum*max_per_row;
 
     float yPos = -45.f + (size.y + 25.f) * (float) rowNum;
 
-    float xPos = -270.f + (25.f + size.x) * (float) levelNum;
+    float xPos = -270.f + (25.f + size.x) * (float) rowNumOffset;
 
     mainOffset = parentMenuOffset + sf::Vector2f{xPos, yPos};
     numOffset = mainOffset + sf::Vector2f{-10.f, -20.f};
