@@ -3,17 +3,21 @@
 //
 
 #include "LoadingScreen.h"
+
+#include <memory>
 #include "TitleScreen.h"
 #include "GameAssets.h"
 
 LoadingScreen::LoadingScreen(wiz::Game& game)
-	: Screen(game) {}
+	: Screen(game) {
+
+}
 
 void LoadingScreen::tick(float delta) {
-	getGame().getAssets().update(16.0f);
+	getGame().getAssets().update(1.0f);
 
 	if(getGame().getAssets().isAllLoaded())
-		getGame().setScreen(std::shared_ptr<TitleScreen>(new TitleScreen(getGame())));
+        getGame().setScreen(std::make_shared<TitleScreen>(getGame()));
 }
 
 void LoadingScreen::render(sf::RenderTarget& target) {

@@ -10,6 +10,7 @@
 #include <SW/Common.hpp>
 #include "SFML/Graphics/Text.hpp"
 #include "SFML/Audio/Music.hpp"
+#include "SFML/Audio/Sound.hpp"
 
 class TitleScreen : public wiz::Screen, public wiz::WindowListener {
 	std::string name = "TitleScreen";
@@ -21,6 +22,10 @@ class TitleScreen : public wiz::Screen, public wiz::WindowListener {
     sf::Music& snailysSong;
 
 	sw::NinePatch ninepatch;
+
+    float musicDelay = 0.0f;
+
+    sf::Sound click;
 public:
 	TitleScreen(wiz::Game& game);
 
