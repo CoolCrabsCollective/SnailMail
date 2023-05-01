@@ -13,10 +13,10 @@
 #include "world/friends/Frog.h"
 #include "world/friends/Bee.h"
 
-Sidebar::Sidebar(World& world) : world(world) {}
+Sidebar::Sidebar(World& world) : world(world) {
+}
 
 void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-
     constexpr float snail_margin = 40.f;
     constexpr float distance_between_snails = 50.f;
     constexpr float offset_from_delivery = 100.f;
@@ -32,6 +32,15 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     background.setTexture(*world.getAssets().get(GameAssets::ALEXS_DESIRE));
     background.setScale({10.f, 10.f});
     target.draw(background);
+
+    deliveryText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    deliveryText.setFillColor(sf::Color::White);
+    deliveryText.setCharacterSize(32);
+    deliveryText.setString("Deliveries");
+    sf::FloatRect messageRect = deliveryText.getLocalBounds();
+    deliveryText.setOrigin({messageRect.left + messageRect.width/2.0f, messageRect.top + messageRect.height/2.0f});
+    deliveryText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width /2, messageRect.height});
+    target.draw(deliveryText);
 
     float snail_offset = 0;
     for(int i = 0; i < missions.size(); i++)

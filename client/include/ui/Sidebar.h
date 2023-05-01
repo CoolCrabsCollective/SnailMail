@@ -16,6 +16,7 @@ protected:
     mutable sf::Sprite snail_cap_sprite;
     mutable sf::Sprite friend_sprite;
     mutable sf::Text number_text;
+    mutable sf::Text deliveryText;
 public:
     Sidebar(World& world);
 
