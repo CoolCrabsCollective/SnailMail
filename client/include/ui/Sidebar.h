@@ -19,7 +19,7 @@ protected:
     mutable sf::Text deliveryText;
     mutable sf::Text smailsmanText;
     mutable sf::Text recipientText;
-    mutable sf::Text targetText;
+    mutable sf::Text timeLeftText;
 public:
     Sidebar(World& world);
 

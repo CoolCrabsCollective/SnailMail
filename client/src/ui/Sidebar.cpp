@@ -22,15 +22,21 @@ Sidebar::Sidebar(World& world) : world(world) {
 
     smailsmanText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     smailsmanText.setFillColor(sf::Color::White);
-    smailsmanText.setCharacterSize(32);
+    smailsmanText.setCharacterSize(30);
     smailsmanText.setString("Smailsman");
     smailsmanText.setStyle(sf::Text::Italic);
 
     recipientText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     recipientText.setFillColor(sf::Color::White);
-    recipientText.setCharacterSize(32);
+    recipientText.setCharacterSize(30);
     recipientText.setString("Recipient");
     recipientText.setStyle(sf::Text::Italic);
+
+    timeLeftText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
+    timeLeftText.setFillColor(sf::Color::White);
+    timeLeftText.setCharacterSize(30);
+    timeLeftText.setString("Time Left");
+    timeLeftText.setStyle(sf::Text::Italic);
 }
 
 void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -60,9 +66,14 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     target.draw(smailsmanText);
 
     sf::FloatRect recipientRect = recipientText.getLocalBounds();
-    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
-    recipientText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width - recipientRect.width - 25.0f, deliveryRect.height + 20.0f});
+    recipientText.setOrigin({ smailsmanRect.width/2.0f, 0});
+    recipientText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width / 2.0f, recipientRect.height + 20.0f});
     target.draw(recipientText);
+
+    sf::FloatRect timeLeftRect = timeLeftText.getLocalBounds();
+    //smailsmanText.setOrigin({smailsmanRect.left + smailsmanRect.width/2.0f, smailsmanRect.top + smailsmanRect.height/2.0f});
+    timeLeftText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width - timeLeftRect.width, timeLeftRect.height + 20.0f});
+    target.draw(timeLeftText);
 
     float snail_offset = 100.0f;
     for(int i = 0; i < missions.size(); i++) {
