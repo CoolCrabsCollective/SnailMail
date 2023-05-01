@@ -164,8 +164,9 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         if(done_delivering) {
             post_office_sprite.setTexture(*world.getAssets().get(GameAssets::POST_OFFICE));
             SpriteUtil::setSpriteSize(post_office_sprite, sf::Vector2f{70., 70.});
-            SpriteUtil::setSpriteOrigin(post_office_sprite, sf::Vector2f{0.0, 0.5});
-            post_office_sprite.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background_width * 0.5f + 10.0f, recipientRect.height + 60.0f});
+            SpriteUtil::setSpriteOrigin(post_office_sprite, sf::Vector2f{0.5, 0.5});
+            post_office_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + (snail_margin/2) + ((0.5f)*background_width),
+                                                        snail_margin + snail_offset + second_or_more_snail_offset});
             target.draw(post_office_sprite);
             snail_offset += offset_from_delivery;
         }
