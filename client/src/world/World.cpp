@@ -290,7 +290,6 @@ void World::tick(float delta) {
         int deliveriesCompleted = 0;
         int deliveriesMissed = 0;
 
-
         for(Mission* mission : missions) {
             for(Delivery* delivery : mission->getDeliveries()) {
                 if(delivery->isCompleted()) {
@@ -334,11 +333,14 @@ void World::tick(float delta) {
     }
 
     if(allSoftLocked) {
-
+        for(Mission* mission : missions) {
+            if(!mission->hasSpawnedSnail() && mission->canSpawnSnail())
+                allSoftLocked = false;
+        }
     }
 
     if(allSoftLocked) {
-        //screen.getCompleteMenu().softlock();
+        screen.getCompleteMenu().softlock();
     }
 }
 

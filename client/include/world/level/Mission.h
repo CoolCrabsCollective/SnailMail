@@ -52,6 +52,8 @@ public:
      */
     [[nodiscard]]
     bool isCompleted() const;
+
+    bool canSpawnSnail();
 };
 
 
