@@ -116,6 +116,9 @@ void LevelSelMenu::hitAction(bool& isHit) {
 }
 
 bool LevelSelMenu::hitScan(const sf::Vector2f& hit) {
+    if(!isOpen)
+        return false;
+
     if(buttonBackground.getGlobalBounds().contains(hit)) {
         world.retry();
         setIsOpen(false);
@@ -127,6 +130,8 @@ bool LevelSelMenu::hitScan(const sf::Vector2f& hit) {
 }
 
 void LevelSelMenu::hover(sf::Vector2f position) {
+    if(!isOpen)
+        return;
     restartHovered = buttonBackground.getGlobalBounds().contains(position);
 }
 
