@@ -327,7 +327,8 @@ void World::tick(float delta) {
     bool allSoftLocked = true;
 
     for(Snail* snail : snails) {
-        if(snail->isMoving() || snail->hasMovementOption())
+        if(snail->isMoving() and !snail->isBlockedMoving()
+        or !snail->isMoving() and snail->hasMovementOption())
             allSoftLocked = false;
     }
 

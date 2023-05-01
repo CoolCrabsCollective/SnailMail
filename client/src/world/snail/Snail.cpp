@@ -44,21 +44,17 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     SpriteUtil::setSpriteSize(snail_cap_sprite, sf::Vector2f{2., 2.});
     float scaleX = snail_sprite.getScale().x;
     float scaleY = snail_sprite.getScale().y;
-    if(locDiff.x >= 0)
-    {
+    if(locDiff.x >= 0) {
         snail_sprite.setScale(sf::Vector2f {std::abs(scaleX), std::abs(scaleY)});
         snail_cap_sprite.setScale(sf::Vector2f {std::abs(scaleX), std::abs(scaleY)});
-    }
-    else
-    {
+    } else {
         snail_sprite.setScale(sf::Vector2f {-std::abs(scaleX), std::abs(scaleY)});
         snail_cap_sprite.setScale(sf::Vector2f {-std::abs(scaleX), std::abs(scaleY)});
     }
 
     SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.5f, 1.f});
     SpriteUtil::setSpriteOrigin(snail_cap_sprite, sf::Vector2f{0.5f, 1.f});
-    if(!moving)
-    {
+    if(!moving) {
         snail_sprite.setRotation(sf::radians(0));
         snail_cap_sprite.setRotation(sf::radians(0));
     }
@@ -70,6 +66,8 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 void Snail::tick(float delta) {
     if(moving)
         tickMovement(delta);
+    else
+        blockedMoving = false;
 
     pathSelArrow->tick(delta, moving, getLocation(), snail_color);
 }
@@ -104,7 +102,7 @@ bool Snail::hasMovementOption() {
 
         bool neighbor_blocking = false;
         for(Snail* snail: world.getSnails()) {
-            if (neighbor == snail->getLocation() && snail->isMoving() && snail->getDestination() == getLocation()) {
+            if(neighbor == snail->getLocation() && snail->isMoving() && snail->getDestination() == getLocation()) {
                 neighbor_blocking = true;
                 break;
             }
@@ -149,8 +147,13 @@ void Snail::tickMovement(float delta) {
         setLocation(getDestination());
         moving = false;
         actualPosition = getPosition();
-        movingProgress = .0f;
+        movingProgress = 0.0f;
     }
+    blockedMoving = movingProgress == prevProgress;
+}
+
+bool Snail::isBlockedMoving() const {
+    return blockedMoving;
 }
 
 GraphNode* Snail::hitScan(const sf::Vector2f& hit) {

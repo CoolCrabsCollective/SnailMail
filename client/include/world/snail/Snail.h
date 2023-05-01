@@ -13,7 +13,7 @@ class PathSelectionArrowUI;
 class Snail : public GraphEntity, public Tickable {
     mutable sf::Sprite snail_sprite;
     mutable sf::Sprite snail_cap_sprite;
-    bool moving = false;
+    bool moving = false, blockedMoving = false;
     float movingProgress = 0.f;
     float progressRate = 2.f;
     float currentProgressRate = 0;
@@ -68,6 +68,8 @@ public:
     bool hover(sf::Vector2f vector2);
 
     bool hasMovementOption();
+
+    bool isBlockedMoving() const;
 };
 
 

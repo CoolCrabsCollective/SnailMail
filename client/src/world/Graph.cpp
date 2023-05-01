@@ -47,6 +47,11 @@ void Graph::generateLevel(Level level) {
     nodes.clear();
     adjacencyMap.clear();
 
+    GRand random;
+
+    if(level.seeded)
+        random.seed(level.seed);
+
     if(level.custom)
     {
         for(const std::pair<float, float>& pair : level.nodes)
@@ -68,16 +73,11 @@ void Graph::generateLevel(Level level) {
             }
 
             std::pair<GraphNode*, GraphNode*> graph_pair{p1, p2};
-            adjacencyMap.emplace(graph_pair, Path(world.getAssets(),graph_pair.first, graph_pair.second));
+            adjacencyMap.emplace(graph_pair, Path(world.getAssets(),graph_pair.first, graph_pair.second, random.b() ? DIRT : ROCK));
         }
         level.nodeCount = nodes.size();
         return;
     }
-
-    GRand random;
-
-    if(level.seeded)
-        random.seed(level.seed);
 
     float minX = INFINITY, minY = INFINITY, maxX = -INFINITY, maxY = -INFINITY;
 
@@ -175,7 +175,7 @@ void Graph::generateLevel(Level level) {
         else
             final_pair = std::pair(node2, node1);
 
-        adjacencyMap.emplace(final_pair, Path(world.getAssets(),final_pair.first, final_pair.second));
+        adjacencyMap.emplace(final_pair, Path(world.getAssets(),final_pair.first, final_pair.second, random.b() ? DIRT : ROCK));
     } while(it < 500000);
 
     if(!isConnected() || hasLeaf()) {
