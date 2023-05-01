@@ -6,7 +6,7 @@
 const std::vector<Level> Level::LEVELS = {
         // LEVEL 1
         {
-                .name = "Lil' Baby",
+                .name = "Snail Steps",
                 .seeded = true,
                 .seed = 123,
                 .nodeCount = 3,
@@ -22,7 +22,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 2
         {
-                .name = "Double Team",
+                .name = "Double Delivery",
                 .seeded = true,
                 .seed = 0xbeefced,
                 .nodeCount = 5,
@@ -40,7 +40,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 3
         {
-            .name = "The Jugs of Destiny",
+            .name = "The Diamonds of Destiny",
             .friends = {{ MOUSE, false, 7 } },
             .offices = { { false, 0 }},
             .missions = { { 1.0f, 0, 0,
@@ -56,7 +56,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 4
         {
-                .name = "Frog Chaserz",
+                .name = "Hexpert",
                 .friends = {{ FROG, false, 6 },
                             { BEE, false, 4 }},
                 .offices = { { false, 5 }, { false, 2 }},
