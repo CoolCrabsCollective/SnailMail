@@ -137,19 +137,18 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             }
             std::string time_str = std::to_string(time_left);
             number_text.setOrigin({total_char_size / 2.f, total_char_size / 2.f});
-            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + (2*snail_margin) + ((background_width/3)*2) + snail_time_distance + character_size / 2.f,
-                                                 snail_margin + snail_offset + second_or_more_snail_offset});
             number_text.setString(time_str);
             number_text.setFillColor(sf::Color::Black);
             number_text.setCharacterSize((int)total_char_size);
             number_text.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
-
             if (activeDeliveries[j]->isExpired()) {
                 number_text.setString("X");
                 number_text.setCharacterSize(64);
             } else if(!std::isfinite(activeDeliveries[j]->getTimeLeft())) {
                 number_text.setString("");
             }
+            number_text.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + background_width - (background_width/6), //+ snail_time_distance + character_size / 2.f,
+                                                 snail_margin + snail_offset + second_or_more_snail_offset});
             target.draw(number_text);
 
             friend_sprite.setTexture(*friendTexture);
