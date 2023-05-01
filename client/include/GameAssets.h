@@ -73,6 +73,8 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, FROG_SPRITE_SHEET, ("gfx/frog_sprite_sheet.png"))
     ASSET(wiz::TextureAsset, ANT, ("gfx/kawaii_ant.png"))
     ASSET(wiz::TextureAsset, ANT_SPRITE_SHEET, ("gfx/ant_sprite_sheet.png"))
+    ASSET(wiz::TextureAsset, DUCK, ("gfx/kawaii_duck.png"))
+    ASSET(wiz::TextureAsset, DUCK_SPRITE_SHEET, ("gfx/duck_sprite_sheet.png"))
 
     // UI
     ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))

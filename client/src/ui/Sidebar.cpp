@@ -13,6 +13,7 @@
 #include "world/friends/Frog.h"
 #include "world/friends/Bee.h"
 #include "world/friends/Ant.h"
+#include "world/friends/Duck.h"
 
 Sidebar::Sidebar(World& world) : world(world) {
     deliveryText.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
@@ -136,6 +137,8 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
                 friendTexture = world.getAssets().get(GameAssets::MOUSE);
             } else if(dynamic_cast<Ant*>(friend_to_deliver)){
                 friendTexture = world.getAssets().get(GameAssets::ANT);
+            } else if(dynamic_cast<Duck*>(friend_to_deliver)){
+                friendTexture = world.getAssets().get(GameAssets::DUCK);
             } else {
                 throw std::runtime_error("Could not find friend for delivery!!");
             }

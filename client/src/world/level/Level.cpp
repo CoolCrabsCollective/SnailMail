@@ -225,12 +225,12 @@ const std::vector<Level> Level::LEVELS = {
                 },
                 .adjacency_list = { {0, 1}, {1, 2}, {0, 2}, {0, 4}, {0, 3}, {1, 7}, {1, 8}, {2, 5}, {2, 6}, {4, 9}, {7, 10}, {6, 11} },
         },
-        // LEVEL 10 : Cock-Quille
+        // LEVEL 10 : Coquille
         {
                 .name = "Coquille",
                 .friends = { { LADYBUG, false, 1 },
                              { ANT, false, 14 },
-                             { FROG, false, 26 },
+                             { DUCK, false, 26 },
                 },
                 .offices = { { false, 0}, {false, 28},
                              {false, 29}},

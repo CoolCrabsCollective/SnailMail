@@ -20,6 +20,7 @@
 #include "MathUtil.h"
 #include "world/GrassPatch.h"
 #include "world/friends/Ant.h"
+#include "world/friends/Duck.h"
 
 const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_BLUE,
@@ -203,6 +204,11 @@ void World::generateLevel(Level level, int levelNum) {
             case ANT:
                 addEntity(spawned = new Ant(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
+            case DUCK:
+                addEntity(spawned = new Duck(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                break;
+            default:
+                throw std::runtime_error("I came my pants uWu help");
         }
         friends.emplace(id, spawned);
         used_positions.insert(lfriend.hardcodedVertex);
