@@ -28,12 +28,13 @@ class LevelItem : public sf::Drawable, public ClickableUI {
     std::string levelNumString;
 
     World& world;
+    LevelSelMenu &levelSelMenu;
 
     int levelNum = 0;
     const int max_per_row = 5;
 
 public:
-    LevelItem(World &world, sf::Vector2f parentMenuOffset, int levelNum);
+    LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f parentMenuOffset, int levelNum);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
