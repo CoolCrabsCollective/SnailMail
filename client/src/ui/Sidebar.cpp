@@ -77,18 +77,33 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     target.draw(timeLeftText);
 
     float snail_offset = 150.0f;
+    int alpha_from_waiting = 80;
     for(int i = 0; i < missions.size(); i++) {
-        if(missions[i]->getSnail() == nullptr)
+        if(missions[i]->isCompleted())
             continue;
+        bool snail_is_queued = missions[i]->getSnail() == nullptr;
 
+        sf::Color snail_color;
+
+        if(snail_is_queued)
+        {
+            sf::Color base_color = World::snail_colors[world.getCurrentLevel().missions[i].snailId];
+            snail_color = sf::Color(base_color.r, base_color.g, base_color.b, alpha_from_waiting);
+        }
+        else
+        {
+            snail_color = missions[i]->getSnail()->getSnailColor();
+        }
         float second_or_more_snail_offset = i > 0 ? 30.f : 0.f;
         snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
         sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + background_width/6 + 7.5f, snail_margin + snail_offset + second_or_more_snail_offset};
         snail_sprite.setPosition(pos);
+        snail_sprite.setColor(sf::Color(255.f, 255.f, 255.f, snail_is_queued ? alpha_from_waiting : 255.f));
         snail_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
         SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.5, 0.5});
+
         snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
-        snail_cap_sprite.setColor(missions[i]->getSnail()->getSnailColor());
+        snail_cap_sprite.setColor(snail_color);
         snail_cap_sprite.setPosition(pos);
         snail_cap_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
         SpriteUtil::setSpriteOrigin(snail_cap_sprite, sf::Vector2f{0.5, 0.5});
@@ -138,7 +153,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             std::string time_str = std::to_string(time_left);
             number_text.setOrigin({total_char_size / 2.f, total_char_size / 2.f});
             number_text.setString(time_str);
-            number_text.setFillColor(sf::Color::Black);
+            number_text.setFillColor(snail_is_queued ? sf::Color(0, 0, 0, alpha_from_waiting) : sf::Color::Black);
             number_text.setCharacterSize((int)total_char_size);
             number_text.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
             if (activeDeliveries[j]->isExpired()) {
@@ -152,6 +167,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             target.draw(number_text);
 
             friend_sprite.setTexture(*friendTexture);
+            friend_sprite.setColor(sf::Color(255, 255, 255, snail_is_queued ? alpha_from_waiting : 255));
             SpriteUtil::setSpriteSize(friend_sprite, sf::Vector2f{70., 70.});
             SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.5, 0.5});
             friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + (snail_margin/2) + ((0.5f)*background_width),

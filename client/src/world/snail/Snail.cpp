@@ -8,6 +8,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
 #include "ui/PathSelectionArrowUI.h"
+#include "world/friends/Friend.h"
 
 Snail::Snail(World& world, GraphNode* node, sf::Color snail_color)
     : GraphEntity(world, node),
@@ -42,8 +43,6 @@ void Snail::deleteYourself() {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    pathSelArrow->draw(target, states);
-
     snail_sprite.setPosition(actualPosition);
     snail_cap_sprite.setPosition(actualPosition);
     SpriteUtil::setSpriteSize(snail_sprite, sf::Vector2f{2., 2.});
@@ -63,12 +62,24 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     if(!moving) {
         snail_sprite.setRotation(sf::radians(0));
         snail_cap_sprite.setRotation(sf::radians(0));
-        SpriteUtil::setSpriteOrigin(snail_sprite, {1.0f,1.0f});
-        SpriteUtil::setSpriteOrigin(snail_cap_sprite, {1.0f,1.0f});
+
+        for (auto ent : world.getEntities()) {
+            if (Friend* frend = dynamic_cast<Friend*>(ent)) {
+                if (frend->getLocation() == location) {
+                    snail_cap_sprite.move({1.0f, 0.0f});
+                    snail_sprite.move({1.0f, 0.0f});
+
+                    snail_sprite.setScale(sf::Vector2f {std::abs(snail_sprite.getScale().x) * -1, snail_sprite.getScale().y});
+                    snail_cap_sprite.setScale(sf::Vector2f {std::abs(snail_cap_sprite.getScale().x) * -1, snail_cap_sprite.getScale().y});
+                    break;
+                }
+            }
+        }
     }
 
     target.draw(snail_sprite);
     target.draw(snail_cap_sprite);
+    pathSelArrow->draw(target, states);
 }
 
 void Snail::tick(float delta) {

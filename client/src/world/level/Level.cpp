@@ -95,8 +95,9 @@ const std::vector<Level> Level::LEVELS = {
                 .nodes = { {5.f, 9.f}, {11.f, 9.f}, {15.f, 13.f}, {15.f, 6.f}, {18.f, 9.f},},
                 .adjacency_list = { {0, 1}, {1, 2}, {1, 3}, {3, 4},{2, 4}},
         },
-        // LEVEL 6 : The Great Double Cock Block
+        // LEVEL 6
         {
+                .name = "The Great Double Cock Block",
                 .friends = {{ FROG, false, 1 },
                             { LADYBUG, false, 10 }},
                 .offices = { { false, 0 }, {false, 3}, {false, 6}},
@@ -117,11 +118,12 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 7
         {
+                .name = "Roadblock",
                 .friends = { { LADYBUG, false, 1 },
                              { FROG, false, 3 },
                              { MOUSE, false, 2 } },
                 .offices = { { false, 0 }, },
-                .snailCount = 3,
+                .snailCount = 2,
                 .missions = { { 1.0f, 0, 0,
                                       { { 2, true, 15.0f },
                                               { 1, true, 20.0f }} },
@@ -132,16 +134,17 @@ const std::vector<Level> Level::LEVELS = {
                                       {{ 0, true, 15.0f },
                                               { 2, true, 20.0f },} }},
                 .deliveriesForBronze = 2,
-                .deliveriesForSilver = 3,
-                .deliveriesForGold = 4,
+                .deliveriesForSilver = 4,
+                .deliveriesForGold = 6,
                 .snail_speed = 5.f,
                 .custom = true,
                 .nodes = {{2.5f, 2.f}, {9.5f, 10.7f}, {6.8f, 15.3f}, {18.f, 9.4f},
                           {21.f, 16.f}},
                 .adjacency_list = {{0, 1}, {0,2}, {0,3}, {1,3}, {1,2}, {2,4}, {3,4}},
         },
-        // Desirable Detour
+        // Level 8
         {
+                .name = "Desirable Detour",
                 .friends = {{ FROG, false, 1 },
                             { LADYBUG, false, 3 },
                             { BEE, false, 6 },
