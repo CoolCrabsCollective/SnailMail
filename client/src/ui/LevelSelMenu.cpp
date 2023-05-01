@@ -75,7 +75,7 @@ void LevelSelMenu::hitAction(bool& isHit) {
 }
 
 void LevelSelMenu::populateLevels() {
-for (int i = 0; i<15; i++) {
+for (int i = 0; i<Level::LEVELS.size(); i++) {
         levelItems.push_back(new LevelItem(world, *this, mainOffset, i + 1));
     }
 }
