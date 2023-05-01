@@ -337,16 +337,30 @@ void World::tick(float delta) {
     bool allSoftLocked = true;
 
     for(Snail* snail : snails) {
-        if(snail->isMoving() and !snail->isBlockedMoving()
+            if(snail->isMoving() and !snail->isBlockedMoving()
         or !snail->isMoving() and snail->hasMovementOption())
             allSoftLocked = false;
     }
 
     if(allSoftLocked) {
         for(Mission* mission : missions) {
+            if(mission->isCompleted())
+                continue;
+
             if(!mission->hasSpawnedSnail() && mission->canSpawnSnail())
                 allSoftLocked = false;
         }
+    }
+
+    if(allSoftLocked) {
+        bool allMissionsCompleted = true;
+        for(Mission* mission : missions) {
+            if(!mission->isCompleted()) {
+                allMissionsCompleted = false;
+            }
+        }
+
+        allSoftLocked = !allMissionsCompleted;
     }
 
     if(allSoftLocked) {
