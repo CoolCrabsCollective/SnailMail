@@ -97,7 +97,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 6
         {
-                .name = "The Great Double Cock Block",
+                .name = "Double Block",
                 .friends = {{ FROG, false, 1 },
                             { LADYBUG, false, 10 }},
                 .offices = { { false, 0 }, {false, 3}, {false, 6}},
