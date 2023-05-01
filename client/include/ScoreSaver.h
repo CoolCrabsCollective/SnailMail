@@ -28,6 +28,8 @@ public:
     bool hasScore(int levelNumber) const;
 
     Score loadScoreForLevel(int levelNumber) const;
+
+    std::vector<Score> loadAllScores() const;
 };
 
 

@@ -19,7 +19,7 @@ TitleScreen::TitleScreen(wiz::Game& game)
     subtext.setOrigin({subtextRect.left + subtextRect.width/2.0f, subtextRect.top + subtextRect.height/2.0f});
 
     snailysSong.setLoop(true);
-    snailysSong.setVolume(50);
+    snailysSong.setVolume(75);
     snailysSong.play();
 }
 

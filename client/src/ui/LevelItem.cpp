@@ -17,6 +17,8 @@ LevelItem::LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f par
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_ITEM));
     backgroundSprite.setPosition(mainOffset);
 
+    metalSprite.setPosition(metalOffset);
+
     level_num.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
     level_num.setFillColor(sf::Color::Black);
     level_num.setPosition(numOffset);
@@ -35,6 +37,11 @@ void LevelItem::draw(sf::RenderTarget &target, const sf::RenderStates &states) c
     SpriteUtil::setSpriteOrigin(backgroundSprite, sf::Vector2f{0.5f, 0.5f});
     target.draw(backgroundSprite);
 
+    if (drawMetal) {
+        SpriteUtil::setSpriteSize(metalSprite, {35.f, 35.f});
+        SpriteUtil::setSpriteOrigin(metalSprite, sf::Vector2f{0.5f, 0.5f});
+        target.draw(metalSprite);
+    }
 
     target.draw(level_num);
 }
@@ -57,8 +64,31 @@ void LevelItem::calculateOffsets() {
     float xPos = -270.f + (25.f + size.x) * (float) rowNumOffset;
 
     mainOffset = parentMenuOffset + sf::Vector2f{xPos, yPos};
-    numOffset = mainOffset + sf::Vector2f{-10.f, -20.f};
+    metalOffset = mainOffset + sf::Vector2f{0.f, -15.f};
+    numOffset = mainOffset + sf::Vector2f{-10.f, 0.f};
 
     ClickableUI::boundingBoxBL = mainOffset - (size / 2.f);
     ClickableUI::boundingBoxTR = mainOffset + (size / 2.f);
+}
+
+void LevelItem::updateMetal() {
+    drawMetal = false;
+
+    if (!world.getScoreSaver().hasScore(levelNum))
+        return;
+
+    Level currentLevel = world.getCurrentLevel();
+
+    int deliveriesCompleted = world.getScoreSaver().loadScoreForLevel(levelNum).delivered;
+
+    if(deliveriesCompleted >= currentLevel.deliveriesForGold) {
+        metalSprite.setTexture(*world.getAssets().get(GameAssets::GOLD_SHELL), true);
+        drawMetal = true;
+    } else if(deliveriesCompleted >= currentLevel.deliveriesForSilver) {
+        metalSprite.setTexture(*world.getAssets().get(GameAssets::SILVER_SHELL), true);
+        drawMetal = true;
+    } else {
+        drawMetal = true;
+        metalSprite.setTexture(*world.getAssets().get(GameAssets::BRONZE_SHELL), true);
+    }
 }

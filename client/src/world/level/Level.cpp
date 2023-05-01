@@ -39,6 +39,22 @@ const std::vector<Level> Level::LEVELS = {
                 .snail_speed = 5.f,
         },
         {
+            .friends = {{ MOUSE, false, 7 } },
+            .offices = { { false, 0 }},
+            .snailCount = 2,
+            .missions = { { 1.0f, 0, 0,
+                                  { { 0, true, 20.0f }, },},
+                          { 7.0f, 0, 1,
+                                  { { 0, true, 20.0f }, },},},
+            .deliveriesForBronze = 0,
+            .deliveriesForSilver = 1,
+            .deliveriesForGold = 2,
+            .snail_speed = 4.f,
+            .custom = true,
+            .nodes = {{3.f, 10.f}, {6.f, 13.f}, {6.f, 6.f}, {9.f, 9.f}, {14.f, 9.f}, {17.f, 13.f}, {17.f, 6.f}, {20.f, 9.f},},
+            .adjacency_list = {{0, 1}, {0, 2}, {1, 3}, {2, 3}, {3, 4}, {4, 5}, {4, 6}, {6, 7},{5, 7}},
+        },
+        {
                 .seeded = true,
                 .seed = 0x71,
                 .nodeCount = 6,
@@ -108,7 +124,7 @@ const std::vector<Level> Level::LEVELS = {
 
 Level Level::getLevel(int levelNumber) {
     if(levelNumber > LEVELS.size())
-        return Level();
+        return {};
 
     return LEVELS[levelNumber - 1];
 }

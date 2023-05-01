@@ -16,11 +16,13 @@ class LevelSelMenu;
 
 class LevelItem : public sf::Drawable, public ClickableUI {
     mutable sf::Sprite backgroundSprite;
+    mutable sf::Sprite metalSprite;
 
     mutable sf::Text level_num;
 
     sf::Vector2f parentMenuOffset;
     sf::Vector2f mainOffset;
+    sf::Vector2f metalOffset;
     sf::Vector2f numOffset;
 
     sf::Vector2f size = {100.f, 100.f};
@@ -33,6 +35,8 @@ class LevelItem : public sf::Drawable, public ClickableUI {
     int levelNum = 0;
     const int max_per_row = 5;
 
+    bool drawMetal = false;
+
 public:
     LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f parentMenuOffset, int levelNum);
 
@@ -41,6 +45,8 @@ public:
     void hitAction(bool& isHit) override;
 
     void calculateOffsets();
+
+    void updateMetal();
 
     ~LevelItem() = default;
 };
