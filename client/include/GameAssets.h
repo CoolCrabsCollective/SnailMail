@@ -71,6 +71,10 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, MOUSE_SPRITE_SHEET, ("gfx/mouse_sprite_sheet.png"))
     ASSET(wiz::TextureAsset, FROG, ("gfx/kawaii_frog.png"))
     ASSET(wiz::TextureAsset, FROG_SPRITE_SHEET, ("gfx/frog_sprite_sheet.png"))
+    ASSET(wiz::TextureAsset, ANT, ("gfx/kawaii_ant.png"))
+    ASSET(wiz::TextureAsset, ANT_SPRITE_SHEET, ("gfx/ant_sprite_sheet.png"))
+    ASSET(wiz::TextureAsset, DUCK, ("gfx/kawaii_duck.png"))
+    ASSET(wiz::TextureAsset, DUCK_SPRITE_SHEET, ("gfx/duck_sprite_sheet.png"))
 
     // UI
     ASSET(wiz::TextureAsset, PATH_SEL_ARROW, ("gfx/ui/path_select_arrow.png"))
@@ -80,6 +84,8 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, FROG_LETTER, ("gfx/ui/letters/frog_icon.png"))
     ASSET(wiz::TextureAsset, LADY_BUG_LETTER, ("gfx/ui/letters/lady_bug_icon.png"))
     ASSET(wiz::TextureAsset, MOUSE_LETTER, ("gfx/ui/letters/mouse_icon.png"))
+    ASSET(wiz::TextureAsset, ANT_LETTER, ("gfx/ui/letters/ant_icon.png"))
+    ASSET(wiz::TextureAsset, DUCK_LETTER, ("gfx/ui/letters/duck_icon.png"))
     ASSET(wiz::TextureAsset, BUTTON, ("gfx/ui/button.png"))
     ASSET(wiz::TextureAsset, ALEXS_DESIRE, ("gfx/ui/alexs_desire.png"))
     ASSET(wiz::TextureAsset, LEVEL_INDICATOR, ("gfx/ui/level_sel/level_indicator.png"))

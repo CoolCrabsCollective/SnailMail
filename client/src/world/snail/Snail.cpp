@@ -206,6 +206,7 @@ GraphNode* Snail::hitScan(const sf::Vector2f& hit) {
     GraphNode* target = pathSelArrow->hitScanAll(hit);
     if (target) {
         moveLocation(target);
+        getWorld().hasSnailMadeFirstMove = true;
         clickSound.play();
     }
     return target;

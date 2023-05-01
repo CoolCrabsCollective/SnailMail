@@ -19,6 +19,8 @@
 #include "world/level/Delivery.h"
 #include "MathUtil.h"
 #include "world/GrassPatch.h"
+#include "world/friends/Ant.h"
+#include "world/friends/Duck.h"
 
 const sf::Color World::snail_colors[] = {
         Snail::SNAIL_COLOR_BLUE,
@@ -60,6 +62,8 @@ Snail* World::spawnSnail(GraphNode* node, int snailId, float speed) {
 
 void World::generateLevel(Level level, int levelNum) {
 
+    setPaused(false);
+    hasSnailMadeFirstMove = false;
     stopAllMusic();
 
     const wiz::MusicAsset& song = getSong(levelNum);
@@ -197,6 +201,14 @@ void World::generateLevel(Level level, int levelNum) {
             case FROG:
                 addEntity(spawned = new Frog(*this, graph->getNodes()[lfriend.hardcodedVertex]));
                 break;
+            case ANT:
+                addEntity(spawned = new Ant(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                break;
+            case DUCK:
+                addEntity(spawned = new Duck(*this, graph->getNodes()[lfriend.hardcodedVertex]));
+                break;
+            default:
+                throw std::runtime_error("I came my pants uWu help");
         }
         friends.emplace(id, spawned);
         used_positions.insert(lfriend.hardcodedVertex);
@@ -307,6 +319,7 @@ void World::tick(float delta) {
         bool success = deliveriesCompleted >= currentLevel.deliveriesForBronze;
         float score = std::max(500.0f * deliveriesCompleted - 250.0f * deliveriesMissed,
                                1000.0f * deliveriesCompleted - 500.0f * deliveriesMissed - timeSpent * 10.0f);
+        score = std::max(score, 0.0f);
 
         bool hasPreviousScore = screen.getScoreSaver().hasScore(currentLevelNumber);
         Score previousBest;
@@ -459,12 +472,14 @@ Friend* World::getFriend(int id) {
 }
 
 void World::loadNextLevel() {
+    hasSnailMadeFirstMove = false;
     setPaused(false);
     currentLevelNumber++;
     generateLevel(Level::getLevel(currentLevelNumber), currentLevelNumber);
 }
 
 void World::retry() {
+    hasSnailMadeFirstMove = false;
     setPaused(false);
     generateLevel(Level::getLevel(currentLevelNumber), currentLevelNumber);
 }
