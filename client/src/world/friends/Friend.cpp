@@ -55,7 +55,7 @@ void Friend::tick(float delta) {
 
     isFuckingSnailman = false;
     for (auto s : world.getSnails()) {
-        if (s->getLocation() == location) {
+        if (s->getLocation() == location && !s->isMoving() && !s->isBlockedMoving()) {
             isFuckingSnailman = true;
         }
     }
