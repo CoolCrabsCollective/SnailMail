@@ -32,6 +32,7 @@ void MailScreen::tick(float delta) {
 
     world.tick(delta / 1000.0f);
     completeMenu.tick(delta / 1000.0f);
+    levelSelMenu.tick(delta / 1000.0f);
 }
 
 void MailScreen::render(sf::RenderTarget &target) {
@@ -104,6 +105,7 @@ void MailScreen::mouseMoved(const sf::Event::MouseMoveEvent& mouseMoveEvent) {
     hoverVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseMoveEvent.x, mouseMoveEvent.y),
                                                uiView);
     completeMenu.hover(hoverVector);
+    levelSelMenu.hover(hoverVector);
 }
 
 void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {

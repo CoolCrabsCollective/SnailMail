@@ -41,6 +41,8 @@ struct LevelDeliveryMission {
 };
 
 struct Level {
+    std::string name = "";
+
     bool seeded = false;
     int seed = 0;
     int nodeCount = 10;
@@ -53,7 +55,6 @@ struct Level {
     int deliveriesForBronze = 1;
     int deliveriesForSilver = 1;
     int deliveriesForGold = 1;
-    float snail_speed = 2.f;
     bool custom = false;
     std::vector<std::pair<float, float>> nodes;
     std::vector<std::pair<int, int>> adjacency_list;

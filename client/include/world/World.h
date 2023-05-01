@@ -61,7 +61,7 @@ public:
 
     World(wiz::AssetLoader& assets, MailScreen& screen);
 
-    void generateLevel(Level level);
+    void generateLevel(Level level, int levelNum);
 
     void loadNextLevel();
 
