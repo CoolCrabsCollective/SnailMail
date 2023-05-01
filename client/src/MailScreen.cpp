@@ -28,7 +28,6 @@ MailScreen::MailScreen(wiz::Game& game)
 }
 
 void MailScreen::tick(float delta) {
-    world.setPaused(levelSelMenu.getIsOpen());
     levelIndicator.setClickable(!completeMenu.isVisible());
 
     world.tick(delta / 1000.0f);

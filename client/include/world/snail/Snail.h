@@ -7,6 +7,7 @@
 
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/GraphEntity.h"
+#include "SFML/Audio/Sound.hpp"
 
 class PathSelectionArrowUI;
 
@@ -31,6 +32,8 @@ public:
     constexpr static sf::Color SNAIL_COLOR_YELLOW = sf::Color(251, 242, 54);
     constexpr static sf::Color SNAIL_COLOR_GREEN = sf::Color(153, 229, 80);
     constexpr static sf::Color SNAIL_COLOR_RED = sf::Color(217, 87, 99);
+
+    sf::Sound deliverySound, clickSound;
 
     Snail(World& world, GraphNode* node, sf::Color snail_color);
 

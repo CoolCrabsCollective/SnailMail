@@ -47,24 +47,17 @@ protected:
 
     bool paused = false;
 
-
     GRand random;
-public:
-    const std::unordered_map<int, PostOffice *> &getPostOffices() const;
 
-protected:
+    sf::Sound successSound, failureSound;
 
     void removeFromZOrderMap(Entity* entity);
 
-public:
-    const Level &getCurrentLevel() const;
-    const static sf::Color snail_colors[];
-
-protected:
     int currentLevelNumber = 1;
     float timeSpent = 0.0f;
 public:
     constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
+    const static sf::Color snail_colors[];
 
     World(wiz::AssetLoader& assets, MailScreen& screen);
 
@@ -115,6 +108,10 @@ public:
     GRand& getRandom();
 
     const ScoreSaver &getScoreSaver();
+
+    const std::unordered_map<int, PostOffice *>& getPostOffices() const;
+
+    const Level &getCurrentLevel() const;
 };
 
 

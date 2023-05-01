@@ -28,7 +28,13 @@ namespace GameAssets {
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_130, ("music/Snail_Friends_130_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_140, ("music/Snail_Friends_140_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_150, ("music/Snail_Friends_150_bpm.ogg"))
-	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
+
+    // SFX
+    ASSET(wiz::SoundAsset, CLICK, ("sfx/click.ogg"))
+    ASSET(wiz::SoundAsset, DELIVERY, ("sfx/delivery.ogg"))
+    ASSET(wiz::SoundAsset, SUCCESS, ("sfx/success.ogg"))
+    ASSET(wiz::SoundAsset, FAILURE, ("sfx/failure.ogg"))
+
 	ASSET(wiz::FontAsset, THE_RIGHT_FONT, ("font/VT323-Regular.ttf"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))

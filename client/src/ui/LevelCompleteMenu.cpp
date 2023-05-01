@@ -37,6 +37,7 @@ void LevelCompleteMenu::show(bool success,
                              float score,
                              bool hasPreviousScore,
                              Score previousBest) {
+    world.setPaused(true);
     visible = true;
     won = success;
     retryScale = 1.0f;
@@ -155,6 +156,7 @@ void LevelCompleteMenu::show(bool success,
 }
 
 void LevelCompleteMenu::softlock() {
+    world.setPaused(true);
     visible = true;
     won = false;
 
