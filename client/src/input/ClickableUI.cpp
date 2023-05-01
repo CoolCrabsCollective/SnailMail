@@ -18,3 +18,7 @@ bool ClickableUI::hitScan(const sf::Vector2f& hit) {
     hitAction(isHit);
     return isHit;
 }
+
+void ClickableUI::setClickable(bool clickable) {
+    ClickableUI::clickable = clickable;
+}

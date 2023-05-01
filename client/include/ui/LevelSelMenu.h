@@ -44,6 +44,8 @@ public:
 
     void populateLevels();
 
+    const std::vector<LevelItem *> &getLevelItems() const;
+
     ~LevelSelMenu() = default;
 };
 

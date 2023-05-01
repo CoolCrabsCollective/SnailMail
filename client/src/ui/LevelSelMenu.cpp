@@ -47,18 +47,28 @@ bool LevelSelMenu::getIsOpen() const {
 
 void LevelSelMenu::setIsOpen(bool isOpen) {
     clickable = isOpen;
+    for (LevelItem* levelItem : levelItems) {
+        levelItem->setClickable(clickable);
+    }
     LevelSelMenu::isOpen = isOpen;
 }
 
 void LevelSelMenu::hitAction(bool& isHit) {
     if (isHit) {
         clickable = false;
+        for (LevelItem* levelItem : levelItems) {
+            levelItem->setClickable(false);
+        }
         isOpen = false;
     }
 }
 
 void LevelSelMenu::populateLevels() {
     for (int i = 0; i<Level::LEVELS.size(); i++) {
-        levelItems.push_back(new LevelItem(world, *this, mainOffset, i));
+        levelItems.push_back(new LevelItem(world, mainOffset, i + 1));
     }
+}
+
+const std::vector<LevelItem *> &LevelSelMenu::getLevelItems() const {
+    return levelItems;
 }

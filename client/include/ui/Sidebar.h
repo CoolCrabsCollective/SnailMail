@@ -17,6 +17,9 @@ protected:
     mutable sf::Sprite friend_sprite;
     mutable sf::Text number_text;
     mutable sf::Text deliveryText;
+    mutable sf::Text smailsmanText;
+    mutable sf::Text recipientText;
+    mutable sf::Text targetText;
 public:
     Sidebar(World& world);
 
