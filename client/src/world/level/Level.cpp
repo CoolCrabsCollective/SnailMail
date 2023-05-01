@@ -212,8 +212,9 @@ const std::vector<Level> Level::LEVELS = {
                                    {24,25},{25,26},{26,27},{27,28},{27,29}, {15,17},{14,27}}
 
         },
+        // LEVEL 10
         {
-                .name = "CUCKED",
+                .name = "Traffic Jam",
                 .seeded = true,
                 .seed = 0xdef9,
                 .nodeCount = 4,
