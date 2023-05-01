@@ -6,7 +6,7 @@
 #include "world/World.h"
 #include "GameAssets.h"
 
-Duck::Duck(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::DUCK_SPRITE_SHEET), 0.3f, 2.0f) {
+Duck::Duck(World& world, GraphNode* node) : Friend(world, node, *world.getAssets().get(GameAssets::DUCK_SPRITE_SHEET), 0.5f, 3.0f) {
 
 }
 
