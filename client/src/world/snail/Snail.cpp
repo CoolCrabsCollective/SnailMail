@@ -7,7 +7,7 @@
 #include "world/World.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SpriteUtil.h"
-#include "ui/PathSelArrow.h"
+#include "ui/PathSelectionArrowUI.h"
 
 Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node), snail_color(snail_color) {
     snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
@@ -16,7 +16,7 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity
     snail_cap_sprite.setColor(snail_color);
     actualPosition = node->getPosition();
 
-    pathSelArrow = new PathSelArrow(world, snail_color);
+    pathSelArrow = new PathSelectionArrowUI(world, snail_color);
 }
 
 const sf::Vector2f &Snail::getPosition() const {
@@ -36,8 +36,7 @@ void Snail::deleteYourself() {
 }
 
 void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    if (!moving && arrowPosUpdated)
-        pathSelArrow->draw(target, states);
+    pathSelArrow->draw(target, states);
 
     snail_sprite.setPosition(actualPosition);
     snail_cap_sprite.setPosition(actualPosition);
@@ -69,13 +68,10 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 }
 
 void Snail::tick(float delta) {
-    if (moving) {
+    if(moving)
         tickMovement(delta);
-        arrowPosUpdated = false;
-    } else {
-        pathSelArrow->updatePositions(getLocation(), snail_color);
-        arrowPosUpdated = true;
-    }
+
+    pathSelArrow->tick(delta, moving, getLocation(), snail_color);
 }
 
 void Snail::moveLocation(GraphNode* node) {
@@ -143,6 +139,12 @@ GraphNode* Snail::hitScan(const sf::Vector2f& hit) {
     if (target)
         moveLocation(target);
     return target;
+}
+
+bool Snail::hover(sf::Vector2f vector2) {
+    if(moving)
+        return false;
+    return pathSelArrow->hover(vector2);
 }
 
 const sf::Color &Snail::getSnailColor() const {

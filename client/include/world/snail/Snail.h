@@ -8,7 +8,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/GraphEntity.h"
 
-class PathSelArrow;
+class PathSelectionArrowUI;
 
 class Snail : public GraphEntity, public Tickable {
     mutable sf::Sprite snail_sprite;
@@ -18,25 +18,23 @@ class Snail : public GraphEntity, public Tickable {
     float progressRate = 2.f;
     float currentProgressRate = 0;
 
-public:
-    void setProgressRate(float progressRate);
-
-private:
-
     sf::Vector2f locDiff;
-
     sf::Vector2f actualPosition;
 
-    PathSelArrow* pathSelArrow;
-    bool arrowPosUpdated = false;
+    PathSelectionArrowUI* pathSelArrow;
     sf::Color snail_color;
 
     bool deleteMyself = false;
 
 public:
+    constexpr static sf::Color SNAIL_COLOR_BLUE = sf::Color(99, 155, 255);
+    constexpr static sf::Color SNAIL_COLOR_YELLOW = sf::Color(251, 242, 54);
+    constexpr static sf::Color SNAIL_COLOR_GREEN = sf::Color(153, 229, 80);
+    constexpr static sf::Color SNAIL_COLOR_RED = sf::Color(217, 87, 99);
+
     Snail(World& world, GraphNode* node, sf::Color snail_color);
 
-    const sf::Vector2f &getPosition() const override;
+    const sf::Vector2f& getPosition() const override;
 
     sf::Vector2f getVisualSize() const override;
 
@@ -54,10 +52,7 @@ public:
 
     GraphNode* hitScan(const sf::Vector2f& hit);
 
-    constexpr static sf::Color SNAIL_COLOR_BLUE = sf::Color(99, 155, 255);
-    constexpr static sf::Color SNAIL_COLOR_YELLOW = sf::Color(251, 242, 54);
-    constexpr static sf::Color SNAIL_COLOR_GREEN = sf::Color(153, 229, 80);
-    constexpr static sf::Color SNAIL_COLOR_RED = sf::Color(217, 87, 99);
+    void setProgressRate(float progressRate);
 
     bool isMoving();
 
@@ -69,6 +64,8 @@ public:
     }
 
     float getMovingProgress() const;
+
+    bool hover(sf::Vector2f vector2);
 };
 
 
