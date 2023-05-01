@@ -35,7 +35,6 @@ Sidebar::Sidebar(World& world) : world(world) {
 
 void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     constexpr float snail_margin = 40.f;
-    constexpr float distance_between_snails = 50.f;
     constexpr float offset_from_delivery = 100.f;
     constexpr float snail_scale = 4.f;
     constexpr float snail_time_distance = 150.f;
@@ -65,20 +64,20 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     recipientText.setPosition(sf::Vector2f{Sidebar::DISTANCE_TO_SIDEBAR + background.getGlobalBounds().width - recipientRect.width - 25.0f, deliveryRect.height + 20.0f});
     target.draw(recipientText);
 
-    float snail_offset = 0;
-    for(int i = 0; i < missions.size(); i++)
-    {
+    float snail_offset = 100.0f;
+    for(int i = 0; i < missions.size(); i++) {
         if(missions[i]->getSnail() == nullptr)
             continue;
-        float starting_offset = snail_offset;
         snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
         sf::Vector2f pos = sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin, snail_margin + snail_offset};
         snail_sprite.setPosition(pos);
         snail_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
+        SpriteUtil::setSpriteOrigin(snail_sprite, sf::Vector2f{0.0, 0.5});
         snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
         snail_cap_sprite.setColor(missions[i]->getSnail()->getSnailColor());
         snail_cap_sprite.setPosition(pos);
         snail_cap_sprite.setScale(sf::Vector2f{snail_scale, snail_scale});
+        SpriteUtil::setSpriteOrigin(snail_cap_sprite, sf::Vector2f{0.0, 0.5});
 
         target.draw(snail_sprite);
         target.draw(snail_cap_sprite);
@@ -86,35 +85,24 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         const std::vector<Delivery*>& deliveries = missions[i]->getDeliveries();
 
         std::vector<Delivery*> activeDeliveries;
-        for(Delivery* d : deliveries)
-        {
-            if(!d->isCompleted())
-            {
+        for(Delivery* d : deliveries) {
+            if(!d->isCompleted()) {
                 activeDeliveries.push_back(d);
             }
         }
 
-
-        for(int j = 0; j < activeDeliveries.size(); j++)
-        {
+        for(int j = 0; j < activeDeliveries.size(); j++) {
             Friend* friend_to_deliver = activeDeliveries[j]->getDestination();
             sf::Texture* friendTexture = nullptr;
-            if (dynamic_cast<LadyBug*>(friend_to_deliver))
-            {
+            if (dynamic_cast<LadyBug*>(friend_to_deliver)) {
                 friendTexture = world.getAssets().get(GameAssets::LADY_BUG);
-            }else if(dynamic_cast<Bee*>(friend_to_deliver)){
-
+            } else if(dynamic_cast<Bee*>(friend_to_deliver)){
                 friendTexture = world.getAssets().get(GameAssets::BEE);
-            }
-            else if(dynamic_cast<Frog*>(friend_to_deliver)){
-
+            } else if(dynamic_cast<Frog*>(friend_to_deliver)){
                 friendTexture = world.getAssets().get(GameAssets::FROG);
-            }
-            else if(dynamic_cast<Mouse*>(friend_to_deliver)){
-
+            } else if(dynamic_cast<Mouse*>(friend_to_deliver)){
                 friendTexture = world.getAssets().get(GameAssets::MOUSE);
-            }
-            else {
+            } else {
                 throw std::runtime_error("Could not find friend for delivery!!");
             }
 
@@ -128,8 +116,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             float character_bigger_delta = 16.f;
             float total_char_size = (character_size + character_bigger_delta * time_multiplier);
 
-            if(time_left_float >= 10.f)
-            {
+            if(time_left_float >= 10.f) {
                 total_char_size = character_size;
             }
             std::string time_str = std::to_string(time_left);
@@ -141,19 +128,19 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             number_text.setCharacterSize((int)total_char_size);
             number_text.setFont(*world.getAssets().get(GameAssets::THE_RIGHT_FONT));
 
-            if(activeDeliveries[j]->isExpired())
-            {
+            if (activeDeliveries[j]->isExpired()) {
                 number_text.setString("X");
                 number_text.setCharacterSize(64);
-            } else if(!std::isfinite(activeDeliveries[j]->getTimeLeft()))
+            } else if(!std::isfinite(activeDeliveries[j]->getTimeLeft())) {
                 number_text.setString("");
+            }
             target.draw(number_text);
 
             friend_sprite.setTexture(*friendTexture);
             friend_sprite.setPosition(sf::Vector2f{DISTANCE_TO_SIDEBAR + snail_margin + snail_friend_distance,
                                                    snail_margin + snail_offset});
             SpriteUtil::setSpriteSize(friend_sprite, sf::Vector2f{70., 70.});
-            SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.5, 0.25});
+            SpriteUtil::setSpriteOrigin(friend_sprite, sf::Vector2f{0.0, 0.5});
             target.draw(friend_sprite);
 
             snail_offset += offset_from_delivery;
@@ -161,8 +148,7 @@ void Sidebar::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
 
         float minimum_offset =  200.f;
         float total_snail_offset = std::max(snail_offset, minimum_offset * (i + 1));
-        if(i < missions.size() - 1)
-        {
+        if(i < missions.size() - 1) {
             sf::RectangleShape line;
             line.setFillColor(sf::Color(116.f, 63.f, 57.f));
             line.setSize(sf::Vector2f{400.f, 10.f});
