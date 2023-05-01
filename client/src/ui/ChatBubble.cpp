@@ -26,6 +26,8 @@ void ChatBubble::draw(sf::RenderTarget &target, const sf::RenderStates &states, 
     if(is_mad)
     {
         bubbleSprite.setTexture(*world.getAssets().get(GameAssets::CHAT_BUBBLE_MAD));
+    } else {
+        bubbleSprite.setTexture(*world.getAssets().get(GameAssets::CHAT_BUBBLE));
     }
     SpriteUtil::setSpriteSize(bubbleSprite, sf::Vector2f{1.5f, 1.5f});
     SpriteUtil::setSpriteOrigin(bubbleSprite, sf::Vector2f{0.5f, 0.5f});
