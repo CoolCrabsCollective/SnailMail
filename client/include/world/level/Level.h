@@ -41,6 +41,8 @@ struct LevelDeliveryMission {
 };
 
 struct Level {
+    std::string name = "";
+
     bool seeded = false;
     int seed = 0;
     int nodeCount = 10;
