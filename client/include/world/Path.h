@@ -15,6 +15,11 @@ struct Slime {
     bool forward;
 };
 
+enum PathType {
+    DIRT,
+    ROCK
+};
+
 class Path : public sf::Drawable, public sf::Transformable {
     mutable sf::Sprite sprite;
     mutable sf::Sprite slimeSprite;
@@ -24,7 +29,8 @@ class Path : public sf::Drawable, public sf::Transformable {
 public:
     Path(wiz::AssetLoader& assets,
          GraphNode* node1,
-         GraphNode* node2);
+         GraphNode* node2,
+         PathType pathType);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
