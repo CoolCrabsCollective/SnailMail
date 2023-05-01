@@ -10,15 +10,9 @@
 TitleScreen::TitleScreen(wiz::Game& game)
 	: snailysSong(*game.getAssets().get(GameAssets::SNAILYS_SONG)), Screen(game) {
     background.setTexture(*game.getAssets().get(GameAssets::TITLE_SCREEN_BACKGROUND));
-    message.setFont(*game.getAssets().get(GameAssets::THE_RIGHT_FONT));
-    message.setFillColor(sf::Color::Blue);
-    message.setCharacterSize(84);
-    message.setString("Welcome to Snail Mail");
-    sf::FloatRect messageRect = message.getLocalBounds();
-    message.setOrigin({messageRect.left + messageRect.width/2.0f, messageRect.top + messageRect.height/2.0f});
 
     subtext.setFont(*game.getAssets().get(GameAssets::THE_RIGHT_FONT));
-    subtext.setFillColor(sf::Color::Blue);
+    subtext.setFillColor(sf::Color(34, 32, 52));
     subtext.setCharacterSize(40);
     subtext.setString("(Click to continue)");
     sf::FloatRect subtextRect = subtext.getLocalBounds();
@@ -33,7 +27,7 @@ void TitleScreen::tick(float delta) {
 	sf::Vector2f vec(getGame().getWindow().getView().getSize());
 
 	message.setPosition(vec / 2.0f);
-    subtext.setPosition(vec / 2.0f + sf::Vector2f(0, 50));
+    subtext.setPosition(vec / 2.0f + sf::Vector2f(0, 320));
 
 	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);

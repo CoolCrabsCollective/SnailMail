@@ -36,7 +36,8 @@ World::World(wiz::AssetLoader &assets, MailScreen& screen)
 
     generateLevel(Level::getLevel(currentLevelNumber));
 
-    background.setTexture(*assets.get(GameAssets::BACKGROUND));
+    background.setTexture(*assets.get(GameAssets::WHITE_PIXEL));
+    background.setColor({ 25, 148, 25, 255 });
     background.setPosition(view.getCenter());
     SpriteUtil::setSpriteSize(background, view.getSize());
     SpriteUtil::setSpriteOrigin(background, {0.5f, 0.5f});
