@@ -6,6 +6,7 @@
 const std::vector<Level> Level::LEVELS = {
         // LEVEL 1
         {
+                .name = "Lil' Baby",
                 .seeded = true,
                 .seed = 123,
                 .nodeCount = 3,
@@ -22,6 +23,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 2
         {
+                .name = "Double Team",
                 .seeded = true,
                 .seed = 0xbeefced,
                 .nodeCount = 5,
@@ -40,6 +42,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 3
         {
+            .name = "The Jugs of Destiny",
             .friends = {{ MOUSE, false, 7 } },
             .offices = { { false, 0 }},
             .snailCount = 2,
@@ -56,6 +59,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 4
         {
+                .name = "Frog Chaserz",
                 .friends = {{ FROG, false, 6 },
                             { BEE, false, 4 }},
                 .offices = { { false, 5 }, { false, 2 }},
@@ -75,6 +79,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 5
         {
+                .name = "Follow My Lead",
                 .friends = {{ LADYBUG, false, 3 }, { BEE, false, 4 } },
                 .offices = { { false, 0 }},
                 .snailCount = 2,
@@ -176,6 +181,7 @@ const std::vector<Level> Level::LEVELS = {
         },
         // LEVEL 9 : Cock-Quille
         {
+                .name = "Coquille",
                 .friends = { { LADYBUG, false, 1 },
                              { MOUSE, false, 14 },
                              { FROG, false, 26 },
@@ -213,6 +219,7 @@ const std::vector<Level> Level::LEVELS = {
 
         },
         {
+                .name = "Pyramid",
                 .seeded = true,
                 .seed = 0xdef9,
                 .nodeCount = 4,
@@ -231,6 +238,7 @@ const std::vector<Level> Level::LEVELS = {
                 .deliveriesForGold = 4,
         },
         {
+                .name = "Junction",
                 .seeded = true,
                 .seed = 0xceedbef,
                 .nodeCount = 8,
