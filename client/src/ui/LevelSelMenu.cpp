@@ -47,12 +47,18 @@ bool LevelSelMenu::getIsOpen() const {
 
 void LevelSelMenu::setIsOpen(bool isOpen) {
     clickable = isOpen;
+    for (LevelItem* levelItem : levelItems) {
+        levelItem->setClickable(clickable);
+    }
     LevelSelMenu::isOpen = isOpen;
 }
 
 void LevelSelMenu::hitAction(bool& isHit) {
     if (isHit) {
         clickable = false;
+        for (LevelItem* levelItem : levelItems) {
+            levelItem->setClickable(false);
+        }
         isOpen = false;
     }
 }
