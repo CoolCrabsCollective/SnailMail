@@ -87,11 +87,19 @@ void MailScreen::mouseButtonReleased(const sf::Event::MouseButtonEvent &mouseBut
     }
 }
 
-void MailScreen::mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) {
+void MailScreen::mouseMoved(const sf::Event::MouseMoveEvent& mouseMoveEvent) {
+    sf::Vector2f hoverVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseMoveEvent.x, mouseMoveEvent.y),
+                                                            world.getView());
 
-    sf::Vector2f clickVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseMoveEvent.x, mouseMoveEvent.y),
+    for(Snail* snail : world.getSnails()) {
+        if(snail->hover(hoverVector)) {
+            break;
+        }
+    }
+
+    hoverVector = getWindow().mapPixelToCoords(sf::Vector2i(mouseMoveEvent.x, mouseMoveEvent.y),
                                                uiView);
-    completeMenu.hover(clickVector);
+    completeMenu.hover(hoverVector);
 }
 
 void MailScreen::touchBegan(const sf::Event::TouchEvent &touchScreenEvent) {
