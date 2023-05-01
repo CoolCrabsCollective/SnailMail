@@ -51,6 +51,7 @@ bool LevelSelMenu::getIsOpen() const {
 }
 
 void LevelSelMenu::setIsOpen(bool isOpen) {
+    world.setPaused(isOpen);
     clickable = isOpen;
     for (LevelItem* levelItem : levelItems) {
         levelItem->setClickable(clickable);
@@ -65,13 +66,8 @@ void LevelSelMenu::setIsOpen(bool isOpen) {
 }
 
 void LevelSelMenu::hitAction(bool& isHit) {
-    if (isHit) {
-        clickable = false;
-        for (LevelItem* levelItem : levelItems) {
-            levelItem->setClickable(false);
-        }
-        isOpen = false;
-    }
+    if(isHit)
+        setIsOpen(false);
 }
 
 void LevelSelMenu::populateLevels() {

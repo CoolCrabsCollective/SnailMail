@@ -17,7 +17,8 @@ LevelCompleteMenu::LevelCompleteMenu(World& world)
         retryHovered(false),
         nextHovered(false),
         retryScale(1.0f),
-        nextScale(1.0f) {
+        nextScale(1.0f),
+        clickSound() {
     background.setTexture(*assets.get(GameAssets::WHITE_PIXEL));
     background.setColor(sf::Color(0, 0, 0, 100));
     background.setPosition({0.0f, 0.0f });
@@ -26,6 +27,8 @@ LevelCompleteMenu::LevelCompleteMenu(World& world)
     buttonBackground.setTexture(*assets.get(GameAssets::BUTTON));
     SpriteUtil::setSpriteSize(buttonBackground, {250.0f, 125.0f});
     SpriteUtil::setSpriteOrigin(buttonBackground, { 0.5f, 0.5f });
+
+    clickSound.setBuffer(*assets.get(GameAssets::CLICK));
 }
 
 void LevelCompleteMenu::show(bool success,
@@ -37,6 +40,7 @@ void LevelCompleteMenu::show(bool success,
                              float score,
                              bool hasPreviousScore,
                              Score previousBest) {
+    world.setPaused(true);
     visible = true;
     won = success;
     retryScale = 1.0f;
@@ -155,6 +159,7 @@ void LevelCompleteMenu::show(bool success,
 }
 
 void LevelCompleteMenu::softlock() {
+    world.setPaused(true);
     visible = true;
     won = false;
 
@@ -259,11 +264,13 @@ void LevelCompleteMenu::click(sf::Vector2f position) {
         return;
 
     if(position.x >= 475.0f && position.x <= 725.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
+        clickSound.play();
         world.retry();
         hide();
     }
 
     if(won && position.x >= 875.0f && position.x <= 1125.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
+        clickSound.play();
         world.loadNextLevel();
         hide();
     }

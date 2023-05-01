@@ -3,12 +3,16 @@
 //
 
 #include "TitleScreen.h"
+
+#include <memory>
 #include "GameAssets.h"
 #include "SFML/Window/Touch.hpp"
 #include "MailScreen.h"
 
 TitleScreen::TitleScreen(wiz::Game& game)
-	: snailysSong(*game.getAssets().get(GameAssets::SNAILYS_SONG)), Screen(game) {
+	: Screen(game),
+        snailysSong(*game.getAssets().get(GameAssets::SNAILYS_SONG)),
+        click() {
     background.setTexture(*game.getAssets().get(GameAssets::TITLE_SCREEN_BACKGROUND));
 
     subtext.setFont(*game.getAssets().get(GameAssets::THE_RIGHT_FONT));
@@ -17,14 +21,15 @@ TitleScreen::TitleScreen(wiz::Game& game)
     subtext.setString("(Click to continue)");
     sf::FloatRect subtextRect = subtext.getLocalBounds();
     subtext.setOrigin({subtextRect.left + subtextRect.width/2.0f, subtextRect.top + subtextRect.height/2.0f});
-
-    snailysSong.setLoop(true);
-    snailysSong.setVolume(75);
-    snailysSong.play();
+    click.setBuffer(*game.getAssets().get(GameAssets::CLICK));
 }
 
 void TitleScreen::tick(float delta) {
 	sf::Vector2f vec(getGame().getWindow().getView().getSize());
+    musicDelay += delta;
+
+    if(musicDelay > 0.5f && snailysSong.getStatus() != sf::SoundSource::Playing)
+        snailysSong.play();
 
 	message.setPosition(vec / 2.0f);
     subtext.setPosition(vec / 2.0f + sf::Vector2f(0, 320));
@@ -33,15 +38,25 @@ void TitleScreen::tick(float delta) {
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
 	background.setScale(vec);
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)
-	   || sf::Joystick::isButtonPressed(0, 3))
-	{
-		getGame().setScreen(std::shared_ptr<MailScreen>(new MailScreen(getGame())));
-		return;
-	}
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        sf::Vector2i pos = sf::Mouse::getPosition(getWindow());
 
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(1))
-		getGame().setScreen(std::shared_ptr<MailScreen>(new MailScreen(getGame())));
+        if(pos.x >= 0 && pos.y >= 0 && pos.x <= getWindow().getSize().x && pos.y <= getWindow().getSize().y) {
+            click.play();
+            getGame().setScreen(std::make_shared<MailScreen>(getGame()));
+            return;
+        }
+    }
+
+    if(sf::Touch::isDown(1)) {
+        sf::Vector2i pos = sf::Touch::getPosition(1, getWindow());
+
+        if(pos.x >= 0 && pos.y >= 0 && pos.x <= getWindow().getSize().x && pos.y <= getWindow().getSize().y) {
+            click.play();
+            getGame().setScreen(std::make_shared<MailScreen>(getGame()));
+            return;
+        }
+    }
 }
 
 void TitleScreen::render(sf::RenderTarget& target) {
@@ -53,48 +68,8 @@ void TitleScreen::render(sf::RenderTarget& target) {
 
 void TitleScreen::show() {
 	getGame().addWindowListener(this);
-
-	int i;
-	for(i = 0; true; i++) {
-		if(!sf::Joystick::isConnected(i))
-			break;
-
-		sf::Joystick::Identification id = sf::Joystick::getIdentification(i);
-		unsigned int buttonCount = sf::Joystick::getButtonCount(i);
-
-		std::stringstream ss;
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::X))
-			ss << "X";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::Y))
-			ss << "Y";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::U))
-			ss << "U";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::V))
-			ss << "V";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::Z))
-			ss << "Z";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::R))
-			ss << "R";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::PovX))
-			ss << "pX";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::PovY))
-			ss << "pY";
-
-		getLogger().info("Found controller, Name: " + id.name +
-					 ", VendorID: " + std::to_string(id.vendorId) +
-					 ", ProductID: " + std::to_string(id.productId) +
-					 ", ButtonCount: " + std::to_string(buttonCount) +
-					 ", Axis: " + ss.str());
-	}
-	getLogger().info("Found " + std::to_string(i) + " controllers");
+    snailysSong.setLoop(true);
+    snailysSong.setVolume(75);
 }
 
 void TitleScreen::hide() {

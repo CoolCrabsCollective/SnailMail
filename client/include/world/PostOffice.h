@@ -10,7 +10,6 @@
 #include "SFML/Graphics/Sprite.hpp"
 
 class PostOffice : public GraphEntity {
-
     mutable sf::Sprite sprite;
 public:
     PostOffice(World &world, GraphNode *node);

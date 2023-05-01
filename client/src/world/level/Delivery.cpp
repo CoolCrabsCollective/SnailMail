@@ -38,6 +38,7 @@ void Delivery::tick(float delta) {
     if(mission.getSnail()->getLocation() == destination->getLocation() && !mission.getSnail()->isMoving()) {
         destination->getChatBubble().popLetter(sender);
         completed = true;
+        mission.getSnail()->deliverySound.play();
     } else {
         timeLeft -= delta;
         if(timeLeft < 0.0f)

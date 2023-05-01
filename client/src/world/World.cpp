@@ -31,7 +31,9 @@ World::World(wiz::AssetLoader &assets, MailScreen& screen)
     : assets(assets),
       screen(screen),
       zOrderMap(),
-      view({ 16.0f, 9.0f }, { 32.0f, 18.0f }) {
+      view({ 16.0f, 9.0f }, { 32.0f, 18.0f }),
+      successSound(),
+      failureSound() {
 
     graph = new Graph(*this);
     addEntity(graph);
@@ -43,6 +45,9 @@ World::World(wiz::AssetLoader &assets, MailScreen& screen)
     background.setPosition(view.getCenter());
     SpriteUtil::setSpriteSize(background, view.getSize());
     SpriteUtil::setSpriteOrigin(background, {0.5f, 0.5f});
+
+    successSound.setBuffer(*assets.get(GameAssets::SUCCESS));
+    failureSound.setBuffer(*assets.get(GameAssets::FAILURE));
 }
 
 Snail* World::spawnSnail(GraphNode* node, int snailId, float speed) {
@@ -322,6 +327,11 @@ void World::tick(float delta) {
                                       score,
                                       hasPreviousScore,
                                       previousBest);
+
+        if(success)
+            successSound.play();
+        else
+            failureSound.play();
     }
 
     bool allSoftLocked = true;
@@ -341,6 +351,7 @@ void World::tick(float delta) {
 
     if(allSoftLocked) {
         screen.getCompleteMenu().softlock();
+        failureSound.play();
     }
 }
 
@@ -434,11 +445,13 @@ Friend* World::getFriend(int id) {
 }
 
 void World::loadNextLevel() {
+    setPaused(false);
     currentLevelNumber++;
     generateLevel(Level::getLevel(currentLevelNumber));
 }
 
 void World::retry() {
+    setPaused(false);
     generateLevel(Level::getLevel(currentLevelNumber));
 }
 

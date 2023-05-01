@@ -9,7 +9,11 @@
 #include "SpriteUtil.h"
 #include "ui/PathSelectionArrowUI.h"
 
-Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity(world, node), snail_color(snail_color) {
+Snail::Snail(World& world, GraphNode* node, sf::Color snail_color)
+    : GraphEntity(world, node),
+        snail_color(snail_color),
+        clickSound(),
+        deliverySound() {
     snail_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY));
     snail_cap_sprite.setTexture(*world.getAssets().get(GameAssets::SNAILY_CAP));
 
@@ -17,6 +21,8 @@ Snail::Snail(World& world, GraphNode* node, sf::Color snail_color) : GraphEntity
     actualPosition = node->getPosition();
 
     pathSelArrow = new PathSelectionArrowUI(world, snail_color);
+    clickSound.setBuffer(*world.getAssets().get(GameAssets::CLICK));
+    deliverySound.setBuffer(*world.getAssets().get(GameAssets::DELIVERY));
 }
 
 const sf::Vector2f &Snail::getPosition() const {
@@ -57,6 +63,8 @@ void Snail::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     if(!moving) {
         snail_sprite.setRotation(sf::radians(0));
         snail_cap_sprite.setRotation(sf::radians(0));
+        SpriteUtil::setSpriteOrigin(snail_sprite, {1.0f,1.0f});
+        SpriteUtil::setSpriteOrigin(snail_cap_sprite, {1.0f,1.0f});
     }
 
     target.draw(snail_sprite);
@@ -161,8 +169,10 @@ GraphNode* Snail::hitScan(const sf::Vector2f& hit) {
         return nullptr;
 
     GraphNode* target = pathSelArrow->hitScanAll(hit);
-    if (target)
+    if (target) {
         moveLocation(target);
+        clickSound.play();
+    }
     return target;
 }
 

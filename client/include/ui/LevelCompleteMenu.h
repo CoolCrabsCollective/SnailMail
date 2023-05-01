@@ -11,6 +11,7 @@
 #include "WIZ/asset/AssetLoader.h"
 #include "world/Tickable.h"
 #include "ScoreSaver.h"
+#include "SFML/Audio/Sound.hpp"
 
 class World;
 
@@ -39,6 +40,8 @@ class LevelCompleteMenu : public sf::Drawable, public Tickable {
     mutable sf::Text retryButton, nextButton;
     float retryScale, nextScale;
     bool retryHovered, nextHovered;
+
+    sf::Sound clickSound;
 public:
     LevelCompleteMenu(World& world);
 

@@ -23,6 +23,7 @@ class Friend : public GraphEntity, public Tickable {
     const float frameDelay;
     const float animationDelay;
     bool isMad = false;
+    bool isFuckingSnailman = false;
 
 public:
     Friend(World& world, GraphNode* node, const sf::Texture &texture, float frameDelay, float animationDelay);
