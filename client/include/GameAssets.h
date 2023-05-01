@@ -17,7 +17,7 @@
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
 
-	ASSET(wiz::MusicAsset, SNAILYS_SONG, ("music/snailys_song_v1.ogg"))
+	ASSET(wiz::MusicAsset, SNAILYS_SONG, ("music/snailys_song_v2.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_60, ("music/Snail_Friends_60_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_70, ("music/Snail_Friends_70_bpm.ogg"))
     ASSET(wiz::MusicAsset, SNAIL_FRIENDS_80, ("music/Snail_Friends_80_bpm.ogg"))
