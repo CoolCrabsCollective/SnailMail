@@ -47,6 +47,32 @@ void Graph::generateLevel(Level level) {
     nodes.clear();
     adjacencyMap.clear();
 
+    if(level.custom)
+    {
+        for(const std::pair<float, float>& pair : level.nodes)
+        {
+            nodes.push_back(new GraphNode({ pair.first, pair.second }));
+        }
+
+        for(const std::pair<int, int>& pair : level.adjacency_list)
+        {
+            GraphNode* p1 = nodes[pair.first];
+            GraphNode* p2 = nodes[pair.second];
+
+            if(p2 < p1)
+            {
+                GraphNode* tmp = p1;
+                p1 = p2;
+                p2 = tmp;
+            }
+
+            std::pair<GraphNode*, GraphNode*> graph_pair{p1, p2};
+            adjacencyMap.emplace(graph_pair, Path(world.getAssets(),graph_pair.first, graph_pair.second));
+        }
+        level.nodeCount = nodes.size();
+        return;
+    }
+
     GRand random;
 
     if(level.seeded)
