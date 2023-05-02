@@ -18,6 +18,8 @@ LevelItem::LevelItem(World& world,
        levelSelMenu(levelSelMenu),
        parentMenuOffset(parentMenuOffset),
        levelNum(levelNum) {
+    clickSound.setBuffer(*world.getAssets().get(GameAssets::CLICK));
+
     calculateOffsets();
 
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_SEL_MENU_ITEM));

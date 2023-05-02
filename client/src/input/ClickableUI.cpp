@@ -5,7 +5,9 @@
 #include "input/ClickableUI.h"
 
 ClickableUI::ClickableUI(sf::Vector2f boundingBoxBL, sf::Vector2f boundingBoxTR): boundingBoxBL(boundingBoxBL),
-                                                                                  boundingBoxTR(boundingBoxTR) {}
+                                                                                  boundingBoxTR(boundingBoxTR),
+                                                                                  clickSound() {
+}
 
 bool ClickableUI::hit(const sf::Vector2f& hitPos) {
     if (!clickable)
@@ -19,6 +21,10 @@ bool ClickableUI::hit(const sf::Vector2f& hitPos) {
 
 bool ClickableUI::hitScan(const sf::Vector2f& hitPos) {
     bool isHit = hit(hitPos);
+
+    if (isHit)
+        clickSound.play();
+
     hitAction(isHit);
     return isHit;
 }
