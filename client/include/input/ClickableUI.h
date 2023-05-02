@@ -6,6 +6,7 @@
 #define LD53_CLIENT_CLICKABLEUI_H
 
 #include "SFML/System/Vector2.hpp"
+#include "SFML/Audio/Sound.hpp"
 
 class ClickableUI {
 protected:
@@ -13,6 +14,8 @@ protected:
     sf::Vector2f boundingBoxTR;
 
     bool clickable = true;
+
+    sf::Sound clickSound;
 
 public:
     ClickableUI(sf::Vector2f boundingBoxBL, sf::Vector2f boundingBoxTR);

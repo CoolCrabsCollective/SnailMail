@@ -11,6 +11,8 @@
 LevelIndicator::LevelIndicator(World &world, LevelSelMenu& levelSelMenu) : ClickableUI({0.f, 0.f},
                                                                                        {0.f, 0.f}),
                                                            world(world), levelSelMenu(levelSelMenu) {
+    clickSound.setBuffer(*world.getAssets().get(GameAssets::CLICK));
+
     backgroundSprite.setTexture(*world.getAssets().get(GameAssets::LEVEL_INDICATOR));
     backgroundSprite.setPosition(mainOffset);
 

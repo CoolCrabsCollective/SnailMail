@@ -16,6 +16,8 @@ LevelSelMenu::LevelSelMenu(World &world)
       restartButton(),
       restartScale(1.0f),
       restartHovered(false) {
+    clickSound.setBuffer(*world.getAssets().get(GameAssets::CLICK));
+
     buttonBackground.setTexture(*world.getAssets().get(GameAssets::BUTTON));
     SpriteUtil::setSpriteOrigin(buttonBackground, { 0.5f, 0.5f });
     buttonBackground.setPosition({ 800.0f, 800.0f });

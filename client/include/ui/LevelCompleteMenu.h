@@ -19,7 +19,7 @@ class LevelCompleteMenu : public sf::Drawable, public Tickable {
     World& world;
     wiz::AssetLoader& assets;
 
-    bool visible, won;
+    bool visible, won, finalLevel;
     sf::Sprite shell;
     sf::Sprite background;
     sf::Text title;
