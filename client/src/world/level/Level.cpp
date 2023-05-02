@@ -73,7 +73,32 @@ const std::vector<Level> Level::LEVELS = {
                 .nodes = {{6.f, 4.f}, {18.f, 4.f}, {21.f, 9.f}, {18.f, 14.f}, {6.f, 14.f}, {3.f, 9.f}, {12.f, 9.f}},
                 .adjacency_list = {{0, 1}, {1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 0}, {0, 6}, {6, 3},{5, 6}, {6, 2}},
         },
-        // LEVEL 5
+        // Level 5
+        {
+                .name = "Junk Town",
+                .seeded = true,
+                .seed = 0xceedbef,
+                .nodeCount = 8,
+                .friends = { { LADYBUG, false, 5 },
+                             { FROG, false, 7 },
+                             { MOUSE, false, 2 },
+                             { BEE, false, 6 } },
+                .offices = { { false, 0 }, { false, 4 }},
+                .missions = { { 1.0f, 0, 0,
+                                      { { 0, true, 10.0f },
+                                              { 1, true, 20.0f },
+                                              { 2, true, 30.0f },
+                                              { 3, true, 50.0f }} },
+                              { 7.0f, 1, 1,
+                                      { { 3, true, 23.0f },
+                                              { 1, true, 36.0f },
+                                              { 0, true, 49.0f },
+                                              { 2, true, 69.0f }} }},
+                .deliveriesForBronze = 2,
+                .deliveriesForSilver = 3,
+                .deliveriesForGold = 4,
+        },
+        // LEVEL 6
         {
                 .name = "Follow The Leader",
                 .friends = {{ LADYBUG, false, 3 }, { BEE, false, 4 } },
@@ -90,7 +115,7 @@ const std::vector<Level> Level::LEVELS = {
                 .nodes = { {5.f, 9.f}, {11.f, 9.f}, {15.f, 13.f}, {15.f, 6.f}, {18.f, 9.f},},
                 .adjacency_list = { {0, 1}, {1, 2}, {1, 3}, {3, 4},{2, 4}},
         },
-        // LEVEL 6
+        // LEVEL 7
         {
                 .name = "Double Block",
                 .friends = {{ FROG, false, 1 },
@@ -109,7 +134,7 @@ const std::vector<Level> Level::LEVELS = {
                 .adjacency_list = {{0, 1}, {1, 2}, {2, 3}, {2, 4}, {3, 4} , {4, 5}, {5, 6}, {5, 7}, {6, 7},
                                    {7, 8}, {8, 9}, {8, 10}, {9, 10}},
         },
-        // LEVEL 7
+        // LEVEL 8
         {
                 .name = "Deadlocked",
                 .friends = { { LADYBUG, false, 1 },
@@ -133,7 +158,28 @@ const std::vector<Level> Level::LEVELS = {
                           {21.f, 16.f}},
                 .adjacency_list = {{0, 1}, {0,2}, {0,3}, {1,3}, {1,2}, {2,4}, {3,4}},
         },
-        // Level 8
+        // LEVEL 9
+        {
+                .name = "The More the Merrier",
+                .friends = {
+                        { BEE, false, 0 } },
+                .offices = { { false, 1 }},
+                .missions = {
+                        { 1.0f, 0, 0, {{ 0, true, 13.f}}},
+                        { 10.0f, 0, 0, {{ 0, true, 13.f}}},
+                        { 15.0f, 0, 1, {{ 0, true, 13.f}}},
+                        { 25.0f, 0, 1, {{ 0, true, 13.f}}},
+                        { 35.0f, 0, 2, {{ 0, true, 13.f}}},
+                        { 25.0f, 0, 1, {{ 0, true, 30.f}}},
+                },
+                .deliveriesForBronze = 2,
+                .deliveriesForSilver = 5,
+                .deliveriesForGold = 6,
+                .custom = true,
+                .nodes = {{12.3f, 9.f}, {21.5f, 3.f}, {2.6f, 4.5f}, {16.f, 15.f}},
+                .adjacency_list = {{0, 1}, {0,2}, {0,3}, {1,3}, {1,2}},
+        },
+        // Level 10
         {
                 .name = "Desirable Detour",
                 .friends = {{ FROG, false, 1 },
@@ -171,7 +217,7 @@ const std::vector<Level> Level::LEVELS = {
                 },
                 .adjacency_list = { {0, 4}, {1, 4}, {0, 2}, {2, 10}, {1, 3}, {4, 5}, {5, 6}, {6, 7}, {7, 8}, {8, 9}, {3, 8}, {9, 10} },
         },
-        // LEVEL 9
+        // LEVEL 11
         {
                 .name = "Triple emergency",
                 .friends = {{ FROG, false, 1 },
@@ -225,7 +271,7 @@ const std::vector<Level> Level::LEVELS = {
                 },
                 .adjacency_list = { {0, 1}, {1, 2}, {0, 2}, {0, 4}, {0, 3}, {1, 7}, {1, 8}, {2, 5}, {2, 6}, {4, 9}, {7, 10}, {6, 11} },
         },
-        // LEVEL 10 : Coquille
+        // LEVEL 12 : Coquille
         {
                 .name = "Coquille",
                 .friends = { { LADYBUG, false, 1 },
@@ -262,53 +308,7 @@ const std::vector<Level> Level::LEVELS = {
                                    {14, 15}, {15, 9},    {17,18}, {18,19},{19,20},{20,21},{21,22},{22,23},{23,24},
                                    {24,25},{25,26},{26,27},{27,28},{27,29}, {15,17},{14,27}}
 
-        },
-        // LEVEL 11
-        {
-                .name = "The More the Merrier",
-                .friends = {
-                        { BEE, false, 0 } },
-                .offices = { { false, 1 }},
-                .missions = {
-                        { 1.0f, 0, 0, {{ 0, true, 13.f}}},
-                        { 10.0f, 0, 0, {{ 0, true, 13.f}}},
-                        { 15.0f, 0, 1, {{ 0, true, 13.f}}},
-                        { 25.0f, 0, 1, {{ 0, true, 13.f}}},
-                        { 35.0f, 0, 2, {{ 0, true, 13.f}}},
-                        { 25.0f, 0, 1, {{ 0, true, 30.f}}},
-                },
-                .deliveriesForBronze = 2,
-                .deliveriesForSilver = 5,
-                .deliveriesForGold = 6,
-                .custom = true,
-                .nodes = {{12.3f, 9.f}, {21.5f, 3.f}, {2.6f, 4.5f}, {16.f, 15.f}},
-                .adjacency_list = {{0, 1}, {0,2}, {0,3}, {1,3}, {1,2}},
-        },
-        // Level 12
-        {
-                .name = "Junk Town",
-                .seeded = true,
-                .seed = 0xceedbef,
-                .nodeCount = 8,
-                .friends = { { LADYBUG, false, 5 },
-                             { FROG, false, 7 },
-                             { MOUSE, false, 2 },
-                             { BEE, false, 6 } },
-                .offices = { { false, 0 }, { false, 4 }},
-                .missions = { { 1.0f, 0, 0,
-                                      { { 0, true, 10.0f },
-                                              { 1, true, 20.0f },
-                                              { 2, true, 30.0f },
-                                              { 3, true, 50.0f }} },
-                              { 7.0f, 1, 1,
-                                      { { 3, true, 23.0f },
-                                              { 1, true, 36.0f },
-                                              { 0, true, 49.0f },
-                                              { 2, true, 69.0f }} }},
-                .deliveriesForBronze = 2,
-                .deliveriesForSilver = 3,
-                .deliveriesForGold = 4,
-        },
+        }
 };
 
 Level Level::getLevel(int levelNumber) {
