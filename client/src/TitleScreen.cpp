@@ -69,7 +69,7 @@ void TitleScreen::render(sf::RenderTarget& target) {
 void TitleScreen::show() {
 	getGame().addWindowListener(this);
     snailysSong.setLoop(true);
-    snailysSong.setVolume(75);
+    snailysSong.setVolume(90);
 }
 
 void TitleScreen::hide() {
