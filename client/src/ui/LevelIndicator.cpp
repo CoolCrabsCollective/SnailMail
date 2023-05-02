@@ -35,8 +35,20 @@ LevelIndicator::LevelIndicator(World &world, LevelSelMenu& levelSelMenu) : Click
     ClickableUI::boundingBoxTR = mainOffset + (sf::Vector2f{50.f, 50.f} / 2.f);
 }
 
+void LevelIndicator::tick(float delta) {
+    if(hovered) {
+        backgroundScale += delta * 8.0f;
+        if(backgroundScale > 1.2f)
+            backgroundScale = 1.2f;
+    } else {
+        backgroundScale -= delta * 10.0f;
+        if(backgroundScale < 1.0f)
+            backgroundScale = 1.0f;
+    }
+}
+
 void LevelIndicator::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    SpriteUtil::setSpriteSize(backgroundSprite, sf::Vector2f{50.f, 50.f});
+    SpriteUtil::setSpriteSize(backgroundSprite, sf::Vector2f{50.f, 50.f} * backgroundScale);
     SpriteUtil::setSpriteOrigin(backgroundSprite, sf::Vector2f{0.5f, 0.5f});
     target.draw(backgroundSprite);
 
@@ -59,4 +71,8 @@ void LevelIndicator::hitAction(bool& isHit) {
     if (isHit) {
         levelSelMenu.setIsOpen(true);
     }
+}
+
+void LevelIndicator::hoverAction(bool& isHit) {
+    hovered = isHit;
 }

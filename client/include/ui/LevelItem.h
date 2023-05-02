@@ -14,7 +14,7 @@
 class World;
 class LevelSelMenu;
 
-class LevelItem : public sf::Drawable, public ClickableUI {
+class LevelItem : public sf::Drawable, public ClickableUI, public Tickable {
     mutable sf::Sprite backgroundSprite;
     mutable sf::Sprite metalSprite;
     mutable sf::Sprite greyOutSprite;
@@ -38,12 +38,19 @@ class LevelItem : public sf::Drawable, public ClickableUI {
 
     bool drawMetal = false;
 
+    bool hovered = false;
+    float backgroundScale = 1.f;
+
 public:
     LevelItem(World &world, LevelSelMenu & levelSelMenu, sf::Vector2f parentMenuOffset, int levelNum);
+
+    void tick(float delta) override;
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
     void hitAction(bool& isHit) override;
+
+    void hoverAction(bool& isHit) override;
 
     void calculateOffsets();
 

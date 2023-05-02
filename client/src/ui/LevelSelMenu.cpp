@@ -62,6 +62,10 @@ void LevelSelMenu::tick(float delta) {
         if(restartScale < 1.0f)
             restartScale = 1.0f;
     }
+
+    for (LevelItem* levelItem : levelItems) {
+        levelItem->tick(delta);
+    }
 }
 
 void LevelSelMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -129,6 +133,8 @@ bool LevelSelMenu::hitScan(const sf::Vector2f& hit) {
     return ClickableUI::hitScan(hit);
 }
 
+void LevelSelMenu::hoverAction(bool &isHit) {}
+
 void LevelSelMenu::hover(sf::Vector2f position) {
     if(!isOpen)
         return;
@@ -136,7 +142,7 @@ void LevelSelMenu::hover(sf::Vector2f position) {
 }
 
 void LevelSelMenu::populateLevels() {
-for (int i = 0; i<Level::LEVELS.size(); i++) {
+    for (int i = 0; i<Level::LEVELS.size(); i++) {
         levelItems.push_back(new LevelItem(world, *this, mainOffset, i + 1));
     }
 }

@@ -7,15 +7,25 @@
 ClickableUI::ClickableUI(sf::Vector2f boundingBoxBL, sf::Vector2f boundingBoxTR): boundingBoxBL(boundingBoxBL),
                                                                                   boundingBoxTR(boundingBoxTR) {}
 
-bool ClickableUI::hitScan(const sf::Vector2f& hit) {
+bool ClickableUI::hit(const sf::Vector2f& hitPos) {
     if (!clickable)
         return false;
 
-    bool xBound = hit.x >= boundingBoxBL.x && hit.x <= boundingBoxTR.x;
-    bool yBound = hit.y >= boundingBoxBL.y && hit.y <= boundingBoxTR.y;
+    bool xBound = hitPos.x >= boundingBoxBL.x && hitPos.x <= boundingBoxTR.x;
+    bool yBound = hitPos.y >= boundingBoxBL.y && hitPos.y <= boundingBoxTR.y;
 
-    bool isHit = xBound && yBound;
+    return xBound && yBound;
+}
+
+bool ClickableUI::hitScan(const sf::Vector2f& hitPos) {
+    bool isHit = hit(hitPos);
     hitAction(isHit);
+    return isHit;
+}
+
+bool ClickableUI::hoverScan(const sf::Vector2f& hitPos) {
+    bool isHit = hit(hitPos);
+    hoverAction(isHit);
     return isHit;
 }
 

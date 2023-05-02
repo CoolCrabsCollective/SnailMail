@@ -58,6 +58,8 @@ public:
 
     ~LevelSelMenu() = default;
 
+    void hoverAction(bool& isHit) override;
+
     void hover(sf::Vector2f position);
 
     bool hitScan(const sf::Vector2f &hit) override;

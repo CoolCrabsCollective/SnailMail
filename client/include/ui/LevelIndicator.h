@@ -9,11 +9,12 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "input/ClickableUI.h"
+#include "world/Tickable.h"
 
 class World;
 class LevelSelMenu;
 
-class LevelIndicator : public sf::Drawable, public ClickableUI {
+class LevelIndicator : public sf::Drawable, public ClickableUI, public Tickable {
     mutable sf::Sprite backgroundSprite;
     mutable sf::Text label;
 
@@ -29,12 +30,19 @@ class LevelIndicator : public sf::Drawable, public ClickableUI {
     World& world;
     LevelSelMenu& levelSelMenu;
 
+    bool hovered = false;
+    float backgroundScale = 1.f;
+
 public:
     LevelIndicator(World &world, LevelSelMenu& levelSelMenu);
+
+    void tick(float delta) override;
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
     void hitAction(bool& isHit) override;
+
+    void hoverAction(bool& isHit) override;
 
     ~LevelIndicator() = default;
 };
