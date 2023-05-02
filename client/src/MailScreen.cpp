@@ -21,7 +21,9 @@ MailScreen::MailScreen(wiz::Game& game)
             levelIndicator(world, levelSelMenu),
             uiView({800.0f, 450.0f}, { 1600.0f, 900.0f }),
             scoreSaver("scores/"),
-            pointSprite() {
+            pointSprite(),
+            natureAmbience(*game.getAssets().get(GameAssets::NATURE_AMBIENCE))
+            {
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelIndicator));
     clickables.push_back(dynamic_cast<ClickableUI*>(&levelSelMenu));
     for (LevelItem* itemLevel : levelSelMenu.getLevelItems()) {
@@ -30,6 +32,10 @@ MailScreen::MailScreen(wiz::Game& game)
     pointSprite.setTexture(*game.getAssets().get(GameAssets::WHITE_PIXEL));
     SpriteUtil::setSpriteSize(pointSprite, { 1.0f, 1.0f });
     SpriteUtil::setSpriteOrigin(pointSprite, { 0.5f, 0.5f });
+
+    natureAmbience.setLoop(true);
+    natureAmbience.setVolume(50);
+    natureAmbience.play();
 }
 
 void MailScreen::tick(float delta) {
