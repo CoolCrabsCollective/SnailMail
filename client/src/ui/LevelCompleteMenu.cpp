@@ -40,6 +40,12 @@ void LevelCompleteMenu::show(bool success,
                              float score,
                              bool hasPreviousScore,
                              Score previousBest) {
+    if (world.getCurrentLevelNumber() == Level::LEVELS.size()) {
+        finalLevel = true;
+    } else {
+        finalLevel = false;
+    }
+
     world.setPaused(true);
     visible = true;
     won = success;
@@ -68,7 +74,7 @@ void LevelCompleteMenu::show(bool success,
     SpriteUtil::setSpriteSize(shell, { 200.0f, 200.0f });
     SpriteUtil::setSpriteOrigin(shell, { 0.0f, 0.0f });
 
-    title.setString(success ? "Success!" : "Too late!");
+    title.setString(success ? (finalLevel ? "Last level completed!" : "Success!") : "Too late!");
     title.setFillColor(sf::Color::White);
     title.setCharacterSize(100);
     title.setFont(*assets.get(GameAssets::THE_RIGHT_FONT));
@@ -249,7 +255,7 @@ void LevelCompleteMenu::draw(sf::RenderTarget &target, const sf::RenderStates &s
     retryButton.setScale(retryButton.getScale() / retryScale);
     buttonBackground.setScale(buttonBackground.getScale() / retryScale);
 
-    if(won) {
+    if(won && !finalLevel) {
         buttonBackground.setPosition({ 1000.0f, 735.0f });
         buttonBackground.setScale(buttonBackground.getScale() * nextScale);
         target.draw(buttonBackground);
@@ -270,7 +276,7 @@ void LevelCompleteMenu::click(sf::Vector2f position) {
         hide();
     }
 
-    if(won && position.x >= 875.0f && position.x <= 1125.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
+    if(won && !finalLevel && position.x >= 875.0f && position.x <= 1125.0f && position.y >= 735.0f - 62.5f && position.y <= 735.0f + 62.5f) {
         clickSound.play();
         world.loadNextLevel();
         hide();
